@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>acvi — 김태연의 작업실</title>
+<meta name="description" content="소리와 진동을 재고, 잰 것으로 풉니다. 김태연의 개인 작업실.">
+<meta property="og:title" content="acvi — 김태연의 작업실">
+<meta property="og:description" content="소리와 진동을 재고, 잰 것으로 풉니다.">
+<meta property="og:url" content="https://acvi.net">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#F3F2EE">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#13171C; --ground:#F3F2EE; --line:#D9D8D2; --grid:#ECEBE6;
+  --muted:#4A5058; --body:#2B3138; --dim:#A9B0B8;
+  --accent:#FF5B2E; --accent-text:#B83A10;
+  --sans:'Sora','IBM Plex Sans KR',sans-serif; --kr:'IBM Plex Sans KR',sans-serif; --mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);word-break:keep-all;-webkit-font-smoothing:antialiased}
+a{color:var(--ink)} a:hover{color:var(--accent-text)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1200px;margin:0 auto;padding-left:24px;padding-right:24px}
+.num{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--accent-text);margin-right:12px}
+h2.sec{margin:0;font-family:var(--kr);font-size:20px;font-weight:600}
+
+nav{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding-top:24px;padding-bottom:24px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand b{font-size:22px;font-weight:600;letter-spacing:-.04em}
+.brand span{font-family:var(--kr);font-size:14px;color:var(--muted)}
+.links{display:flex;flex-wrap:wrap;gap:4px 24px;font-family:var(--kr);font-size:15px}
+.links a{text-decoration:none;padding:10px 0}
+
+header{display:flex;flex-direction:column;gap:28px;padding-top:88px;padding-bottom:40px}
+.status{display:inline-flex;align-self:flex-start;align-items:center;gap:10px;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:#fff}
+.status i{width:8px;height:8px;border-radius:999px;background:var(--accent);animation:pulse 2s ease-in-out infinite}
+.status span{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--body)}
+@keyframes pulse{50%{opacity:.35}}
+header h1{margin:0;font-family:var(--kr);font-size:clamp(40px,6.4vw,88px);font-weight:600;line-height:1.14;letter-spacing:-.035em}
+header p{margin:0;max-width:560px;font-family:var(--kr);font-size:18px;line-height:1.75;color:var(--muted)}
+
+#log{display:flex;flex-direction:column;gap:24px;padding-top:40px;padding-bottom:96px}
+.log-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px 24px}
+.log-head small{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.scope{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px 16px 12px}
+.scope svg{display:block;width:100%;height:auto}
+.wave{stroke-dasharray:1;stroke-dashoffset:1}
+.scope.on .wave{animation:draw 2.6s cubic-bezier(.3,.6,.2,1) forwards}
+.scope.on .tail{animation-delay:2.2s;animation-duration:.8s}
+@keyframes draw{to{stroke-dashoffset:0}}
+.picks{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;margin-top:8px}
+.picks button{display:flex;flex-direction:column;align-items:center;gap:4px;min-height:56px;padding:8px 4px;border:0;border-radius:10px;background:transparent;color:var(--body);cursor:pointer;font:inherit}
+.picks button:hover{background:#F0EFEA}
+.picks button[aria-pressed="true"]{background:var(--ink);color:var(--ground)}
+.picks .d{font-family:var(--mono);font-size:12px}
+.picks .r{font-family:var(--kr);font-size:13px;font-weight:600}
+.detail{display:flex;flex-wrap:wrap;gap:24px 48px;padding:32px;background:var(--ink);color:var(--ground);border-radius:16px}
+.detail .l{flex:1 1 360px;display:flex;flex-direction:column;gap:12px}
+.detail .meta{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--dim)}
+.detail .rank{font-family:var(--kr);font-size:clamp(28px,3.4vw,40px);font-weight:600;letter-spacing:-.03em;color:var(--accent)}
+.detail h3{margin:0;font-family:var(--kr);font-size:20px;font-weight:600;line-height:1.5}
+.detail .scale{font-family:var(--kr);font-size:14px;color:var(--dim)}
+.detail dl{flex:1 1 360px;margin:0;display:grid;grid-template-columns:88px minmax(0,1fr);gap:14px 16px;font-family:var(--kr);font-size:16px;line-height:1.7}
+.detail dt{font-family:var(--mono);font-size:12px;color:var(--dim);padding-top:4px}
+.detail dd{margin:0;color:#E3E6E9}
+
+#works,#notes{display:flex;flex-direction:column;gap:24px;padding-bottom:96px}
+.rows{border-top:1px solid var(--ink)}
+.row{display:flex;flex-wrap:wrap;gap:8px 32px;padding:24px 0;border-bottom:1px solid var(--line)}
+.row b{flex:0 0 200px;font-size:24px;font-weight:600;letter-spacing:-.03em}
+.row p{flex:1 1 420px;margin:0;font-family:var(--kr);font-size:16px;line-height:1.7;color:var(--body)}
+.row span{flex:0 0 120px;font-family:var(--mono);font-size:12px;color:var(--muted);padding-top:6px}
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:16px}
+.note{padding:28px;border:1px dashed var(--dim);border-radius:16px;display:flex;flex-direction:column;gap:10px}
+.note small{font-family:var(--mono);font-size:12px;color:var(--accent-text)}
+.note b{font-family:var(--kr);font-size:20px;font-weight:600}
+.note p{margin:0;font-family:var(--kr);font-size:15px;line-height:1.7;color:var(--muted)}
+.press{display:flex;flex-wrap:wrap;gap:8px 24px;padding-top:8px;font-family:var(--kr);font-size:15px;color:var(--muted)}
+.press small{font-family:var(--mono);font-size:12px;padding-top:2px}
+
+footer{background:var(--ink);color:var(--ground)}
+footer .wrap{display:flex;flex-direction:column;gap:28px;padding-top:80px;padding-bottom:40px}
+footer h2{margin:0;font-family:var(--kr);font-size:clamp(32px,4.4vw,56px);font-weight:600;line-height:1.25;letter-spacing:-.03em}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:0 24px;border-radius:999px;font-family:var(--kr);font-size:16px;text-decoration:none}
+.btn.a{background:var(--accent);color:var(--ink);font-weight:600}
+.btn.g{border:1px solid var(--muted);color:var(--ground)}
+.btn:hover{color:inherit;opacity:.9}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-top:48px;padding-top:20px;border-top:1px solid #2B3138;font-family:var(--mono);font-size:12px;color:var(--dim)}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .wave{stroke-dasharray:none;stroke-dashoffset:0;animation:none!important}
+  .status i{animation:none}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav aria-label="주 메뉴">
+    <a class="brand" href="#top">
+      <svg width="32" height="32" viewBox="0 0 132 132" aria-hidden="true"><rect width="132" height="132" rx="32" fill="#13171C"/><g transform="translate(16 41) scale(0.5)"><path d="M0 50 L6.7 29.6 L13.3 17.1 L20 14.7 L26.7 21.6 L33.3 34.8 L40 50 L46.7 63.2 L53.3 71.2 L60 72.7 L66.7 68.3 L73.3 59.8 L80 50 L86.7 41.5 L93.3 36.4 L100 35.4 L106.7 38.2 L113.3 43.7 L120 50 L126.7 55.5 L133.3 58.8 L140 59.4 L146.7 57.6 L153.3 54.1 L160 50 L166.7 46.5 L173.3 44.3 L180 43.9 L186.7 45.1 L193.3 47.4 L200 50" fill="none" stroke="#FF5B2E" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+      <b>acvi</b><span>김태연의 작업실</span>
+    </a>
+    <div class="links">
+      <a href="#log">기록</a><a href="#works">작업</a><a href="#notes">실험 노트</a><a href="#contact">연락</a>
+    </div>
+  </nav>
+
+  <header id="top">
+    <div class="status"><i></i><span>작업 중 · Matter AX Sprint 2026 본선 준비</span></div>
+    <h1>소리와 진동을 재고,<br>잰 것으로 풉니다.</h1>
+    <p>acvi는 김태연의 개인 작업실입니다. 현장에서 들리는 것을 직접 측정하고, 그 신호로 문제를 푸는 작업을 여기에 하나씩 쌓아 둡니다.</p>
+  </header>
+</div>
+
+<main>
+  <section id="log" class="wrap" aria-labelledby="log-title">
+    <div class="log-head">
+      <h2 class="sec" id="log-title"><span class="num">01</span>기록 — 지금까지의 진동</h2>
+      <small>피크 높이 = 수상 등급 · 피크를 눌러 보세요</small>
+    </div>
+    <div class="scope" id="scope">
+      <svg viewBox="0 0 1200 270" role="img" aria-label="2025년 2월부터 2026년 9월까지 공모전 6건을 시간 순 진동 피크로 나타낸 그래프. 가장 높은 피크는 2026년 8월 내일로 해커톤 대상.">
+        <defs><pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M50 0 L0 0 0 50" fill="none" stroke="#ECEBE6"/></pattern></defs>
+        <rect width="1200" height="270" fill="url(#grid)"/>
+        <line x1="0" y1="170" x2="1200" y2="170" stroke="#C9C8C1"/>
+        <path class="wave" pathLength="1" d="M0 170.0 L84 170.0 L87 152.0 L90 128.9 L93 112.2 L96 102.7 L99 100.6 L102 105.4 L105 115.8 L108 130.4 L111 147.2 L114 164.4 L117 180.5 L120 193.8 L123 203.5 L126 209.0 L129 210.2 L132 207.5 L135 201.4 L138 193.0 L141 183.2 L144 173.2 L147 163.9 L150 156.2 L153 150.6 L156 147.4 L159 146.7 L162 148.3 L165 151.8 L168 156.7 L171 162.3 L174 168.1 L177 173.5 L180 178.0 L183 181.3 L186 183.1 L189 183.5 L192 182.6 L195 180.5 L198 177.7 L201 174.4 L204 171.1 L207 168.0 L210 165.4 L213 163.5 L216 162.4 L219 162.2 L222 162.7 L225 163.9 L228 165.5 L231 167.4 L234 169.4 L237 171.2 L240 172.7 L243 173.8 L246 174.4 L249 174.5 L252 174.2 L255 173.5 L258 172.6 L261 171.5 L264 170.4 L267 169.3 L270 168.4 L273 167.8 L276 167.4 L279 167.4 L282 167.6 L285 167.9 L288 136.3 L291 111.2 L294 94.2 L297 86.3 L300 87.2 L303 95.9 L306 110.7 L309 129.7 L312 150.6 L315 171.2 L318 189.5 L321 204.1 L324 213.9 L327 218.5 L330 218.0 L333 213.0 L336 204.4 L339 193.3 L342 181.2 L345 169.3 L348 158.7 L351 150.2 L354 144.5 L357 141.9 L360 142.2 L363 145.1 L366 150.1 L369 156.5 L372 163.5 L375 170.4 L378 176.6 L381 181.5 L384 184.8 L387 186.3 L390 186.1 L393 184.4 L396 181.5 L399 177.8 L402 173.8 L405 169.8 L408 166.2 L411 163.4 L414 161.5 L417 160.6 L420 160.7 L423 161.6 L426 163.3 L429 165.5 L432 167.8 L435 170.1 L438 172.2 L441 173.8 L444 175.0 L447 175.5 L450 175.4 L453 174.8 L456 173.9 L459 172.6 L462 171.3 L465 169.9 L468 168.7 L471 167.8 L474 167.1 L477 166.8 L480 166.9 L483 167.2 L486 161.6 L489 145.8 L492 133.9 L495 126.7 L498 124.4 L501 126.7 L504 132.9 L507 142.0 L510 152.8 L513 164.1 L516 174.9 L519 184.0 L522 190.9 L525 195.1 L528 196.4 L531 195.1 L534 191.5 L537 186.3 L540 180.0 L543 173.4 L546 167.2 L549 161.9 L552 157.9 L555 155.5 L558 154.7 L561 155.4 L564 157.5 L567 160.6 L570 164.2 L573 168.0 L576 171.6 L579 174.7 L582 177.0 L585 178.4 L588 178.9 L591 178.4 L594 177.2 L597 175.5 L600 173.4 L603 171.1 L606 169.1 L609 167.3 L612 165.9 L615 165.1 L618 164.9 L621 165.1 L624 165.8 L627 166.8 L630 168.1 L633 169.3 L636 170.5 L639 171.6 L642 172.4 L645 172.8 L648 173.0 L651 172.8 L654 172.4 L657 171.8 L660 171.1 L663 170.4 L666 169.7 L669 169.1 L672 168.6 L675 168.4 L678 168.3 L681 168.4 L684 168.6 L687 153.9 L690 135.1 L693 121.6 L696 114.1 L699 112.7 L702 116.9 L705 125.8 L708 138.0 L711 151.9 L714 166.2 L717 179.3 L720 190.2 L723 198.1 L726 202.4 L729 203.2 L732 200.8 L735 195.6 L738 188.6 L741 180.5 L744 172.2 L747 164.6 L750 158.3 L753 153.7 L756 151.2 L759 150.8 L762 152.2 L765 155.2 L768 159.2 L771 163.9 L774 168.7 L777 173.1 L780 176.8 L783 179.4 L786 180.9 L789 181.2 L792 180.3 L795 178.6 L798 176.2 L801 173.5 L804 170.7 L807 168.2 L810 166.1 L813 164.5 L816 163.7 L819 163.5 L822 164.0 L825 165.0 L828 166.4 L831 168.0 L834 169.6 L837 171.1 L840 172.3 L843 173.2 L846 173.7 L849 173.7 L852 173.5 L855 172.9 L858 172.1 L861 171.2 L864 170.2 L867 169.4 L870 168.7 L873 168.2 L876 167.9 L879 167.8 L882 168.0 L885 168.3 L888 127.8 L891 95.5 L894 73.7 L897 63.3 L900 64.2 L903 75.1 L906 93.9 L909 118.1 L912 144.7 L915 171.0 L918 194.4 L921 213.2 L924 225.8 L927 231.8 L930 231.3 L933 225.0 L936 214.1 L939 200.1 L942 184.7 L945 169.4 L948 155.8 L951 145.0 L954 137.6 L957 134.2 L960 134.5 L963 138.1 L966 144.4 L969 152.6 L972 161.5 L975 170.3 L978 178.2 L981 184.5 L984 188.8 L987 190.8 L990 190.6 L993 188.5 L996 184.8 L999 180.1 L1002 174.9 L1005 169.8 L1008 165.2 L1011 161.6 L1014 159.1 L1017 158.0 L1020 158.1 L1023 159.3 L1026 161.4 L1029 164.1 L1032 167.1 L1035 170.1 L1038 172.8 L1041 174.9 L1044 176.3 L1047 177.0 L1050 176.9" fill="none" stroke="#13171C" stroke-width="2" stroke-linejoin="round"/>
+        <path class="wave tail" pathLength="1" d="M1050 176.9 L1053 176.2 L1056 175.0 L1059 173.4 L1062 171.7 L1065 169.9 L1068 168.4 L1071 167.2 L1074 166.3 L1077 166.0 L1080 166.0 L1083 166.4 L1086 163.5 L1089 154.8 L1092 148.4 L1095 144.8 L1098 143.9 L1101 145.6 L1104 149.5 L1107 154.9 L1110 161.2 L1113 167.7 L1116 173.8 L1119 178.8 L1122 182.5 L1125 184.6 L1128 185.1 L1131 184.1 L1134 181.9 L1137 178.7 L1140 175.1 L1143 171.3 L1146 167.8 L1149 164.9 L1152 162.8 L1155 161.5 L1158 161.2 L1161 161.8 L1164 163.1 L1167 164.9 L1170 167.0 L1173 169.2 L1176 171.3 L1179 173.0 L1182 174.2 L1185 174.9 L1188 175.1 L1191 174.7 L1194 174.0 L1197 172.9 L1200 171.7" fill="none" stroke="#13171C" stroke-width="2" stroke-linejoin="round" opacity=".55"/>
+        <path id="sel-seg" d="" fill="none" stroke="#FF5B2E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="100" cy="101.5" r="5" fill="#13171C"/>
+        <circle cx="300" cy="87.2" r="5" fill="#13171C"/>
+        <circle cx="500" cy="125.4" r="5" fill="#13171C"/>
+        <circle cx="700" cy="113.5" r="5" fill="#13171C"/>
+        <circle cx="900" cy="64.2" r="5" fill="#13171C"/>
+        <circle cx="1100" cy="144.8" r="5" fill="#fff" stroke="#13171C" stroke-width="2"/>
+        <circle id="sel-dot" cx="900" cy="64.2" r="9" fill="#FF5B2E"/>
+      </svg>
+      <div class="picks" role="group" aria-label="기록 선택" id="picks"></div>
+    </div>
+    <article class="detail" aria-live="polite">
+      <div class="l">
+        <span class="meta" id="d-meta"></span>
+        <span class="rank" id="d-rank"></span>
+        <h3 id="d-title"></h3>
+        <span class="scale" id="d-scale"></span>
+      </div>
+      <dl>
+        <dt>잰 것</dt><dd id="d-measure"></dd>
+        <dt>푼 방법</dt><dd id="d-solve"></dd>
+      </dl>
+    </article>
+  </section>
+
+  <section id="works" class="wrap" aria-labelledby="works-title">
+    <h2 class="sec" id="works-title"><span class="num">02</span>작업 — 만들어 둔 도구들</h2>
+    <div class="rows">
+      <div class="row"><b>drrk</b><p>캐리어 바퀴 소리를 진동 센서로 세는 파이썬 패키지. 새 앱이 아니라 기존 서비스에 붙여 쓰도록 만들었습니다.</p><span>음향 계측</span></div>
+      <div class="row"><b>SafeWave</b><p>와이파이 신호와 소리를 함께 읽는 낙상 감지 시스템. 센서 노드부터 소형 컴퓨터까지 실제로 이어 붙여 검증하는 중입니다.</p><span>졸업작품</span></div>
+      <div class="row"><b>AITKOO</b><p>카메라 없이 와이파이 신호의 미세한 흔들림으로 환자 상태를 살피는 비접촉 감시 시스템.</p><span>무박 2일</span></div>
+    </div>
+  </section>
+
+  <section id="notes" class="wrap" aria-labelledby="notes-title">
+    <h2 class="sec" id="notes-title"><span class="num">03</span>실험 노트 — 혼자 파 보는 것</h2>
+    <div class="notes">
+      <div class="note"><small>진행 중</small><b>창 함수를 직접 만들어 보기</b><p>신호를 잘라 볼 때 쓰는 창의 모양과 길이가 결과를 얼마나 바꾸는지, 기성품 대신 직접 설계해 비교합니다.</p></div>
+      <div class="note"><small>진행 중</small><b>마이크 하나로 공간감 되살리기</b><p>마이크 한 개로 녹음한 소리에 남은 울림만으로, 그 방의 입체감을 되살릴 수 있는지 실험합니다.</p></div>
+    </div>
+    <div class="press">
+      <small>보도</small>
+      <a href="https://www.kyeongin.com/article/1770048" target="_blank" rel="noopener">경인일보 ‘만나본 Who’ 인터뷰 · 2026.09</a>
+      <a href="https://www.joongboo.com/news/articleView.html?idxno=363734069" target="_blank" rel="noopener">중부일보 내일로 해커톤 성료 기사 · 2026.08</a>
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2>같이 재 볼 소리가 있다면,<br>작업실 문은 열려 있습니다.</h2>
+    <div class="btns">
+      <!-- [이메일 주소]를 공개해도 되는 메일 주소로 바꿔 주세요 -->
+      <a class="btn a" href="mailto:kim@acvi.net">메일 보내기</a>
+      <a class="btn g" href="https://github.com/composedly13" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <div class="foot"><span>© 2026 acvi · 김태연</span><span>Acoustic · Vibration</span></div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // 기록 데이터 — 새 공모전이 생기면 여기에 한 줄 추가하고 파형도 다시 계산하면 됩니다.
+  var data = [
+    { date: '2025.02', short: '최우수상', rank: '최우수상', title: '한신 AI 아트코딩 해커톤', team: '[팀명]', scale: '한신대학교 SW중심대학사업단 주최', measure: '[이 작업에서 잰 것을 적어 주세요]', solve: '[어떻게 풀었는지 적어 주세요]' },
+    { date: '2026.05', short: '최우수상', rank: '최우수상 · 국립중앙과학관장상', title: 'AI Hack Camp 2026', team: '팀 CSI', scale: '전국 410개 팀 참가 · 무박 2일', measure: '카메라 대신, 방 안을 지나는 와이파이 신호의 미세한 흔들림.', solve: '흔들림의 패턴을 기기 안에서 도는 작은 AI로 읽어, 환자 상태를 실시간으로 살피는 비접촉 감시 시스템을 만들었습니다.' },
+    { date: '2026.07', short: '동상', rank: '동상', title: '한국디지털콘텐츠학회 대학생논문경진대회', team: '공동저자', scale: '하계종합학술대회 논문 발표', measure: '와이파이 신호와 방 안의 소리, 두 가지를 동시에.', solve: '두 신호를 함께 읽어 혼자 사는 어르신의 낙상을 놓치지 않는 시스템의 설계 방향을 논문으로 정리했습니다.' },
+    { date: '2026.08', short: '후원기업상', rank: '후원기업상', title: '2026 AI·SW중심대학 디지털 경진대회 AI부문', team: '팀 토큰강도', scale: '상위 3% · 본선 진출', measure: 'AI 에이전트가 실제로 골라 온 행동의 기록.', solve: '큰 모델의 판단을 작은 모델에 옮겨 담고 직접 압축해, 메모리 1GB·10분 제한을 지키며 점수를 0.436에서 0.798로 올렸습니다.' },
+    { date: '2026.08', short: '대상', rank: '대상 · 인천국제공항공사 사장상', title: '내일路 해커톤 2026', team: '드르륵팀 · 팀장', scale: '예선 약 70팀 → 본선 12팀 → 대상 2팀', measure: '책상 상판에 붙인 진동 센서로 캐리어 바퀴가 굴러가는 소리.', solve: '바퀴 소리로 짐의 흐름을 세고 항공편 도착 정보와 합쳐, 공항에서 철도로 넘어가는 구간의 승강장 혼잡을 미리 알려 주는 모듈을 만들었습니다.' },
+    { date: '2026.09~', short: '진행 중', rank: '서류 통과 · 본선 준비 중', title: '지능형 홈 Matter AX Sprint 2026', team: '팀 딸깍', scale: '1차 서류 심사 통과 20팀', measure: '본선을 준비하는 중입니다.', solve: '결과가 나오면 이 진동도 기록으로 채워집니다.' }
+  ];
+  var peaks = [[100,101.5],[300,87.2],[500,125.4],[700,113.5],[900,64.2],[1100,144.8]];
+  var segs = [
+    "M85 170.0 L88 143.7 L91 122.6 L94 108.2 L97 101.2 L100 101.5 L103 108.3 L106 120.3 L109 135.8 L112 153.0 L115 170.0 L118 185.3 L121 197.5 L124 205.8 L127 209.9 L130 209.7 L133 205.8 L136 198.8 L139 189.8 L142 179.9 L145 170.0 L148 161.2 L151 154.1 L154 149.2 L157 146.9 L160 147.0 L163 149.3 L166 153.3 L169 158.5 L172 164.3 L175 170.0 L178 175.1 L181 179.2 L184 182.0 L187 183.4 L190 183.3 L193 182.0 L196 179.7 L199 176.7 L202 173.3 L205 170.0 L208 167.0 L211 164.6 L214 163.0 L217 162.2 L220 162.3 L223 163.0 L226 164.4 L229 166.1 L232 168.1 L235 170.0 L238 171.7 L241 173.1 L244 174.0 L247 174.5 L250 174.5 L253 174.0 L256 173.3 L259 172.2 L262 171.1 L265 170.0 L268 169.0 L271 168.2 L274 167.7",
+    "M285 167.9 L288 136.3 L291 111.2 L294 94.2 L297 86.3 L300 87.2 L303 95.9 L306 110.7 L309 129.7 L312 150.6 L315 171.2 L318 189.5 L321 204.1 L324 213.9 L327 218.5 L330 218.0 L333 213.0 L336 204.4 L339 193.3 L342 181.2 L345 169.3 L348 158.7 L351 150.2 L354 144.5 L357 141.9 L360 142.2 L363 145.1 L366 150.1 L369 156.5 L372 163.5 L375 170.4 L378 176.6 L381 181.5 L384 184.8 L387 186.3 L390 186.1 L393 184.4 L396 181.5 L399 177.8 L402 173.8 L405 169.8 L408 166.2 L411 163.4 L414 161.5 L417 160.6 L420 160.7 L423 161.6 L426 163.3 L429 165.5 L432 167.8 L435 170.1 L438 172.2 L441 173.8 L444 175.0 L447 175.5 L450 175.4 L453 174.8 L456 173.9 L459 172.6 L462 171.3 L465 169.9 L468 168.7 L471 167.8 L474 167.1",
+    "M485 167.5 L488 150.7 L491 137.4 L494 128.6 L497 124.6 L500 125.4 L503 130.4 L506 138.7 L509 149.1 L512 160.4 L515 171.4 L518 181.2 L521 188.9 L524 194.0 L527 196.3 L530 195.8 L533 192.9 L536 188.2 L539 182.1 L542 175.6 L545 169.2 L548 163.5 L551 159.0 L554 156.1 L557 154.8 L560 155.0 L563 156.7 L566 159.5 L569 163.0 L572 166.8 L575 170.5 L578 173.8 L581 176.4 L584 178.1 L587 178.8 L590 178.7 L593 177.7 L596 176.1 L599 174.1 L602 171.9 L605 169.7 L608 167.8 L611 166.3 L614 165.3 L617 164.9 L620 165.0 L623 165.5 L626 166.5 L629 167.6 L632 168.9 L635 170.2 L638 171.3 L641 172.1 L644 172.7 L647 173.0 L650 172.9 L653 172.6 L656 172.0 L659 171.4 L662 170.6 L665 169.9 L668 169.3 L671 168.8 L674 168.4",
+    "M685 168.7 L688 147.1 L691 130.0 L694 118.4 L697 113.0 L700 113.5 L703 119.4 L706 129.6 L709 142.5 L712 156.7 L715 170.8 L718 183.3 L721 193.2 L724 199.9 L727 203.1 L730 202.7 L733 199.3 L736 193.4 L739 185.9 L742 177.7 L745 169.6 L748 162.3 L751 156.6 L754 152.7 L757 150.8 L760 151.0 L763 153.0 L766 156.4 L769 160.8 L772 165.5 L775 170.3 L778 174.5 L781 177.8 L784 180.0 L787 181.1 L790 181.0 L793 179.8 L796 177.9 L799 175.4 L802 172.6 L805 169.9 L808 167.4 L811 165.5 L814 164.2 L817 163.6 L820 163.6 L823 164.3 L826 165.4 L829 166.9 L832 168.5 L835 170.1 L838 171.5 L841 172.6 L844 173.4 L847 173.7 L850 173.7 L853 173.3 L856 172.6 L859 171.8 L862 170.9 L865 170.0 L868 169.1 L871 168.5 L874 168.0",
+    "M885 168.3 L888 127.8 L891 95.5 L894 73.7 L897 63.3 L900 64.2 L903 75.1 L906 93.9 L909 118.1 L912 144.7 L915 171.0 L918 194.4 L921 213.2 L924 225.8 L927 231.8 L930 231.3 L933 225.0 L936 214.1 L939 200.1 L942 184.7 L945 169.4 L948 155.8 L951 145.0 L954 137.6 L957 134.2 L960 134.5 L963 138.1 L966 144.4 L969 152.6 L972 161.5 L975 170.3 L978 178.2 L981 184.5 L984 188.8 L987 190.8 L990 190.6 L993 188.5 L996 184.8 L999 180.1 L1002 174.9 L1005 169.8 L1008 165.2 L1011 161.6 L1014 159.1 L1017 158.0 L1020 158.1 L1023 159.3 L1026 161.4 L1029 164.1 L1032 167.1 L1035 170.1 L1038 172.8 L1041 174.9 L1044 176.3 L1047 177.0 L1050 176.9 L1053 176.2 L1056 175.0 L1059 173.4 L1062 171.7 L1065 169.9 L1068 168.4 L1071 167.2 L1074 166.3",
+    "M1085 166.9 L1088 157.5 L1091 150.3 L1094 145.7 L1097 143.9 L1100 144.8 L1103 148.0 L1106 153.0 L1109 159.1 L1112 165.6 L1115 171.8 L1118 177.3 L1121 181.4 L1124 184.1 L1127 185.1 L1130 184.6 L1133 182.8 L1136 179.9 L1139 176.3 L1142 172.6 L1145 168.9 L1148 165.8 L1151 163.4 L1154 161.8 L1157 161.2 L1160 161.5 L1163 162.6 L1166 164.3 L1169 166.3 L1172 168.5 L1175 170.6 L1178 172.4 L1181 173.8 L1184 174.7 L1187 175.1 L1190 174.9 L1193 174.3 L1196 173.3 L1199 172.1"
+  ];
+
+  var picks = document.getElementById('picks');
+  var seg = document.getElementById('sel-seg');
+  var dot = document.getElementById('sel-dot');
+  var buttons = data.map(function (d, i) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.innerHTML = '<span class="d"></span><span class="r"></span>';
+    b.querySelector('.d').textContent = d.date;
+    b.querySelector('.r').textContent = d.short;
+    b.addEventListener('click', function () { select(i); });
+    picks.appendChild(b);
+    return b;
+  });
+
+  function select(i) {
+    var d = data[i];
+    buttons.forEach(function (b, j) { b.setAttribute('aria-pressed', j === i ? 'true' : 'false'); });
+    seg.setAttribute('d', segs[i]);
+    dot.setAttribute('cx', peaks[i][0]);
+    dot.setAttribute('cy', peaks[i][1]);
+    document.getElementById('d-meta').textContent = d.date + ' · ' + d.team;
+    document.getElementById('d-rank').textContent = d.rank;
+    document.getElementById('d-title').textContent = d.title;
+    document.getElementById('d-scale').textContent = d.scale;
+    document.getElementById('d-measure').textContent = d.measure;
+    document.getElementById('d-solve').textContent = d.solve;
+  }
+  select(4);
+
+  // 화면에 들어오면 파형이 왼쪽부터 그려지게
+  var scope = document.getElementById('scope');
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (e) { if (e.isIntersecting) { scope.classList.add('on'); obs.disconnect(); } });
+    }, { threshold: 0.3 }).observe(scope);
+  } else {
+    scope.classList.add('on');
+  }
+})();
+</script>
+</body>
+</html>
