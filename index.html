@@ -2,348 +2,421 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>acvi — Acoustic · Vibration Studio</title>
-<meta name="description" content="들리는 것을 재고, 잰 것으로 답을 만듭니다. 소리와 진동을 측정하고 분석해 현장의 문제를 푸는 1인 스튜디오 acvi.">
-<meta property="og:title" content="acvi — Acoustic · Vibration Studio">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>acvi — Acoustic · Vibration</title>
+<meta name="description" content="들리는 것을 재고, 잰 것으로 답을 만듭니다. 소리와 진동을 다루는 김태연의 스튜디오 acvi.">
+<meta property="og:title" content="acvi — Acoustic · Vibration">
 <meta property="og:description" content="들리는 것을 재고, 잰 것으로 답을 만듭니다.">
 <meta property="og:url" content="https://acvi.net">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#13171C">
+<meta name="theme-color" content="#101418">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
+/* 레이아웃: 화면 전체가 하나의 진동하는 줄(캔버스). 메인은 한 화면, 나머지는 오른쪽에서 열리는 패널 */
 :root{
-  --ink:#13171C; --ground:#F3F2EE; --ground-2:#E6E5DF; --line:#D9D8D2; --grid:#ECEBE6;
-  --muted:#4A5058; --body:#2B3138; --dim:#A9B0B8; --on-dark:#C4CAD1;
-  --accent:#FF5B2E; --accent-text:#B83A10;
-  --sans:'Sora','IBM Plex Sans KR',sans-serif; --kr:'IBM Plex Sans KR',sans-serif; --mono:'JetBrains Mono',monospace;
+  color-scheme: dark;
+  --ink:#101418; --ink-2:#161B21; --line:#2A3038; --fg:#EEF0F2; --mute:#A3ABB4; --accent:#FF5B2E; --accent-ink:#101418;
+  --display:'Sora','IBM Plex Sans KR',system-ui,sans-serif;
+  --body:'IBM Plex Sans KR','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
+  --drawer: min(560px, 100vw);
 }
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);word-break:keep-all;-webkit-font-smoothing:antialiased}
-a{color:var(--ink)} a:hover{color:var(--accent-text)}
-:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
-.wrap{max-width:1200px;margin:0 auto;padding-left:24px;padding-right:24px}
-.eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.28em;color:var(--accent-text)}
-.sec-head{display:flex;flex-direction:column;gap:12px}
-h2.title{margin:0;font-family:var(--kr);font-size:clamp(30px,4vw,48px);font-weight:600;letter-spacing:-.03em}
-.btn{display:inline-flex;align-items:center;min-height:48px;padding:0 24px;border-radius:999px;font-family:var(--kr);font-size:16px;text-decoration:none;transition:transform .15s ease}
-.btn:hover{transform:translateY(-2px)}
-.btn.a{background:var(--accent);color:var(--ink);font-weight:600}
-.btn.a:hover{color:var(--ink)}
-.btn.g{border:1px solid var(--muted);color:var(--ground)}
-.btn.g:hover{color:#fff}
-.btns{display:flex;flex-wrap:wrap;gap:12px}
+html,body{height:100%}
+[hidden]{display:none!important}
+body{margin:0;background:var(--ink);color:var(--fg);font-family:var(--body);overflow:hidden;word-break:keep-all;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+button{font:inherit;color:inherit}
 
-/* 상단 */
-header{background:var(--ink);color:var(--ground);position:relative;overflow:hidden}
-nav{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding-top:22px;padding-bottom:22px}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ground)}
-.brand:hover{color:var(--ground)}
-.brand b{font-size:22px;font-weight:600;letter-spacing:-.04em}
-.links{display:flex;flex-wrap:wrap;align-items:center;gap:4px 24px;font-family:var(--kr);font-size:15px}
-.links a{color:#D5D9DE;text-decoration:none;padding:10px 0}
-.links a:hover{color:#fff}
-.links a.pill{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:999px;border:1px solid var(--muted);color:var(--ground)}
-.hero{display:flex;flex-direction:column;gap:28px;padding-top:88px;padding-bottom:210px;position:relative;z-index:1}
-.hero .eyebrow{color:var(--dim)}
-.hero h1{margin:0;font-family:var(--kr);font-size:clamp(40px,6.4vw,88px);font-weight:600;line-height:1.14;letter-spacing:-.035em}
-.hero p{margin:0;max-width:600px;font-family:var(--kr);font-size:18px;line-height:1.75;color:var(--on-dark)}
-.hero .btns{margin-top:8px}
-.hero-wave{position:absolute;left:0;bottom:28px;width:100%;height:150px}
+#field{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}
 
-/* 실적 띠 */
-.record{border-bottom:1px solid var(--line)}
-.record .wrap{display:flex;flex-wrap:wrap;gap:16px 48px;align-items:baseline;padding-top:36px;padding-bottom:36px}
-.record small{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--muted)}
-.record span{font-family:var(--kr);font-size:16px}
-.record b{font-weight:600}
+.stage{position:relative;height:100%;display:grid;grid-template-rows:auto 1fr auto;padding-inline:clamp(16px,3.5vw,48px);pointer-events:none;transition:opacity .4s ease, transform .5s cubic-bezier(.2,.7,.2,1)}
+.stage a,.stage button{pointer-events:auto}
+body.open .stage{opacity:.35;transform:translateX(-4vw)}
 
-/* 하는 일 */
-#services{display:flex;flex-direction:column;gap:40px;padding-top:96px;padding-bottom:64px}
-.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:20px}
-.service{background:#fff;border:1px solid var(--line);border-radius:20px;padding:32px;display:flex;flex-direction:column;gap:16px}
-.service small{font-family:var(--mono);font-size:12px;color:var(--muted)}
-.service h3{margin:0;font-family:var(--kr);font-size:24px;font-weight:600;letter-spacing:-.02em}
-.service p{margin:0;font-family:var(--kr);font-size:16px;line-height:1.7;color:var(--body)}
-.service .proof{margin-top:auto;padding-top:16px;border-top:1px solid var(--grid);font-family:var(--kr);font-size:14px;color:var(--muted)}
+.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;padding-block:24px 0;font-family:var(--mono);font-size:12px;color:var(--mute)}
+.top .left{letter-spacing:.24em}
+.top .right{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent);margin-right:8px;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.3}}
+.amp{font-variant-numeric:tabular-nums;min-width:8.5ch}
+.sound{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 12px;border:1px solid var(--line);border-radius:999px;background:transparent;cursor:pointer;font-family:var(--mono);font-size:12px;color:var(--mute)}
+.sound[aria-pressed="true"]{color:var(--fg);border-color:var(--accent)}
 
-/* 일하는 방식 */
-#process{display:flex;flex-direction:column;gap:32px;padding-top:32px;padding-bottom:96px}
-.steps{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));border-top:2px solid var(--ink)}
-.steps li{padding:24px 24px 24px 0;display:flex;flex-direction:column;gap:10px}
-.steps small{font-family:var(--mono);font-size:13px;color:var(--accent-text)}
-.steps b{font-family:var(--kr);font-size:20px;font-weight:600}
-.steps span{font-family:var(--kr);font-size:15px;line-height:1.7;color:var(--muted)}
+.hero{align-self:start;padding-top:clamp(40px,11vh,120px);display:flex;flex-direction:column;gap:18px}
+.hero h1{margin:0;font-family:var(--display);font-weight:600;font-size:clamp(96px,17vw,240px);line-height:.82;letter-spacing:-.06em}
+.hero p{margin:0;font-size:clamp(18px,2vw,26px);font-weight:500;color:var(--mute);text-wrap:balance}
+.hint{font-family:var(--mono);font-size:12px;color:var(--mute);transition:opacity .6s}
+.hint.gone{opacity:0}
 
-/* 해 온 일 */
-#log{background:var(--ground-2)}
-#log .wrap{display:flex;flex-direction:column;gap:24px;padding-top:96px;padding-bottom:96px}
-.log-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px 24px}
-.log-head > small{font-family:var(--mono);font-size:12px;color:var(--muted)}
-.scope{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px 16px 12px}
-.scope svg{display:block;width:100%;height:auto}
-.wave{stroke-dasharray:1;stroke-dashoffset:1}
-.scope.on .wave{animation:draw 2.6s cubic-bezier(.3,.6,.2,1) forwards}
-.scope.on .tail{animation-delay:2.2s;animation-duration:.8s}
-@keyframes draw{to{stroke-dashoffset:0}}
-.picks{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;margin-top:8px}
-.picks button{display:flex;flex-direction:column;align-items:center;gap:4px;min-height:56px;padding:8px 4px;border:0;border-radius:10px;background:transparent;color:var(--body);cursor:pointer;font:inherit}
-.picks button:hover{background:#F0EFEA}
-.picks button[aria-pressed="true"]{background:var(--ink);color:var(--ground)}
-.picks .d{font-family:var(--mono);font-size:12px}
-.picks .r{font-family:var(--kr);font-size:13px;font-weight:600}
-.detail{display:flex;flex-wrap:wrap;gap:24px 48px;padding:32px;background:var(--ink);color:var(--ground);border-radius:16px}
-.detail .l{flex:1 1 360px;display:flex;flex-direction:column;gap:12px}
-.detail .meta{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--dim)}
-.detail .rank{font-family:var(--kr);font-size:clamp(28px,3.4vw,40px);font-weight:600;letter-spacing:-.03em;color:var(--accent)}
-.detail h3{margin:0;font-family:var(--kr);font-size:20px;font-weight:600;line-height:1.5}
-.detail .scale{font-family:var(--kr);font-size:14px;color:var(--dim)}
-.detail dl{flex:1 1 360px;margin:0;display:grid;grid-template-columns:88px minmax(0,1fr);gap:14px 16px;font-family:var(--kr);font-size:16px;line-height:1.7}
-.detail dt{font-family:var(--mono);font-size:12px;color:var(--dim);padding-top:4px}
-.detail dd{margin:0;color:#E3E6E9}
-.press{display:flex;flex-wrap:wrap;gap:8px 24px;padding-top:8px;font-family:var(--kr);font-size:15px;color:var(--muted)}
-.press small{font-family:var(--mono);font-size:12px;padding-top:2px}
+.nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line);margin-inline:calc(-1 * clamp(16px,3.5vw,48px));padding-bottom:env(safe-area-inset-bottom,0px)}
+.nav a{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:88px;padding-inline:clamp(16px,3.5vw,48px);text-decoration:none;border-right:1px solid var(--line);background:color-mix(in srgb, var(--ink) 70%, transparent);transition:background .25s}
+.nav a:last-child{border-right:0}
+.nav a:hover,.nav a:focus-visible{background:var(--ink-2)}
+.nav b{font-weight:600;font-size:clamp(16px,1.6vw,21px)}
+.nav small{display:block;font-family:var(--mono);font-size:11px;color:var(--mute);margin-bottom:4px}
+.nav .arr{transition:transform .25s}
+.nav a:hover .arr{transform:translateX(6px)}
 
-/* 만드는 사람 */
-#studio{display:flex;flex-wrap:wrap;gap:32px 64px;padding-top:96px;padding-bottom:96px}
-#studio .sec-head{flex:1 1 320px}
-#studio .body{flex:2 1 480px;display:flex;flex-direction:column;gap:16px;font-family:var(--kr);font-size:17px;line-height:1.8;color:var(--body)}
-#studio .body p{margin:0}
-#studio .body small{font-family:var(--mono);font-size:13px;color:var(--muted)}
+/* 패널 */
+.drawer{position:fixed;top:0;right:0;bottom:0;width:var(--drawer);background:var(--ink-2);border-left:1px solid var(--line);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .5s cubic-bezier(.2,.7,.2,1);z-index:5}
+body.open .drawer{transform:none}
+.dhead{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:16px 16px 0 24px;padding-top:calc(16px + env(safe-area-inset-top,0px))}
+.tabs{display:flex;gap:4px}
+.tabs button{min-height:44px;padding:0 14px;border:0;border-radius:999px;background:transparent;color:var(--mute);cursor:pointer;font-size:15px}
+.tabs button[aria-selected="true"]{background:var(--fg);color:var(--ink);font-weight:600}
+.close{width:44px;height:44px;border:1px solid var(--line);border-radius:50%;background:transparent;cursor:pointer;font-size:20px;line-height:1}
+.dbody{flex:1;overflow-y:auto;padding:28px 24px 40px;padding-bottom:calc(40px + env(safe-area-inset-bottom,0px))}
+.panel{display:flex;flex-direction:column;gap:24px}
+.panel h2{margin:0;font-family:var(--display);font-weight:600;font-size:40px;letter-spacing:-.04em}
+.lede{margin:0;color:var(--mute);font-size:16px;line-height:1.7}
 
-/* 문의 */
-footer{background:var(--ink);color:var(--ground)}
-footer .wrap{display:flex;flex-direction:column;gap:28px;padding-top:96px;padding-bottom:40px}
-footer .eyebrow{color:var(--dim)}
-footer h2{margin:0;font-family:var(--kr);font-size:clamp(32px,4.4vw,56px);font-weight:600;line-height:1.25;letter-spacing:-.03em}
-footer p{margin:0;max-width:560px;font-family:var(--kr);font-size:16px;line-height:1.75;color:var(--on-dark)}
-.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-top:56px;padding-top:20px;border-top:1px solid #2B3138;font-family:var(--mono);font-size:12px;color:var(--dim)}
+.rec{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.rec li{border-bottom:1px solid var(--line)}
+.rec button{width:100%;display:grid;grid-template-columns:72px minmax(0,1fr) auto;align-items:center;gap:12px;min-height:72px;padding:12px 0;background:transparent;border:0;text-align:left;cursor:pointer}
+.rec .d{font-family:var(--mono);font-size:12px;color:var(--mute);font-variant-numeric:tabular-nums}
+.rec .t{display:flex;flex-direction:column;gap:2px;min-width:0}
+.rec .t b{font-weight:600;font-size:16px}
+.rec .t span{font-size:13px;color:var(--mute)}
+.rec .lvl{display:flex;align-items:flex-end;gap:2px;height:22px}
+.rec .lvl i{display:block;width:3px;border-radius:2px;background:var(--line)}
+.rec .lvl i.on{background:var(--accent)}
+.rec .more{display:grid;grid-template-columns:64px minmax(0,1fr);gap:10px 12px;padding:0 0 18px 84px;font-size:15px;line-height:1.7}
+.rec .more dt{font-family:var(--mono);font-size:11px;color:var(--mute);padding-top:4px}
+.rec .more dd{margin:0}
+.press{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--mute)}
 
+.svc{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.svc div{padding:20px 0;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
+.svc b{font-size:20px;font-weight:600}
+.svc p{margin:0;color:var(--mute);line-height:1.7;font-size:15px}
+.svc span{font-size:13px;color:var(--fg);opacity:.75}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-family:var(--mono);font-size:13px;color:var(--mute)}
+.flow b{color:var(--fg);font-family:var(--body);font-weight:600;font-size:15px}
+
+.facts{margin:0;display:grid;grid-template-columns:56px minmax(0,1fr);gap:10px 14px;font-size:15px;line-height:1.6}
+.facts dt{font-family:var(--mono);font-size:11px;color:var(--mute);padding-top:4px}
+.facts dd{margin:0}
+.mail{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:20px;border:1px solid var(--line);border-radius:16px}
+.mail code{font-family:var(--mono);font-size:18px;user-select:all}
+.btn{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:999px;border:1px solid var(--line);background:transparent;text-decoration:none;cursor:pointer;font-size:14px}
+.btn.a{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+
+@media (max-width:640px){
+  .nav{grid-template-columns:1fr}
+  .nav a{min-height:60px;border-right:0;border-top:1px solid var(--line)}
+  .top .left{display:none}
+  .rec .more{padding-left:0}
+}
 @media (prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  .btn{transition:none}
-  .wave{stroke-dasharray:none;stroke-dashoffset:0;animation:none!important}
+  .stage,.drawer,.nav a,.nav .arr,.hint{transition:none}
+  .dot{animation:none}
 }
 </style>
 </head>
 <body>
 
-<header>
-  <nav class="wrap" aria-label="주 메뉴">
-    <a class="brand" href="#top">
-      <svg width="32" height="32" viewBox="0 0 132 132" aria-hidden="true"><rect width="132" height="132" rx="32" fill="#F3F2EE"/><g transform="translate(16 41) scale(0.5)"><path d="M0 50 L6.7 29.6 L13.3 17.1 L20 14.7 L26.7 21.6 L33.3 34.8 L40 50 L46.7 63.2 L53.3 71.2 L60 72.7 L66.7 68.3 L73.3 59.8 L80 50 L86.7 41.5 L93.3 36.4 L100 35.4 L106.7 38.2 L113.3 43.7 L120 50 L126.7 55.5 L133.3 58.8 L140 59.4 L146.7 57.6 L153.3 54.1 L160 50 L166.7 46.5 L173.3 44.3 L180 43.9 L186.7 45.1 L193.3 47.4 L200 50" fill="none" stroke="#FF5B2E" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
-      <b>acvi</b>
-    </a>
-    <div class="links">
-      <a href="#services">하는 일</a>
-      <a href="#process">일하는 방식</a>
-      <a href="#log">해 온 일</a>
-      <a class="pill" href="#contact">프로젝트 문의</a>
-    </div>
+<canvas id="field" aria-hidden="true"></canvas>
+
+<div class="stage" id="stage">
+  <div class="top">
+    <span class="left">ACOUSTIC · VIBRATION</span>
+    <span class="right">
+      <span><span class="dot"></span>작업 중 · Matter AX Sprint 본선 준비</span>
+      <span class="amp" id="amp" aria-hidden="true">AMP 0.00</span>
+      <button class="sound" id="sound" type="button" aria-pressed="false">소리 꺼짐</button>
+    </span>
+  </div>
+
+  <div class="hero">
+    <h1>acvi</h1>
+    <p>들리는 것을 재고, 잰 것으로 답을 만듭니다.</p>
+    <span class="hint" id="hint">선을 건드려 보세요 · 움직이거나 눌러서</span>
+  </div>
+
+  <nav class="nav" aria-label="페이지">
+    <a href="#work" data-open="work"><span><small>WORK</small><b>작업</b></span><span class="arr" aria-hidden="true">→</span></a>
+    <a href="#services" data-open="services"><span><small>SERVICES</small><b>하는 일</b></span><span class="arr" aria-hidden="true">→</span></a>
+    <a href="#about" data-open="about"><span><small>ABOUT</small><b>소개 · 문의</b></span><span class="arr" aria-hidden="true">→</span></a>
   </nav>
+</div>
 
-  <div id="top" class="wrap hero">
-    <span class="eyebrow">ACOUSTIC · VIBRATION STUDIO</span>
-    <h1>들리는 것을 재고,<br>잰 것으로 답을 만듭니다.</h1>
-    <p>acvi는 소리와 진동을 측정하고 분석해 현장의 문제를 푸는 1인 스튜디오입니다. 센서를 붙이는 일부터 AI 모델, 돌아가는 시제품까지 한 사람이 끝까지 맡습니다.</p>
-    <div class="btns">
-      <a class="btn a" href="#contact">프로젝트 문의하기</a>
-      <a class="btn g" href="#log">해 온 일 보기</a>
+<aside class="drawer" id="drawer" aria-label="상세" aria-hidden="true">
+  <div class="dhead">
+    <div class="tabs" role="tablist">
+      <button role="tab" id="tab-work" aria-controls="work" data-tab="work">작업</button>
+      <button role="tab" id="tab-services" aria-controls="services" data-tab="services">하는 일</button>
+      <button role="tab" id="tab-about" aria-controls="about" data-tab="about">소개</button>
     </div>
+    <button class="close" id="close" type="button" aria-label="닫기">×</button>
   </div>
-
-  <svg class="hero-wave" viewBox="0 0 200 100" preserveAspectRatio="none" aria-hidden="true">
-    <path d="M0 50 L3.3 39 L6.7 29.6 L10 22.1 L13.3 17.1 L16.7 14.6 L20 14.7 L23.3 17.1 L26.7 21.6 L30 27.6 L33.3 34.8 L36.7 42.4 L40 50 L43.3 57.1 L46.7 63.2 L50 68 L53.3 71.2 L56.7 72.8 L60 72.7 L63.3 71.2 L66.7 68.3 L70 64.4 L73.3 59.8 L76.7 54.9 L80 50 L83.3 45.4 L86.7 41.5 L90 38.4 L93.3 36.4 L96.7 35.3 L100 35.4 L103.3 36.4 L106.7 38.2 L110 40.7 L113.3 43.7 L116.7 46.8 L120 50 L123.3 52.9 L126.7 55.5 L130 57.4 L133.3 58.8 L136.7 59.5 L140 59.4 L143.3 58.8 L146.7 57.6 L150 56 L153.3 54.1 L156.7 52 L160 50 L163.3 48.1 L166.7 46.5 L170 45.2 L173.3 44.3 L176.7 43.9 L180 43.9 L183.3 44.3 L186.7 45.1 L190 46.2 L193.3 47.4 L196.7 48.7 L200 50" fill="none" stroke="#FF5B2E" stroke-width="3" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-</header>
-
-<main>
-  <section class="record" aria-label="실적 요약">
-    <div class="wrap">
-      <small>TRACK RECORD</small>
-      <span><b>대상</b> 내일路 해커톤 2026</span>
-      <span><b>최우수상</b> AI Hack Camp 2026</span>
-      <span><b>상위 3%</b> AI·SW중심대학 디지털 경진대회</span>
-      <span><b>보도 2건</b> 경인일보 · 중부일보</span>
-    </div>
-  </section>
-
-  <section id="services" class="wrap" aria-labelledby="services-title">
-    <div class="sec-head">
-      <span class="eyebrow">01 · SERVICES</span>
-      <h2 class="title" id="services-title">이런 일을 맡습니다</h2>
-    </div>
-    <div class="services">
-      <article class="service">
-        <small>A</small>
-        <h3>현장 소리·진동 계측</h3>
-        <p>무엇을 어디서 재야 하는지부터 정합니다. 마이크와 접촉식 진동 센서를 고르고 붙여, 쓸 수 있는 데이터로 정리해 드립니다.</p>
-        <span class="proof">해 본 일 · 책상 상판 진동으로 캐리어 바퀴 세기</span>
-      </article>
-      <article class="service">
-        <small>B</small>
-        <h3>소리·진동 AI 모델</h3>
-        <p>신호에서 사건을 찾아내고, 나누고, 예측하는 모델을 만듭니다. 작은 기기 안에서 돌아가도록 가볍게 줄이는 일까지 포함합니다.</p>
-        <span class="proof">해 본 일 · 소리로 낙상 감지, 1GB 안에 언어모델 압축</span>
-      </article>
-      <article class="service">
-        <small>C</small>
-        <h3>빠른 시제품</h3>
-        <p>아이디어가 실제로 되는지 짧은 기간에 확인합니다. 센서, 모델, 기존 서비스에 붙는 모듈까지 한 번에 묶어 보여 드립니다.</p>
-        <span class="proof">해 본 일 · 준비 1주 + 본선 2일로 대상 시제품 완성</span>
-      </article>
-    </div>
-  </section>
-
-  <section id="process" class="wrap" aria-labelledby="process-title">
-    <div class="sec-head">
-      <span class="eyebrow">02 · PROCESS</span>
-      <h2 class="title" id="process-title">일하는 방식</h2>
-    </div>
-    <ol class="steps">
-      <li><small>01</small><b>문제 듣기</b><span>기술보다 먼저, 왜 재야 하는지와 무엇이 바뀌면 성공인지 정합니다.</span></li>
-      <li><small>02</small><b>재기</b><span>현장에서 직접 녹음하고 측정합니다. 이 단계에서 안 되는 방법은 일찍 버립니다.</span></li>
-      <li><small>03</small><b>읽기</b><span>신호처리와 AI 모델로 의미를 뽑습니다. 설명할 수 있는 단순한 방법을 먼저 씁니다.</span></li>
-      <li><small>04</small><b>붙이기</b><span>새 앱을 만들기보다, 이미 쓰는 서비스에 붙는 모듈로 넘겨 드립니다.</span></li>
-    </ol>
-  </section>
-
-  <section id="log" aria-labelledby="log-title">
-    <div class="wrap">
-      <div class="log-head">
-        <div class="sec-head">
-          <span class="eyebrow">03 · TRACK RECORD</span>
-          <h2 class="title" id="log-title">해 온 일</h2>
-        </div>
-        <small>피크 높이 = 결과 · 피크를 눌러 보세요</small>
-      </div>
-      <div class="scope" id="scope">
-        <svg viewBox="0 0 1200 270" role="img" aria-label="2025년 2월부터 2026년 9월까지 공모전 6건을 시간 순 진동 피크로 나타낸 그래프. 가장 높은 피크는 2026년 8월 내일로 해커톤 대상.">
-          <defs><pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M50 0 L0 0 0 50" fill="none" stroke="#ECEBE6"/></pattern></defs>
-          <rect width="1200" height="270" fill="url(#grid)"/>
-          <line x1="0" y1="170" x2="1200" y2="170" stroke="#C9C8C1"/>
-          <path class="wave" pathLength="1" d="M0 170.0 L84 170.0 L87 152.0 L90 128.9 L93 112.2 L96 102.7 L99 100.6 L102 105.4 L105 115.8 L108 130.4 L111 147.2 L114 164.4 L117 180.5 L120 193.8 L123 203.5 L126 209.0 L129 210.2 L132 207.5 L135 201.4 L138 193.0 L141 183.2 L144 173.2 L147 163.9 L150 156.2 L153 150.6 L156 147.4 L159 146.7 L162 148.3 L165 151.8 L168 156.7 L171 162.3 L174 168.1 L177 173.5 L180 178.0 L183 181.3 L186 183.1 L189 183.5 L192 182.6 L195 180.5 L198 177.7 L201 174.4 L204 171.1 L207 168.0 L210 165.4 L213 163.5 L216 162.4 L219 162.2 L222 162.7 L225 163.9 L228 165.5 L231 167.4 L234 169.4 L237 171.2 L240 172.7 L243 173.8 L246 174.4 L249 174.5 L252 174.2 L255 173.5 L258 172.6 L261 171.5 L264 170.4 L267 169.3 L270 168.4 L273 167.8 L276 167.4 L279 167.4 L282 167.6 L285 167.9 L288 136.3 L291 111.2 L294 94.2 L297 86.3 L300 87.2 L303 95.9 L306 110.7 L309 129.7 L312 150.6 L315 171.2 L318 189.5 L321 204.1 L324 213.9 L327 218.5 L330 218.0 L333 213.0 L336 204.4 L339 193.3 L342 181.2 L345 169.3 L348 158.7 L351 150.2 L354 144.5 L357 141.9 L360 142.2 L363 145.1 L366 150.1 L369 156.5 L372 163.5 L375 170.4 L378 176.6 L381 181.5 L384 184.8 L387 186.3 L390 186.1 L393 184.4 L396 181.5 L399 177.8 L402 173.8 L405 169.8 L408 166.2 L411 163.4 L414 161.5 L417 160.6 L420 160.7 L423 161.6 L426 163.3 L429 165.5 L432 167.8 L435 170.1 L438 172.2 L441 173.8 L444 175.0 L447 175.5 L450 175.4 L453 174.8 L456 173.9 L459 172.6 L462 171.3 L465 169.9 L468 168.7 L471 167.8 L474 167.1 L477 166.8 L480 166.9 L483 167.2 L486 161.6 L489 145.8 L492 133.9 L495 126.7 L498 124.4 L501 126.7 L504 132.9 L507 142.0 L510 152.8 L513 164.1 L516 174.9 L519 184.0 L522 190.9 L525 195.1 L528 196.4 L531 195.1 L534 191.5 L537 186.3 L540 180.0 L543 173.4 L546 167.2 L549 161.9 L552 157.9 L555 155.5 L558 154.7 L561 155.4 L564 157.5 L567 160.6 L570 164.2 L573 168.0 L576 171.6 L579 174.7 L582 177.0 L585 178.4 L588 178.9 L591 178.4 L594 177.2 L597 175.5 L600 173.4 L603 171.1 L606 169.1 L609 167.3 L612 165.9 L615 165.1 L618 164.9 L621 165.1 L624 165.8 L627 166.8 L630 168.1 L633 169.3 L636 170.5 L639 171.6 L642 172.4 L645 172.8 L648 173.0 L651 172.8 L654 172.4 L657 171.8 L660 171.1 L663 170.4 L666 169.7 L669 169.1 L672 168.6 L675 168.4 L678 168.3 L681 168.4 L684 168.6 L687 153.9 L690 135.1 L693 121.6 L696 114.1 L699 112.7 L702 116.9 L705 125.8 L708 138.0 L711 151.9 L714 166.2 L717 179.3 L720 190.2 L723 198.1 L726 202.4 L729 203.2 L732 200.8 L735 195.6 L738 188.6 L741 180.5 L744 172.2 L747 164.6 L750 158.3 L753 153.7 L756 151.2 L759 150.8 L762 152.2 L765 155.2 L768 159.2 L771 163.9 L774 168.7 L777 173.1 L780 176.8 L783 179.4 L786 180.9 L789 181.2 L792 180.3 L795 178.6 L798 176.2 L801 173.5 L804 170.7 L807 168.2 L810 166.1 L813 164.5 L816 163.7 L819 163.5 L822 164.0 L825 165.0 L828 166.4 L831 168.0 L834 169.6 L837 171.1 L840 172.3 L843 173.2 L846 173.7 L849 173.7 L852 173.5 L855 172.9 L858 172.1 L861 171.2 L864 170.2 L867 169.4 L870 168.7 L873 168.2 L876 167.9 L879 167.8 L882 168.0 L885 168.3 L888 127.8 L891 95.5 L894 73.7 L897 63.3 L900 64.2 L903 75.1 L906 93.9 L909 118.1 L912 144.7 L915 171.0 L918 194.4 L921 213.2 L924 225.8 L927 231.8 L930 231.3 L933 225.0 L936 214.1 L939 200.1 L942 184.7 L945 169.4 L948 155.8 L951 145.0 L954 137.6 L957 134.2 L960 134.5 L963 138.1 L966 144.4 L969 152.6 L972 161.5 L975 170.3 L978 178.2 L981 184.5 L984 188.8 L987 190.8 L990 190.6 L993 188.5 L996 184.8 L999 180.1 L1002 174.9 L1005 169.8 L1008 165.2 L1011 161.6 L1014 159.1 L1017 158.0 L1020 158.1 L1023 159.3 L1026 161.4 L1029 164.1 L1032 167.1 L1035 170.1 L1038 172.8 L1041 174.9 L1044 176.3 L1047 177.0 L1050 176.9" fill="none" stroke="#13171C" stroke-width="2" stroke-linejoin="round"/>
-          <path class="wave tail" pathLength="1" d="M1050 176.9 L1053 176.2 L1056 175.0 L1059 173.4 L1062 171.7 L1065 169.9 L1068 168.4 L1071 167.2 L1074 166.3 L1077 166.0 L1080 166.0 L1083 166.4 L1086 163.5 L1089 154.8 L1092 148.4 L1095 144.8 L1098 143.9 L1101 145.6 L1104 149.5 L1107 154.9 L1110 161.2 L1113 167.7 L1116 173.8 L1119 178.8 L1122 182.5 L1125 184.6 L1128 185.1 L1131 184.1 L1134 181.9 L1137 178.7 L1140 175.1 L1143 171.3 L1146 167.8 L1149 164.9 L1152 162.8 L1155 161.5 L1158 161.2 L1161 161.8 L1164 163.1 L1167 164.9 L1170 167.0 L1173 169.2 L1176 171.3 L1179 173.0 L1182 174.2 L1185 174.9 L1188 175.1 L1191 174.7 L1194 174.0 L1197 172.9 L1200 171.7" fill="none" stroke="#13171C" stroke-width="2" stroke-linejoin="round" opacity=".55"/>
-          <path id="sel-seg" d="" fill="none" stroke="#FF5B2E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="100" cy="101.5" r="5" fill="#13171C"/>
-          <circle cx="300" cy="87.2" r="5" fill="#13171C"/>
-          <circle cx="500" cy="125.4" r="5" fill="#13171C"/>
-          <circle cx="700" cy="113.5" r="5" fill="#13171C"/>
-          <circle cx="900" cy="64.2" r="5" fill="#13171C"/>
-          <circle cx="1100" cy="144.8" r="5" fill="#fff" stroke="#13171C" stroke-width="2"/>
-          <circle id="sel-dot" cx="900" cy="64.2" r="9" fill="#FF5B2E"/>
-        </svg>
-        <div class="picks" role="group" aria-label="기록 선택" id="picks"></div>
-      </div>
-      <article class="detail" aria-live="polite">
-        <div class="l">
-          <span class="meta" id="d-meta"></span>
-          <span class="rank" id="d-rank"></span>
-          <h3 id="d-title"></h3>
-          <span class="scale" id="d-scale"></span>
-        </div>
-        <dl>
-          <dt>잰 것</dt><dd id="d-measure"></dd>
-          <dt>푼 방법</dt><dd id="d-solve"></dd>
-        </dl>
-      </article>
+  <div class="dbody">
+    <section class="panel" id="work" role="tabpanel" aria-labelledby="tab-work" hidden>
+      <h2>작업</h2>
+      <p class="lede">결과가 클수록 크게 울립니다. 항목에 올리거나 눌러 보세요.</p>
+      <ul class="rec" id="rec"></ul>
       <div class="press">
-        <small>보도</small>
-        <a href="https://www.kyeongin.com/article/1770048" target="_blank" rel="noopener">경인일보 ‘만나본 Who’ 인터뷰 · 2026.09</a>
-        <a href="https://www.joongboo.com/news/articleView.html?idxno=363734069" target="_blank" rel="noopener">중부일보 내일로 해커톤 성료 기사 · 2026.08</a>
+        <span>보도</span>
+        <a href="https://www.kyeongin.com/article/1770048" target="_blank" rel="noopener">경인일보 인터뷰 · 2026.09</a>
+        <a href="https://www.joongboo.com/news/articleView.html?idxno=363734069" target="_blank" rel="noopener">중부일보 · 2026.08</a>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="studio" class="wrap" aria-labelledby="studio-title">
-    <div class="sec-head">
-      <span class="eyebrow">04 · STUDIO</span>
-      <h2 class="title" id="studio-title">만드는 사람</h2>
-    </div>
-    <div class="body">
-      <p>acvi는 김태연이 운영합니다. 신호처리와 청각 지능을 공부하며, 들리는 것을 숫자로 바꾸고 그 숫자로 현장의 문제를 푸는 일을 해 왔습니다.</p>
-      <p>한 사람이 측정부터 모델, 시제품까지 맡기 때문에 중간에 말이 바뀌지 않습니다. 대신 한 번에 맡는 프로젝트 수는 적게 유지합니다.</p>
-      <small>대표 김태연</small>
-    </div>
-  </section>
-</main>
+    <section class="panel" id="services" role="tabpanel" aria-labelledby="tab-services" hidden>
+      <h2>하는 일</h2>
+      <div class="svc">
+        <div><b>현장 소리·진동 계측</b><p>무엇을 어디서 재야 하는지 정하고, 센서를 골라 붙여 쓸 수 있는 데이터로 넘겨 드립니다.</p><span>예 · 책상 상판 진동으로 캐리어 바퀴 세기</span></div>
+        <div><b>소리·진동 AI 모델</b><p>신호에서 사건을 찾고, 나누고, 예측하는 모델을 만들어 작은 기기에서 돌도록 줄입니다.</p><span>예 · 소리로 낙상 감지, 1GB 안에 언어모델 압축</span></div>
+        <div><b>빠른 시제품</b><p>아이디어가 되는지 짧게 확인하고, 쓰던 서비스에 붙는 모듈까지 묶어 보여 드립니다.</p><span>예 · 준비 1주 + 본선 2일로 대상 시제품</span></div>
+      </div>
+      <div class="flow" aria-label="일하는 순서"><b>듣기</b>→<b>재기</b>→<b>읽기</b>→<b>붙이기</b></div>
+    </section>
 
-<footer id="contact">
-  <div class="wrap">
-    <span class="eyebrow">CONTACT</span>
-    <h2>재 볼 소리가 있다면,<br>먼저 이야기부터 들려주세요.</h2>
-    <p>어떤 현장인지, 무엇이 궁금한지 두세 줄이면 충분합니다. 영업일 기준 2일 안에 답장드립니다.</p>
-    <div class="btns">
-      <a class="btn a" href="mailto:kim@acvi.net">kim@acvi.net</a>
-      <a class="btn g" href="https://github.com/composedly13" target="_blank" rel="noopener">GitHub</a>
-    </div>
-    <div class="foot"><span>© 2026 acvi · Acoustic · Vibration Studio</span><span>acvi.net</span></div>
+    <section class="panel" id="about" role="tabpanel" aria-labelledby="tab-about" hidden>
+      <h2>소개</h2>
+      <p class="lede">acvi는 김태연이 운영하는 소리·진동 스튜디오입니다. 신호처리와 청각 지능을 공부하며, 들리는 것을 숫자로 바꾸고 그 숫자로 현장의 문제를 풀어 왔습니다.</p>
+      <dl class="facts">
+        <dt>대표</dt><dd>김태연</dd>
+        <dt>수상</dt><dd>내일路 해커톤 2026 대상 · AI Hack Camp 2026 최우수상</dd>
+      </dl>
+      <div class="mail">
+        <code id="addr">kim@acvi.net</code>
+        <button class="btn" id="copy" type="button">주소 복사</button>
+        <a class="btn a" href="mailto:kim@acvi.net">메일 쓰기</a>
+        <a class="btn" href="https://github.com/composedly13" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </section>
   </div>
-</footer>
+</aside>
 
 <script>
-(function () {
-  // 해 온 일 데이터 — 새 기록이 생기면 여기와 아래 peaks·segs에 한 칸씩 추가합니다.
-  var data = [
-    { date: '2025.02', short: '최우수상', rank: '최우수상', title: '한신 AI 아트코딩 해커톤', team: '한신대학교', scale: '한신대학교 SW중심대학사업단 주최', measure: '기록을 정리하고 있습니다.', solve: '곧 이 진동의 이야기도 채워집니다.' },
-    { date: '2026.05', short: '최우수상', rank: '최우수상 · 국립중앙과학관장상', title: 'AI Hack Camp 2026', team: '팀 CSI', scale: '전국 410개 팀 참가 · 무박 2일', measure: '카메라 대신, 방 안을 지나는 와이파이 신호의 미세한 흔들림.', solve: '흔들림의 패턴을 기기 안에서 도는 작은 AI로 읽어, 환자 상태를 실시간으로 살피는 비접촉 감시 시스템을 만들었습니다.' },
-    { date: '2026.07', short: '동상', rank: '동상', title: '한국디지털콘텐츠학회 대학생논문경진대회', team: '공동저자', scale: '하계종합학술대회 논문 발표', measure: '와이파이 신호와 방 안의 소리, 두 가지를 동시에.', solve: '두 신호를 함께 읽어 혼자 사는 어르신의 낙상을 놓치지 않는 시스템의 설계 방향을 논문으로 정리했습니다.' },
-    { date: '2026.08', short: '후원기업상', rank: '후원기업상', title: '2026 AI·SW중심대학 디지털 경진대회 AI부문', team: '팀 토큰강도', scale: '상위 3% · 본선 진출', measure: 'AI 에이전트가 실제로 골라 온 행동의 기록.', solve: '큰 모델의 판단을 작은 모델에 옮겨 담고 직접 압축해, 메모리 1GB·10분 제한을 지키며 점수를 0.436에서 0.798로 올렸습니다.' },
-    { date: '2026.08', short: '대상', rank: '대상 · 인천국제공항공사 사장상', title: '내일路 해커톤 2026', team: '드르륵팀 · 팀장', scale: '예선 약 70팀 → 본선 12팀 → 대상 2팀', measure: '책상 상판에 붙인 진동 센서로 캐리어 바퀴가 굴러가는 소리.', solve: '바퀴 소리로 짐의 흐름을 세고 항공편 도착 정보와 합쳐, 공항에서 철도로 넘어가는 구간의 승강장 혼잡을 미리 알려 주는 모듈을 만들었습니다.' },
-    { date: '2026.09~', short: '진행 중', rank: '서류 통과 · 본선 준비 중', title: '지능형 홈 Matter AX Sprint 2026', team: '팀 딸깍', scale: '1차 서류 심사 통과 20팀', measure: '본선을 준비하는 중입니다.', solve: '결과가 나오면 이 진동도 기록으로 채워집니다.' }
-  ];
-  var peaks = [[100,101.5],[300,87.2],[500,125.4],[700,113.5],[900,64.2],[1100,144.8]];
-  var segs = [
-    "M85 170.0 L88 143.7 L91 122.6 L94 108.2 L97 101.2 L100 101.5 L103 108.3 L106 120.3 L109 135.8 L112 153.0 L115 170.0 L118 185.3 L121 197.5 L124 205.8 L127 209.9 L130 209.7 L133 205.8 L136 198.8 L139 189.8 L142 179.9 L145 170.0 L148 161.2 L151 154.1 L154 149.2 L157 146.9 L160 147.0 L163 149.3 L166 153.3 L169 158.5 L172 164.3 L175 170.0 L178 175.1 L181 179.2 L184 182.0 L187 183.4 L190 183.3 L193 182.0 L196 179.7 L199 176.7 L202 173.3 L205 170.0 L208 167.0 L211 164.6 L214 163.0 L217 162.2 L220 162.3 L223 163.0 L226 164.4 L229 166.1 L232 168.1 L235 170.0 L238 171.7 L241 173.1 L244 174.0 L247 174.5 L250 174.5 L253 174.0 L256 173.3 L259 172.2 L262 171.1 L265 170.0 L268 169.0 L271 168.2 L274 167.7",
-    "M285 167.9 L288 136.3 L291 111.2 L294 94.2 L297 86.3 L300 87.2 L303 95.9 L306 110.7 L309 129.7 L312 150.6 L315 171.2 L318 189.5 L321 204.1 L324 213.9 L327 218.5 L330 218.0 L333 213.0 L336 204.4 L339 193.3 L342 181.2 L345 169.3 L348 158.7 L351 150.2 L354 144.5 L357 141.9 L360 142.2 L363 145.1 L366 150.1 L369 156.5 L372 163.5 L375 170.4 L378 176.6 L381 181.5 L384 184.8 L387 186.3 L390 186.1 L393 184.4 L396 181.5 L399 177.8 L402 173.8 L405 169.8 L408 166.2 L411 163.4 L414 161.5 L417 160.6 L420 160.7 L423 161.6 L426 163.3 L429 165.5 L432 167.8 L435 170.1 L438 172.2 L441 173.8 L444 175.0 L447 175.5 L450 175.4 L453 174.8 L456 173.9 L459 172.6 L462 171.3 L465 169.9 L468 168.7 L471 167.8 L474 167.1",
-    "M485 167.5 L488 150.7 L491 137.4 L494 128.6 L497 124.6 L500 125.4 L503 130.4 L506 138.7 L509 149.1 L512 160.4 L515 171.4 L518 181.2 L521 188.9 L524 194.0 L527 196.3 L530 195.8 L533 192.9 L536 188.2 L539 182.1 L542 175.6 L545 169.2 L548 163.5 L551 159.0 L554 156.1 L557 154.8 L560 155.0 L563 156.7 L566 159.5 L569 163.0 L572 166.8 L575 170.5 L578 173.8 L581 176.4 L584 178.1 L587 178.8 L590 178.7 L593 177.7 L596 176.1 L599 174.1 L602 171.9 L605 169.7 L608 167.8 L611 166.3 L614 165.3 L617 164.9 L620 165.0 L623 165.5 L626 166.5 L629 167.6 L632 168.9 L635 170.2 L638 171.3 L641 172.1 L644 172.7 L647 173.0 L650 172.9 L653 172.6 L656 172.0 L659 171.4 L662 170.6 L665 169.9 L668 169.3 L671 168.8 L674 168.4",
-    "M685 168.7 L688 147.1 L691 130.0 L694 118.4 L697 113.0 L700 113.5 L703 119.4 L706 129.6 L709 142.5 L712 156.7 L715 170.8 L718 183.3 L721 193.2 L724 199.9 L727 203.1 L730 202.7 L733 199.3 L736 193.4 L739 185.9 L742 177.7 L745 169.6 L748 162.3 L751 156.6 L754 152.7 L757 150.8 L760 151.0 L763 153.0 L766 156.4 L769 160.8 L772 165.5 L775 170.3 L778 174.5 L781 177.8 L784 180.0 L787 181.1 L790 181.0 L793 179.8 L796 177.9 L799 175.4 L802 172.6 L805 169.9 L808 167.4 L811 165.5 L814 164.2 L817 163.6 L820 163.6 L823 164.3 L826 165.4 L829 166.9 L832 168.5 L835 170.1 L838 171.5 L841 172.6 L844 173.4 L847 173.7 L850 173.7 L853 173.3 L856 172.6 L859 171.8 L862 170.9 L865 170.0 L868 169.1 L871 168.5 L874 168.0",
-    "M885 168.3 L888 127.8 L891 95.5 L894 73.7 L897 63.3 L900 64.2 L903 75.1 L906 93.9 L909 118.1 L912 144.7 L915 171.0 L918 194.4 L921 213.2 L924 225.8 L927 231.8 L930 231.3 L933 225.0 L936 214.1 L939 200.1 L942 184.7 L945 169.4 L948 155.8 L951 145.0 L954 137.6 L957 134.2 L960 134.5 L963 138.1 L966 144.4 L969 152.6 L972 161.5 L975 170.3 L978 178.2 L981 184.5 L984 188.8 L987 190.8 L990 190.6 L993 188.5 L996 184.8 L999 180.1 L1002 174.9 L1005 169.8 L1008 165.2 L1011 161.6 L1014 159.1 L1017 158.0 L1020 158.1 L1023 159.3 L1026 161.4 L1029 164.1 L1032 167.1 L1035 170.1 L1038 172.8 L1041 174.9 L1044 176.3 L1047 177.0 L1050 176.9 L1053 176.2 L1056 175.0 L1059 173.4 L1062 171.7 L1065 169.9 L1068 168.4 L1071 167.2 L1074 166.3",
-    "M1085 166.9 L1088 157.5 L1091 150.3 L1094 145.7 L1097 143.9 L1100 144.8 L1103 148.0 L1106 153.0 L1109 159.1 L1112 165.6 L1115 171.8 L1118 177.3 L1121 181.4 L1124 184.1 L1127 185.1 L1130 184.6 L1133 182.8 L1136 179.9 L1139 176.3 L1142 172.6 L1145 168.9 L1148 165.8 L1151 163.4 L1154 161.8 L1157 161.2 L1160 161.5 L1163 162.6 L1166 164.3 L1169 166.3 L1172 168.5 L1175 170.6 L1178 172.4 L1181 173.8 L1184 174.7 L1187 175.1 L1190 174.9 L1193 174.3 L1196 173.3 L1199 172.1"
-  ];
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var canvas = document.getElementById('field');
+  var ctx = canvas.getContext('2d');
+  var accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#FF5B2E';
+  var lineCol = getComputedStyle(document.documentElement).getPropertyValue('--line').trim() || '#2A3038';
+  var W = 0, H = 0, dpr = 1;
 
-  var picks = document.getElementById('picks');
-  var seg = document.getElementById('sel-seg');
-  var dot = document.getElementById('sel-dot');
-  var buttons = data.map(function (d, i) {
-    var b = document.createElement('button');
-    b.type = 'button';
-    b.innerHTML = '<span class="d"></span><span class="r"></span>';
-    b.querySelector('.d').textContent = d.date;
-    b.querySelector('.r').textContent = d.short;
-    b.addEventListener('click', function () { select(i); });
-    picks.appendChild(b);
-    return b;
+  // 1차원 줄의 파동 방정식 (양 끝 고정)
+  var N = 240, y = new Float32Array(N), yp = new Float32Array(N), yn = new Float32Array(N);
+  var C2 = 0.38, DAMP = reduce ? 0.985 : 0.9972;
+
+  function resize(){
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.clientWidth; H = canvas.clientHeight;
+    canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+  }
+  window.addEventListener('resize', resize); resize();
+
+  function base(){ return H * (W < 640 ? 0.6 : 0.64); }
+  function scale(){ return H * 0.2; }
+  function visibleW(){ return document.body.classList.contains('open') && W > 700 ? W - Math.min(560, W) : W; }
+
+  function pluck(xn, amp, width){
+    width = width || 0.035;
+    for (var i = 1; i < N - 1; i++){
+      var d = i / (N - 1) - xn;
+      var g = Math.exp(-(d * d) / (2 * width * width)) * amp;
+      y[i] += g; yp[i] += g;
+    }
+  }
+
+  function step(){
+    for (var i = 1; i < N - 1; i++){
+      yn[i] = (2 * y[i] - yp[i] + C2 * (y[i - 1] - 2 * y[i] + y[i + 1])) * DAMP;
+    }
+    var t = yp; yp = y; y = yn; yn = t;
+    y[0] = y[N - 1] = 0;
+  }
+
+  // 소리 (사용자가 켰을 때만)
+  var audio = null, soundOn = false;
+  var soundBtn = document.getElementById('sound');
+  soundBtn.addEventListener('click', function(){
+    soundOn = !soundOn;
+    if (soundOn && !audio){ try { audio = new (window.AudioContext || window.webkitAudioContext)(); } catch(e){ audio = null; } }
+    if (audio && audio.state === 'suspended') audio.resume();
+    soundBtn.setAttribute('aria-pressed', soundOn ? 'true' : 'false');
+    soundBtn.textContent = soundOn ? '소리 켜짐' : '소리 꺼짐';
+    if (soundOn) strike(0.5, 0.6);
+  });
+  function tone(xn, amp){
+    if (!soundOn || !audio) return;
+    var now = audio.currentTime, f = 110 * Math.pow(2, xn * 2);
+    [[1, 1], [2.01, 0.35], [3.02, 0.12]].forEach(function(p){
+      var o = audio.createOscillator(), g = audio.createGain();
+      o.type = 'sine'; o.frequency.value = f * p[0];
+      g.gain.setValueAtTime(0.0001, now);
+      g.gain.exponentialRampToValueAtTime(Math.max(0.0002, 0.12 * amp * p[1]), now + 0.008);
+      g.gain.exponentialRampToValueAtTime(0.0001, now + 1.6 / p[0]);
+      o.connect(g).connect(audio.destination); o.start(now); o.stop(now + 1.7);
+    });
+  }
+  function strike(xn, amp, sign){
+    pluck(xn, (sign || (Math.random() < 0.5 ? -1 : 1)) * amp, 0.03);
+    tone(xn, Math.abs(amp));
+  }
+
+  // 손대기
+  var hint = document.getElementById('hint'), touched = false;
+  function firstTouch(){ if (!touched){ touched = true; hint.classList.add('gone'); } }
+  var last = null;
+  canvas.addEventListener('pointermove', function(e){
+    var vw = visibleW(); if (e.clientX > vw) { last = null; return; }
+    if (last){
+      var dy = e.clientY - last.y, dx = e.clientX - last.x;
+      var near = Math.abs(e.clientY - (base() + y[Math.round(e.clientX / vw * (N - 1))] * scale())) < H * 0.22;
+      if (near){
+        var push = Math.max(-0.5, Math.min(0.5, (dy + dx * 0.1) / H * 2.2));
+        pluck(e.clientX / vw, push, 0.02);
+        if (Math.abs(push) > 0.02) firstTouch();
+      }
+    }
+    last = { x: e.clientX, y: e.clientY };
+  });
+  canvas.addEventListener('pointerleave', function(){ last = null; });
+  canvas.addEventListener('pointerdown', function(e){
+    var vw = visibleW(); if (e.clientX > vw) return;
+    var rel = (e.clientY - base()) / scale();
+    strike(e.clientX / vw, 0.9, rel < 0 ? -1 : 1);
+    firstTouch();
   });
 
-  function select(i) {
-    var d = data[i];
-    buttons.forEach(function (b, j) { b.setAttribute('aria-pressed', j === i ? 'true' : 'false'); });
-    seg.setAttribute('d', segs[i]);
-    dot.setAttribute('cx', peaks[i][0]);
-    dot.setAttribute('cy', peaks[i][1]);
-    document.getElementById('d-meta').textContent = d.date + ' · ' + d.team;
-    document.getElementById('d-rank').textContent = d.rank;
-    document.getElementById('d-title').textContent = d.title;
-    document.getElementById('d-scale').textContent = d.scale;
-    document.getElementById('d-measure').textContent = d.measure;
-    document.getElementById('d-solve').textContent = d.solve;
-  }
-  select(4);
+  // 메인 이동 칸에 올리면 그 자리가 울림
+  Array.prototype.forEach.call(document.querySelectorAll('.nav a'), function(a, i){
+    a.addEventListener('pointerenter', function(){ pluck((i + 0.5) / 3, -0.35, 0.05); });
+  });
 
-  // 화면에 들어오면 파형이 왼쪽부터 그려지게
-  var scope = document.getElementById('scope');
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function (entries, obs) {
-      entries.forEach(function (e) { if (e.isIntersecting) { scope.classList.add('on'); obs.disconnect(); } });
-    }, { threshold: 0.3 }).observe(scope);
-  } else {
-    scope.classList.add('on');
+  // 가만히 있으면 가끔 스스로 떨림
+  var idle = 0;
+  function ambient(dt){
+    if (reduce) return;
+    idle += dt;
+    if (idle > 2600){ idle = 0; pluck(0.15 + Math.random() * 0.7, (Math.random() < 0.5 ? -1 : 1) * (0.12 + Math.random() * 0.1), 0.05); }
   }
+
+  var ampEl = document.getElementById('amp'), ampT = 0;
+  function draw(){
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    var vw = visibleW(), b = base(), s = scale();
+
+    // 측정 눈금
+    ctx.strokeStyle = lineCol; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(0, b); ctx.lineTo(vw, b); ctx.stroke();
+    for (var k = 1; k < 20; k++){
+      var tx = vw * k / 20, th = k % 5 === 0 ? 10 : 5;
+      ctx.beginPath(); ctx.moveTo(tx, b - th); ctx.lineTo(tx, b + th); ctx.stroke();
+    }
+
+    // 줄
+    ctx.beginPath();
+    for (var i = 0; i < N; i++){
+      var px = vw * i / (N - 1), py = b + y[i] * s;
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.strokeStyle = accent; ctx.lineWidth = 2.5; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    ctx.stroke();
+  }
+
+  var prev = performance.now();
+  function loop(now){
+    var dt = Math.min(64, now - prev); prev = now;
+    var sub = Math.max(1, Math.round(dt / 16.7 * 3));
+    for (var k = 0; k < sub; k++) step();
+    ambient(dt);
+    draw();
+    ampT += dt;
+    if (ampT > 120){
+      ampT = 0;
+      var m = 0; for (var i = 0; i < N; i++){ var v = Math.abs(y[i]); if (v > m) m = v; }
+      ampEl.textContent = 'AMP ' + Math.min(9.99, m).toFixed(2);
+    }
+    requestAnimationFrame(loop);
+  }
+  // 첫 화면: 로고처럼 감쇠 파형 한 번
+  pluck(0.18, -0.85, 0.045);
+  requestAnimationFrame(loop);
+
+  // 작업 목록
+  var data = [
+    { date:'2025.02', rank:'최우수상', title:'한신 AI 아트코딩 해커톤', sub:'한신대학교 SW중심대학사업단', lvl:4, m:'기록을 정리하고 있습니다.', s:'곧 이 진동의 이야기도 채워집니다.' },
+    { date:'2026.05', rank:'최우수상', title:'AI Hack Camp 2026', sub:'국립중앙과학관장상 · 410개 팀', lvl:4, m:'카메라 대신, 방 안을 지나는 와이파이 신호의 미세한 흔들림.', s:'흔들림의 패턴을 기기 안에서 도는 작은 AI로 읽어 환자 상태를 살피는 비접촉 감시 시스템을 만들었습니다.' },
+    { date:'2026.07', rank:'동상', title:'대학생논문경진대회', sub:'한국디지털콘텐츠학회 · 공동저자', lvl:2, m:'와이파이 신호와 방 안의 소리, 두 가지를 동시에.', s:'두 신호를 함께 읽어 혼자 사는 어르신의 낙상을 놓치지 않는 시스템의 설계 방향을 논문으로 정리했습니다.' },
+    { date:'2026.08', rank:'후원기업상', title:'AI·SW중심대학 디지털 경진대회', sub:'AI부문 · 상위 3%', lvl:3, m:'AI 에이전트가 실제로 골라 온 행동의 기록.', s:'큰 모델의 판단을 작은 모델에 옮겨 담고 직접 압축해, 메모리 1GB·10분 제한 안에서 점수를 0.436에서 0.798로 올렸습니다.' },
+    { date:'2026.08', rank:'대상', title:'내일路 해커톤 2026', sub:'인천국제공항공사 사장상 · 팀장', lvl:5, m:'책상 상판에 붙인 진동 센서로 캐리어 바퀴가 굴러가는 소리.', s:'바퀴 소리로 짐의 흐름을 세고 항공편 도착 정보와 합쳐, 공항에서 철도로 넘어가는 구간의 승강장 혼잡을 미리 알려 주는 모듈을 만들었습니다.' },
+    { date:'2026.09~', rank:'진행 중', title:'Matter AX Sprint 2026', sub:'서류 통과 20팀 · 본선 준비', lvl:1, m:'본선을 준비하는 중입니다.', s:'결과가 나오면 이 진동도 기록으로 채워집니다.' }
+  ];
+  var rec = document.getElementById('rec');
+  data.slice().reverse().forEach(function(d, ri){
+    var i = data.length - 1 - ri;
+    var li = document.createElement('li');
+    var bars = ''; for (var k = 1; k <= 5; k++) bars += '<i class="' + (k <= d.lvl ? 'on' : '') + '" style="height:' + (4 + k * 3.6) + 'px"></i>';
+    li.innerHTML = '<button type="button" aria-expanded="false" aria-controls="m' + i + '"><span class="d"></span><span class="t"><b></b><span></span></span><span class="lvl" aria-hidden="true">' + bars + '</span></button><dl class="more" id="m' + i + '" hidden><dt>잰 것</dt><dd></dd><dt>푼 방법</dt><dd></dd></dl>';
+    li.querySelector('.d').textContent = d.date;
+    li.querySelector('.t b').textContent = d.rank + ' · ' + d.title;
+    li.querySelector('.t span').textContent = d.sub;
+    var dds = li.querySelectorAll('dd'); dds[0].textContent = d.m; dds[1].textContent = d.s;
+    var btn = li.querySelector('button'), more = li.querySelector('.more');
+    var ring = function(){ strike((i + 0.5) / data.length, 0.18 + d.lvl * 0.17, -1); };
+    btn.addEventListener('pointerenter', ring);
+    btn.addEventListener('focus', ring);
+    btn.addEventListener('click', function(){
+      var open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+      more.hidden = open;
+      if (!open) ring();
+    });
+    rec.appendChild(li);
+  });
+
+  // 패널 열기·닫기 (주소 끝 #work 등으로 바로 열 수 있음)
+  var drawer = document.getElementById('drawer');
+  var tabs = document.querySelectorAll('[data-tab]');
+  var lastFocus = null;
+  function show(id){
+    if (!id || !document.getElementById(id)){ hide(); return; }
+    if (!document.body.classList.contains('open')) lastFocus = document.activeElement;
+    document.body.classList.add('open');
+    drawer.setAttribute('aria-hidden', 'false');
+    Array.prototype.forEach.call(tabs, function(t){
+      var on = t.getAttribute('data-tab') === id;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      document.getElementById(t.getAttribute('data-tab')).hidden = !on;
+    });
+    pluck(0.85, 0.5, 0.06);
+    setTimeout(function(){ var h = document.querySelector('#' + id + ' h2'); if (h){ h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); } }, 60);
+  }
+  function hide(){
+    document.body.classList.remove('open');
+    drawer.setAttribute('aria-hidden', 'true');
+    if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+  }
+  function fromHash(){ var h = (location.hash || '').replace('#', ''); if (h) show(h); else hide(); }
+  window.addEventListener('hashchange', fromHash);
+  Array.prototype.forEach.call(tabs, function(t){
+    t.addEventListener('click', function(){ location.hash = t.getAttribute('data-tab'); });
+  });
+  document.getElementById('close').addEventListener('click', function(){
+    if (location.hash) history.pushState('', document.title, location.pathname + location.search);
+    hide();
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && document.body.classList.contains('open')) document.getElementById('close').click(); });
+  fromHash();
+
+  // 주소 복사
+  document.getElementById('copy').addEventListener('click', function(){
+    var b = this, addr = document.getElementById('addr').textContent;
+    var done = function(){ b.textContent = '복사했어요'; setTimeout(function(){ b.textContent = '주소 복사'; }, 1600); };
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(addr).then(done, function(){ selectAddr(); });
+    } else selectAddr();
+    function selectAddr(){ var r = document.createRange(); r.selectNodeContents(document.getElementById('addr')); var s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = '선택됨 · Ctrl+C'; }
+  });
 })();
 </script>
 </body>
