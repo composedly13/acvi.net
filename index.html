@@ -3,21 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>acvi — 김태연의 작업실</title>
-<meta name="description" content="소리와 진동을 재고, 잰 것으로 풉니다. 김태연의 개인 작업실.">
-<meta property="og:title" content="acvi — 김태연의 작업실">
-<meta property="og:description" content="소리와 진동을 재고, 잰 것으로 풉니다.">
+<title>acvi — Acoustic · Vibration Studio</title>
+<meta name="description" content="들리는 것을 재고, 잰 것으로 답을 만듭니다. 소리와 진동을 측정하고 분석해 현장의 문제를 푸는 1인 스튜디오 acvi.">
+<meta property="og:title" content="acvi — Acoustic · Vibration Studio">
+<meta property="og:description" content="들리는 것을 재고, 잰 것으로 답을 만듭니다.">
 <meta property="og:url" content="https://acvi.net">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#F3F2EE">
+<meta name="theme-color" content="#13171C">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#13171C; --ground:#F3F2EE; --line:#D9D8D2; --grid:#ECEBE6;
-  --muted:#4A5058; --body:#2B3138; --dim:#A9B0B8;
+  --ink:#13171C; --ground:#F3F2EE; --ground-2:#E6E5DF; --line:#D9D8D2; --grid:#ECEBE6;
+  --muted:#4A5058; --body:#2B3138; --dim:#A9B0B8; --on-dark:#C4CAD1;
   --accent:#FF5B2E; --accent-text:#B83A10;
   --sans:'Sora','IBM Plex Sans KR',sans-serif; --kr:'IBM Plex Sans KR',sans-serif; --mono:'JetBrains Mono',monospace;
 }
@@ -27,27 +27,63 @@ body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);
 a{color:var(--ink)} a:hover{color:var(--accent-text)}
 :focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 .wrap{max-width:1200px;margin:0 auto;padding-left:24px;padding-right:24px}
-.num{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--accent-text);margin-right:12px}
-h2.sec{margin:0;font-family:var(--kr);font-size:20px;font-weight:600}
+.eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.28em;color:var(--accent-text)}
+.sec-head{display:flex;flex-direction:column;gap:12px}
+h2.title{margin:0;font-family:var(--kr);font-size:clamp(30px,4vw,48px);font-weight:600;letter-spacing:-.03em}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:0 24px;border-radius:999px;font-family:var(--kr);font-size:16px;text-decoration:none;transition:transform .15s ease}
+.btn:hover{transform:translateY(-2px)}
+.btn.a{background:var(--accent);color:var(--ink);font-weight:600}
+.btn.a:hover{color:var(--ink)}
+.btn.g{border:1px solid var(--muted);color:var(--ground)}
+.btn.g:hover{color:#fff}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
 
-nav{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding-top:24px;padding-bottom:24px;border-bottom:1px solid var(--line)}
-.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+/* 상단 */
+header{background:var(--ink);color:var(--ground);position:relative;overflow:hidden}
+nav{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding-top:22px;padding-bottom:22px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ground)}
+.brand:hover{color:var(--ground)}
 .brand b{font-size:22px;font-weight:600;letter-spacing:-.04em}
-.brand span{font-family:var(--kr);font-size:14px;color:var(--muted)}
-.links{display:flex;flex-wrap:wrap;gap:4px 24px;font-family:var(--kr);font-size:15px}
-.links a{text-decoration:none;padding:10px 0}
+.links{display:flex;flex-wrap:wrap;align-items:center;gap:4px 24px;font-family:var(--kr);font-size:15px}
+.links a{color:#D5D9DE;text-decoration:none;padding:10px 0}
+.links a:hover{color:#fff}
+.links a.pill{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:999px;border:1px solid var(--muted);color:var(--ground)}
+.hero{display:flex;flex-direction:column;gap:28px;padding-top:88px;padding-bottom:210px;position:relative;z-index:1}
+.hero .eyebrow{color:var(--dim)}
+.hero h1{margin:0;font-family:var(--kr);font-size:clamp(40px,6.4vw,88px);font-weight:600;line-height:1.14;letter-spacing:-.035em}
+.hero p{margin:0;max-width:600px;font-family:var(--kr);font-size:18px;line-height:1.75;color:var(--on-dark)}
+.hero .btns{margin-top:8px}
+.hero-wave{position:absolute;left:0;bottom:28px;width:100%;height:150px}
 
-header{display:flex;flex-direction:column;gap:28px;padding-top:88px;padding-bottom:40px}
-.status{display:inline-flex;align-self:flex-start;align-items:center;gap:10px;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:#fff}
-.status i{width:8px;height:8px;border-radius:999px;background:var(--accent);animation:pulse 2s ease-in-out infinite}
-.status span{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--body)}
-@keyframes pulse{50%{opacity:.35}}
-header h1{margin:0;font-family:var(--kr);font-size:clamp(40px,6.4vw,88px);font-weight:600;line-height:1.14;letter-spacing:-.035em}
-header p{margin:0;max-width:560px;font-family:var(--kr);font-size:18px;line-height:1.75;color:var(--muted)}
+/* 실적 띠 */
+.record{border-bottom:1px solid var(--line)}
+.record .wrap{display:flex;flex-wrap:wrap;gap:16px 48px;align-items:baseline;padding-top:36px;padding-bottom:36px}
+.record small{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--muted)}
+.record span{font-family:var(--kr);font-size:16px}
+.record b{font-weight:600}
 
-#log{display:flex;flex-direction:column;gap:24px;padding-top:40px;padding-bottom:96px}
-.log-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px 24px}
-.log-head small{font-family:var(--mono);font-size:12px;color:var(--muted)}
+/* 하는 일 */
+#services{display:flex;flex-direction:column;gap:40px;padding-top:96px;padding-bottom:64px}
+.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:20px}
+.service{background:#fff;border:1px solid var(--line);border-radius:20px;padding:32px;display:flex;flex-direction:column;gap:16px}
+.service small{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.service h3{margin:0;font-family:var(--kr);font-size:24px;font-weight:600;letter-spacing:-.02em}
+.service p{margin:0;font-family:var(--kr);font-size:16px;line-height:1.7;color:var(--body)}
+.service .proof{margin-top:auto;padding-top:16px;border-top:1px solid var(--grid);font-family:var(--kr);font-size:14px;color:var(--muted)}
+
+/* 일하는 방식 */
+#process{display:flex;flex-direction:column;gap:32px;padding-top:32px;padding-bottom:96px}
+.steps{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));border-top:2px solid var(--ink)}
+.steps li{padding:24px 24px 24px 0;display:flex;flex-direction:column;gap:10px}
+.steps small{font-family:var(--mono);font-size:13px;color:var(--accent-text)}
+.steps b{font-family:var(--kr);font-size:20px;font-weight:600}
+.steps span{font-family:var(--kr);font-size:15px;line-height:1.7;color:var(--muted)}
+
+/* 해 온 일 */
+#log{background:var(--ground-2)}
+#log .wrap{display:flex;flex-direction:column;gap:24px;padding-top:96px;padding-bottom:96px}
+.log-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px 24px}
+.log-head > small{font-family:var(--mono);font-size:12px;color:var(--muted)}
 .scope{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px 16px 12px}
 .scope svg{display:block;width:100%;height:auto}
 .wave{stroke-dasharray:1;stroke-dashoffset:1}
@@ -69,136 +105,191 @@ header p{margin:0;max-width:560px;font-family:var(--kr);font-size:18px;line-heig
 .detail dl{flex:1 1 360px;margin:0;display:grid;grid-template-columns:88px minmax(0,1fr);gap:14px 16px;font-family:var(--kr);font-size:16px;line-height:1.7}
 .detail dt{font-family:var(--mono);font-size:12px;color:var(--dim);padding-top:4px}
 .detail dd{margin:0;color:#E3E6E9}
-
-#works,#notes{display:flex;flex-direction:column;gap:24px;padding-bottom:96px}
-.rows{border-top:1px solid var(--ink)}
-.row{display:flex;flex-wrap:wrap;gap:8px 32px;padding:24px 0;border-bottom:1px solid var(--line)}
-.row b{flex:0 0 200px;font-size:24px;font-weight:600;letter-spacing:-.03em}
-.row p{flex:1 1 420px;margin:0;font-family:var(--kr);font-size:16px;line-height:1.7;color:var(--body)}
-.row span{flex:0 0 120px;font-family:var(--mono);font-size:12px;color:var(--muted);padding-top:6px}
-.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:16px}
-.note{padding:28px;border:1px dashed var(--dim);border-radius:16px;display:flex;flex-direction:column;gap:10px}
-.note small{font-family:var(--mono);font-size:12px;color:var(--accent-text)}
-.note b{font-family:var(--kr);font-size:20px;font-weight:600}
-.note p{margin:0;font-family:var(--kr);font-size:15px;line-height:1.7;color:var(--muted)}
 .press{display:flex;flex-wrap:wrap;gap:8px 24px;padding-top:8px;font-family:var(--kr);font-size:15px;color:var(--muted)}
 .press small{font-family:var(--mono);font-size:12px;padding-top:2px}
 
+/* 만드는 사람 */
+#studio{display:flex;flex-wrap:wrap;gap:32px 64px;padding-top:96px;padding-bottom:96px}
+#studio .sec-head{flex:1 1 320px}
+#studio .body{flex:2 1 480px;display:flex;flex-direction:column;gap:16px;font-family:var(--kr);font-size:17px;line-height:1.8;color:var(--body)}
+#studio .body p{margin:0}
+#studio .body small{font-family:var(--mono);font-size:13px;color:var(--muted)}
+
+/* 문의 */
 footer{background:var(--ink);color:var(--ground)}
-footer .wrap{display:flex;flex-direction:column;gap:28px;padding-top:80px;padding-bottom:40px}
+footer .wrap{display:flex;flex-direction:column;gap:28px;padding-top:96px;padding-bottom:40px}
+footer .eyebrow{color:var(--dim)}
 footer h2{margin:0;font-family:var(--kr);font-size:clamp(32px,4.4vw,56px);font-weight:600;line-height:1.25;letter-spacing:-.03em}
-.btns{display:flex;flex-wrap:wrap;gap:12px}
-.btn{display:inline-flex;align-items:center;min-height:48px;padding:0 24px;border-radius:999px;font-family:var(--kr);font-size:16px;text-decoration:none}
-.btn.a{background:var(--accent);color:var(--ink);font-weight:600}
-.btn.g{border:1px solid var(--muted);color:var(--ground)}
-.btn:hover{color:inherit;opacity:.9}
-.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-top:48px;padding-top:20px;border-top:1px solid #2B3138;font-family:var(--mono);font-size:12px;color:var(--dim)}
+footer p{margin:0;max-width:560px;font-family:var(--kr);font-size:16px;line-height:1.75;color:var(--on-dark)}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-top:56px;padding-top:20px;border-top:1px solid #2B3138;font-family:var(--mono);font-size:12px;color:var(--dim)}
 
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
+  .btn{transition:none}
   .wave{stroke-dasharray:none;stroke-dashoffset:0;animation:none!important}
-  .status i{animation:none}
 }
 </style>
 </head>
 <body>
 
-<div class="wrap">
-  <nav aria-label="주 메뉴">
+<header>
+  <nav class="wrap" aria-label="주 메뉴">
     <a class="brand" href="#top">
-      <svg width="32" height="32" viewBox="0 0 132 132" aria-hidden="true"><rect width="132" height="132" rx="32" fill="#13171C"/><g transform="translate(16 41) scale(0.5)"><path d="M0 50 L6.7 29.6 L13.3 17.1 L20 14.7 L26.7 21.6 L33.3 34.8 L40 50 L46.7 63.2 L53.3 71.2 L60 72.7 L66.7 68.3 L73.3 59.8 L80 50 L86.7 41.5 L93.3 36.4 L100 35.4 L106.7 38.2 L113.3 43.7 L120 50 L126.7 55.5 L133.3 58.8 L140 59.4 L146.7 57.6 L153.3 54.1 L160 50 L166.7 46.5 L173.3 44.3 L180 43.9 L186.7 45.1 L193.3 47.4 L200 50" fill="none" stroke="#FF5B2E" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
-      <b>acvi</b><span>김태연의 작업실</span>
+      <svg width="32" height="32" viewBox="0 0 132 132" aria-hidden="true"><rect width="132" height="132" rx="32" fill="#F3F2EE"/><g transform="translate(16 41) scale(0.5)"><path d="M0 50 L6.7 29.6 L13.3 17.1 L20 14.7 L26.7 21.6 L33.3 34.8 L40 50 L46.7 63.2 L53.3 71.2 L60 72.7 L66.7 68.3 L73.3 59.8 L80 50 L86.7 41.5 L93.3 36.4 L100 35.4 L106.7 38.2 L113.3 43.7 L120 50 L126.7 55.5 L133.3 58.8 L140 59.4 L146.7 57.6 L153.3 54.1 L160 50 L166.7 46.5 L173.3 44.3 L180 43.9 L186.7 45.1 L193.3 47.4 L200 50" fill="none" stroke="#FF5B2E" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+      <b>acvi</b>
     </a>
     <div class="links">
-      <a href="#log">기록</a><a href="#works">작업</a><a href="#notes">실험 노트</a><a href="#contact">연락</a>
+      <a href="#services">하는 일</a>
+      <a href="#process">일하는 방식</a>
+      <a href="#log">해 온 일</a>
+      <a class="pill" href="#contact">프로젝트 문의</a>
     </div>
   </nav>
 
-  <header id="top">
-    <div class="status"><i></i><span>작업 중 · Matter AX Sprint 2026 본선 준비</span></div>
-    <h1>소리와 진동을 재고,<br>잰 것으로 풉니다.</h1>
-    <p>acvi는 김태연의 개인 작업실입니다. 현장에서 들리는 것을 직접 측정하고, 그 신호로 문제를 푸는 작업을 여기에 하나씩 쌓아 둡니다.</p>
-  </header>
-</div>
+  <div id="top" class="wrap hero">
+    <span class="eyebrow">ACOUSTIC · VIBRATION STUDIO</span>
+    <h1>들리는 것을 재고,<br>잰 것으로 답을 만듭니다.</h1>
+    <p>acvi는 소리와 진동을 측정하고 분석해 현장의 문제를 푸는 1인 스튜디오입니다. 센서를 붙이는 일부터 AI 모델, 돌아가는 시제품까지 한 사람이 끝까지 맡습니다.</p>
+    <div class="btns">
+      <a class="btn a" href="#contact">프로젝트 문의하기</a>
+      <a class="btn g" href="#log">해 온 일 보기</a>
+    </div>
+  </div>
+
+  <svg class="hero-wave" viewBox="0 0 200 100" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 50 L3.3 39 L6.7 29.6 L10 22.1 L13.3 17.1 L16.7 14.6 L20 14.7 L23.3 17.1 L26.7 21.6 L30 27.6 L33.3 34.8 L36.7 42.4 L40 50 L43.3 57.1 L46.7 63.2 L50 68 L53.3 71.2 L56.7 72.8 L60 72.7 L63.3 71.2 L66.7 68.3 L70 64.4 L73.3 59.8 L76.7 54.9 L80 50 L83.3 45.4 L86.7 41.5 L90 38.4 L93.3 36.4 L96.7 35.3 L100 35.4 L103.3 36.4 L106.7 38.2 L110 40.7 L113.3 43.7 L116.7 46.8 L120 50 L123.3 52.9 L126.7 55.5 L130 57.4 L133.3 58.8 L136.7 59.5 L140 59.4 L143.3 58.8 L146.7 57.6 L150 56 L153.3 54.1 L156.7 52 L160 50 L163.3 48.1 L166.7 46.5 L170 45.2 L173.3 44.3 L176.7 43.9 L180 43.9 L183.3 44.3 L186.7 45.1 L190 46.2 L193.3 47.4 L196.7 48.7 L200 50" fill="none" stroke="#FF5B2E" stroke-width="3" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</header>
 
 <main>
-  <section id="log" class="wrap" aria-labelledby="log-title">
-    <div class="log-head">
-      <h2 class="sec" id="log-title"><span class="num">01</span>기록 — 지금까지의 진동</h2>
-      <small>피크 높이 = 수상 등급 · 피크를 눌러 보세요</small>
+  <section class="record" aria-label="실적 요약">
+    <div class="wrap">
+      <small>TRACK RECORD</small>
+      <span><b>대상</b> 내일路 해커톤 2026</span>
+      <span><b>최우수상</b> AI Hack Camp 2026</span>
+      <span><b>상위 3%</b> AI·SW중심대학 디지털 경진대회</span>
+      <span><b>보도 2건</b> 경인일보 · 중부일보</span>
     </div>
-    <div class="scope" id="scope">
-      <svg viewBox="0 0 1200 270" role="img" aria-label="2025년 2월부터 2026년 9월까지 공모전 6건을 시간 순 진동 피크로 나타낸 그래프. 가장 높은 피크는 2026년 8월 내일로 해커톤 대상.">
-        <defs><pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M50 0 L0 0 0 50" fill="none" stroke="#ECEBE6"/></pattern></defs>
-        <rect width="1200" height="270" fill="url(#grid)"/>
-        <line x1="0" y1="170" x2="1200" y2="170" stroke="#C9C8C1"/>
-        <path class="wave" pathLength="1" d="M0 170.0 L84 170.0 L87 152.0 L90 128.9 L93 112.2 L96 102.7 L99 100.6 L102 105.4 L105 115.8 L108 130.4 L111 147.2 L114 164.4 L117 180.5 L120 193.8 L123 203.5 L126 209.0 L129 210.2 L132 207.5 L135 201.4 L138 193.0 L141 183.2 L144 173.2 L147 163.9 L150 156.2 L153 150.6 L156 147.4 L159 146.7 L162 148.3 L165 151.8 L168 156.7 L171 162.3 L174 168.1 L177 173.5 L180 178.0 L183 181.3 L186 183.1 L189 183.5 L192 182.6 L195 180.5 L198 177.7 L201 174.4 L204 171.1 L207 168.0 L210 165.4 L213 163.5 L216 162.4 L219 162.2 L222 162.7 L225 163.9 L228 165.5 L231 167.4 L234 169.4 L237 171.2 L240 172.7 L243 173.8 L246 174.4 L249 174.5 L252 174.2 L255 173.5 L258 172.6 L261 171.5 L264 170.4 L267 169.3 L270 168.4 L273 167.8 L276 167.4 L279 167.4 L282 167.6 L285 167.9 L288 136.3 L291 111.2 L294 94.2 L297 86.3 L300 87.2 L303 95.9 L306 110.7 L309 129.7 L312 150.6 L315 171.2 L318 189.5 L321 204.1 L324 213.9 L327 218.5 L330 218.0 L333 213.0 L336 204.4 L339 193.3 L342 181.2 L345 169.3 L348 158.7 L351 150.2 L354 144.5 L357 141.9 L360 142.2 L363 145.1 L366 150.1 L369 156.5 L372 163.5 L375 170.4 L378 176.6 L381 181.5 L384 184.8 L387 186.3 L390 186.1 L393 184.4 L396 181.5 L399 177.8 L402 173.8 L405 169.8 L408 166.2 L411 163.4 L414 161.5 L417 160.6 L420 160.7 L423 161.6 L426 163.3 L429 165.5 L432 167.8 L435 170.1 L438 172.2 L441 173.8 L444 175.0 L447 175.5 L450 175.4 L453 174.8 L456 173.9 L459 172.6 L462 171.3 L465 169.9 L468 168.7 L471 167.8 L474 167.1 L477 166.8 L480 166.9 L483 167.2 L486 161.6 L489 145.8 L492 133.9 L495 126.7 L498 124.4 L501 126.7 L504 132.9 L507 142.0 L510 152.8 L513 164.1 L516 174.9 L519 184.0 L522 190.9 L525 195.1 L528 196.4 L531 195.1 L534 191.5 L537 186.3 L540 180.0 L543 173.4 L546 167.2 L549 161.9 L552 157.9 L555 155.5 L558 154.7 L561 155.4 L564 157.5 L567 160.6 L570 164.2 L573 168.0 L576 171.6 L579 174.7 L582 177.0 L585 178.4 L588 178.9 L591 178.4 L594 177.2 L597 175.5 L600 173.4 L603 171.1 L606 169.1 L609 167.3 L612 165.9 L615 165.1 L618 164.9 L621 165.1 L624 165.8 L627 166.8 L630 168.1 L633 169.3 L636 170.5 L639 171.6 L642 172.4 L645 172.8 L648 173.0 L651 172.8 L654 172.4 L657 171.8 L660 171.1 L663 170.4 L666 169.7 L669 169.1 L672 168.6 L675 168.4 L678 168.3 L681 168.4 L684 168.6 L687 153.9 L690 135.1 L693 121.6 L696 114.1 L699 112.7 L702 116.9 L705 125.8 L708 138.0 L711 151.9 L714 166.2 L717 179.3 L720 190.2 L723 198.1 L726 202.4 L729 203.2 L732 200.8 L735 195.6 L738 188.6 L741 180.5 L744 172.2 L747 164.6 L750 158.3 L753 153.7 L756 151.2 L759 150.8 L762 152.2 L765 155.2 L768 159.2 L771 163.9 L774 168.7 L777 173.1 L780 176.8 L783 179.4 L786 180.9 L789 181.2 L792 180.3 L795 178.6 L798 176.2 L801 173.5 L804 170.7 L807 168.2 L810 166.1 L813 164.5 L816 163.7 L819 163.5 L822 164.0 L825 165.0 L828 166.4 L831 168.0 L834 169.6 L837 171.1 L840 172.3 L843 173.2 L846 173.7 L849 173.7 L852 173.5 L855 172.9 L858 172.1 L861 171.2 L864 170.2 L867 169.4 L870 168.7 L873 168.2 L876 167.9 L879 167.8 L882 168.0 L885 168.3 L888 127.8 L891 95.5 L894 73.7 L897 63.3 L900 64.2 L903 75.1 L906 93.9 L909 118.1 L912 144.7 L915 171.0 L918 194.4 L921 213.2 L924 225.8 L927 231.8 L930 231.3 L933 225.0 L936 214.1 L939 200.1 L942 184.7 L945 169.4 L948 155.8 L951 145.0 L954 137.6 L957 134.2 L960 134.5 L963 138.1 L966 144.4 L969 152.6 L972 161.5 L975 170.3 L978 178.2 L981 184.5 L984 188.8 L987 190.8 L990 190.6 L993 188.5 L996 184.8 L999 180.1 L1002 174.9 L1005 169.8 L1008 165.2 L1011 161.6 L1014 159.1 L1017 158.0 L1020 158.1 L1023 159.3 L1026 161.4 L1029 164.1 L1032 167.1 L1035 170.1 L1038 172.8 L1041 174.9 L1044 176.3 L1047 177.0 L1050 176.9" fill="none" stroke="#13171C" stroke-width="2" stroke-linejoin="round"/>
-        <path class="wave tail" pathLength="1" d="M1050 176.9 L1053 176.2 L1056 175.0 L1059 173.4 L1062 171.7 L1065 169.9 L1068 168.4 L1071 167.2 L1074 166.3 L1077 166.0 L1080 166.0 L1083 166.4 L1086 163.5 L1089 154.8 L1092 148.4 L1095 144.8 L1098 143.9 L1101 145.6 L1104 149.5 L1107 154.9 L1110 161.2 L1113 167.7 L1116 173.8 L1119 178.8 L1122 182.5 L1125 184.6 L1128 185.1 L1131 184.1 L1134 181.9 L1137 178.7 L1140 175.1 L1143 171.3 L1146 167.8 L1149 164.9 L1152 162.8 L1155 161.5 L1158 161.2 L1161 161.8 L1164 163.1 L1167 164.9 L1170 167.0 L1173 169.2 L1176 171.3 L1179 173.0 L1182 174.2 L1185 174.9 L1188 175.1 L1191 174.7 L1194 174.0 L1197 172.9 L1200 171.7" fill="none" stroke="#13171C" stroke-width="2" stroke-linejoin="round" opacity=".55"/>
-        <path id="sel-seg" d="" fill="none" stroke="#FF5B2E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-        <circle cx="100" cy="101.5" r="5" fill="#13171C"/>
-        <circle cx="300" cy="87.2" r="5" fill="#13171C"/>
-        <circle cx="500" cy="125.4" r="5" fill="#13171C"/>
-        <circle cx="700" cy="113.5" r="5" fill="#13171C"/>
-        <circle cx="900" cy="64.2" r="5" fill="#13171C"/>
-        <circle cx="1100" cy="144.8" r="5" fill="#fff" stroke="#13171C" stroke-width="2"/>
-        <circle id="sel-dot" cx="900" cy="64.2" r="9" fill="#FF5B2E"/>
-      </svg>
-      <div class="picks" role="group" aria-label="기록 선택" id="picks"></div>
+  </section>
+
+  <section id="services" class="wrap" aria-labelledby="services-title">
+    <div class="sec-head">
+      <span class="eyebrow">01 · SERVICES</span>
+      <h2 class="title" id="services-title">이런 일을 맡습니다</h2>
     </div>
-    <article class="detail" aria-live="polite">
-      <div class="l">
-        <span class="meta" id="d-meta"></span>
-        <span class="rank" id="d-rank"></span>
-        <h3 id="d-title"></h3>
-        <span class="scale" id="d-scale"></span>
+    <div class="services">
+      <article class="service">
+        <small>A</small>
+        <h3>현장 소리·진동 계측</h3>
+        <p>무엇을 어디서 재야 하는지부터 정합니다. 마이크와 접촉식 진동 센서를 고르고 붙여, 쓸 수 있는 데이터로 정리해 드립니다.</p>
+        <span class="proof">해 본 일 · 책상 상판 진동으로 캐리어 바퀴 세기</span>
+      </article>
+      <article class="service">
+        <small>B</small>
+        <h3>소리·진동 AI 모델</h3>
+        <p>신호에서 사건을 찾아내고, 나누고, 예측하는 모델을 만듭니다. 작은 기기 안에서 돌아가도록 가볍게 줄이는 일까지 포함합니다.</p>
+        <span class="proof">해 본 일 · 소리로 낙상 감지, 1GB 안에 언어모델 압축</span>
+      </article>
+      <article class="service">
+        <small>C</small>
+        <h3>빠른 시제품</h3>
+        <p>아이디어가 실제로 되는지 짧은 기간에 확인합니다. 센서, 모델, 기존 서비스에 붙는 모듈까지 한 번에 묶어 보여 드립니다.</p>
+        <span class="proof">해 본 일 · 준비 1주 + 본선 2일로 대상 시제품 완성</span>
+      </article>
+    </div>
+  </section>
+
+  <section id="process" class="wrap" aria-labelledby="process-title">
+    <div class="sec-head">
+      <span class="eyebrow">02 · PROCESS</span>
+      <h2 class="title" id="process-title">일하는 방식</h2>
+    </div>
+    <ol class="steps">
+      <li><small>01</small><b>문제 듣기</b><span>기술보다 먼저, 왜 재야 하는지와 무엇이 바뀌면 성공인지 정합니다.</span></li>
+      <li><small>02</small><b>재기</b><span>현장에서 직접 녹음하고 측정합니다. 이 단계에서 안 되는 방법은 일찍 버립니다.</span></li>
+      <li><small>03</small><b>읽기</b><span>신호처리와 AI 모델로 의미를 뽑습니다. 설명할 수 있는 단순한 방법을 먼저 씁니다.</span></li>
+      <li><small>04</small><b>붙이기</b><span>새 앱을 만들기보다, 이미 쓰는 서비스에 붙는 모듈로 넘겨 드립니다.</span></li>
+    </ol>
+  </section>
+
+  <section id="log" aria-labelledby="log-title">
+    <div class="wrap">
+      <div class="log-head">
+        <div class="sec-head">
+          <span class="eyebrow">03 · TRACK RECORD</span>
+          <h2 class="title" id="log-title">해 온 일</h2>
+        </div>
+        <small>피크 높이 = 결과 · 피크를 눌러 보세요</small>
       </div>
-      <dl>
-        <dt>잰 것</dt><dd id="d-measure"></dd>
-        <dt>푼 방법</dt><dd id="d-solve"></dd>
-      </dl>
-    </article>
-  </section>
-
-  <section id="works" class="wrap" aria-labelledby="works-title">
-    <h2 class="sec" id="works-title"><span class="num">02</span>작업 — 만들어 둔 도구들</h2>
-    <div class="rows">
-      <div class="row"><b>drrk</b><p>캐리어 바퀴 소리를 진동 센서로 세는 파이썬 패키지. 새 앱이 아니라 기존 서비스에 붙여 쓰도록 만들었습니다.</p><span>음향 계측</span></div>
-      <div class="row"><b>SafeWave</b><p>와이파이 신호와 소리를 함께 읽는 낙상 감지 시스템. 센서 노드부터 소형 컴퓨터까지 실제로 이어 붙여 검증하는 중입니다.</p><span>졸업작품</span></div>
-      <div class="row"><b>AITKOO</b><p>카메라 없이 와이파이 신호의 미세한 흔들림으로 환자 상태를 살피는 비접촉 감시 시스템.</p><span>무박 2일</span></div>
+      <div class="scope" id="scope">
+        <svg viewBox="0 0 1200 270" role="img" aria-label="2025년 2월부터 2026년 9월까지 공모전 6건을 시간 순 진동 피크로 나타낸 그래프. 가장 높은 피크는 2026년 8월 내일로 해커톤 대상.">
+          <defs><pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M50 0 L0 0 0 50" fill="none" stroke="#ECEBE6"/></pattern></defs>
+          <rect width="1200" height="270" fill="url(#grid)"/>
+          <line x1="0" y1="170" x2="1200" y2="170" stroke="#C9C8C1"/>
+          <path class="wave" pathLength="1" d="M0 170.0 L84 170.0 L87 152.0 L90 128.9 L93 112.2 L96 102.7 L99 100.6 L102 105.4 L105 115.8 L108 130.4 L111 147.2 L114 164.4 L117 180.5 L120 193.8 L123 203.5 L126 209.0 L129 210.2 L132 207.5 L135 201.4 L138 193.0 L141 183.2 L144 173.2 L147 163.9 L150 156.2 L153 150.6 L156 147.4 L159 146.7 L162 148.3 L165 151.8 L168 156.7 L171 162.3 L174 168.1 L177 173.5 L180 178.0 L183 181.3 L186 183.1 L189 183.5 L192 182.6 L195 180.5 L198 177.7 L201 174.4 L204 171.1 L207 168.0 L210 165.4 L213 163.5 L216 162.4 L219 162.2 L222 162.7 L225 163.9 L228 165.5 L231 167.4 L234 169.4 L237 171.2 L240 172.7 L243 173.8 L246 174.4 L249 174.5 L252 174.2 L255 173.5 L258 172.6 L261 171.5 L264 170.4 L267 169.3 L270 168.4 L273 167.8 L276 167.4 L279 167.4 L282 167.6 L285 167.9 L288 136.3 L291 111.2 L294 94.2 L297 86.3 L300 87.2 L303 95.9 L306 110.7 L309 129.7 L312 150.6 L315 171.2 L318 189.5 L321 204.1 L324 213.9 L327 218.5 L330 218.0 L333 213.0 L336 204.4 L339 193.3 L342 181.2 L345 169.3 L348 158.7 L351 150.2 L354 144.5 L357 141.9 L360 142.2 L363 145.1 L366 150.1 L369 156.5 L372 163.5 L375 170.4 L378 176.6 L381 181.5 L384 184.8 L387 186.3 L390 186.1 L393 184.4 L396 181.5 L399 177.8 L402 173.8 L405 169.8 L408 166.2 L411 163.4 L414 161.5 L417 160.6 L420 160.7 L423 161.6 L426 163.3 L429 165.5 L432 167.8 L435 170.1 L438 172.2 L441 173.8 L444 175.0 L447 175.5 L450 175.4 L453 174.8 L456 173.9 L459 172.6 L462 171.3 L465 169.9 L468 168.7 L471 167.8 L474 167.1 L477 166.8 L480 166.9 L483 167.2 L486 161.6 L489 145.8 L492 133.9 L495 126.7 L498 124.4 L501 126.7 L504 132.9 L507 142.0 L510 152.8 L513 164.1 L516 174.9 L519 184.0 L522 190.9 L525 195.1 L528 196.4 L531 195.1 L534 191.5 L537 186.3 L540 180.0 L543 173.4 L546 167.2 L549 161.9 L552 157.9 L555 155.5 L558 154.7 L561 155.4 L564 157.5 L567 160.6 L570 164.2 L573 168.0 L576 171.6 L579 174.7 L582 177.0 L585 178.4 L588 178.9 L591 178.4 L594 177.2 L597 175.5 L600 173.4 L603 171.1 L606 169.1 L609 167.3 L612 165.9 L615 165.1 L618 164.9 L621 165.1 L624 165.8 L627 166.8 L630 168.1 L633 169.3 L636 170.5 L639 171.6 L642 172.4 L645 172.8 L648 173.0 L651 172.8 L654 172.4 L657 171.8 L660 171.1 L663 170.4 L666 169.7 L669 169.1 L672 168.6 L675 168.4 L678 168.3 L681 168.4 L684 168.6 L687 153.9 L690 135.1 L693 121.6 L696 114.1 L699 112.7 L702 116.9 L705 125.8 L708 138.0 L711 151.9 L714 166.2 L717 179.3 L720 190.2 L723 198.1 L726 202.4 L729 203.2 L732 200.8 L735 195.6 L738 188.6 L741 180.5 L744 172.2 L747 164.6 L750 158.3 L753 153.7 L756 151.2 L759 150.8 L762 152.2 L765 155.2 L768 159.2 L771 163.9 L774 168.7 L777 173.1 L780 176.8 L783 179.4 L786 180.9 L789 181.2 L792 180.3 L795 178.6 L798 176.2 L801 173.5 L804 170.7 L807 168.2 L810 166.1 L813 164.5 L816 163.7 L819 163.5 L822 164.0 L825 165.0 L828 166.4 L831 168.0 L834 169.6 L837 171.1 L840 172.3 L843 173.2 L846 173.7 L849 173.7 L852 173.5 L855 172.9 L858 172.1 L861 171.2 L864 170.2 L867 169.4 L870 168.7 L873 168.2 L876 167.9 L879 167.8 L882 168.0 L885 168.3 L888 127.8 L891 95.5 L894 73.7 L897 63.3 L900 64.2 L903 75.1 L906 93.9 L909 118.1 L912 144.7 L915 171.0 L918 194.4 L921 213.2 L924 225.8 L927 231.8 L930 231.3 L933 225.0 L936 214.1 L939 200.1 L942 184.7 L945 169.4 L948 155.8 L951 145.0 L954 137.6 L957 134.2 L960 134.5 L963 138.1 L966 144.4 L969 152.6 L972 161.5 L975 170.3 L978 178.2 L981 184.5 L984 188.8 L987 190.8 L990 190.6 L993 188.5 L996 184.8 L999 180.1 L1002 174.9 L1005 169.8 L1008 165.2 L1011 161.6 L1014 159.1 L1017 158.0 L1020 158.1 L1023 159.3 L1026 161.4 L1029 164.1 L1032 167.1 L1035 170.1 L1038 172.8 L1041 174.9 L1044 176.3 L1047 177.0 L1050 176.9" fill="none" stroke="#13171C" stroke-width="2" stroke-linejoin="round"/>
+          <path class="wave tail" pathLength="1" d="M1050 176.9 L1053 176.2 L1056 175.0 L1059 173.4 L1062 171.7 L1065 169.9 L1068 168.4 L1071 167.2 L1074 166.3 L1077 166.0 L1080 166.0 L1083 166.4 L1086 163.5 L1089 154.8 L1092 148.4 L1095 144.8 L1098 143.9 L1101 145.6 L1104 149.5 L1107 154.9 L1110 161.2 L1113 167.7 L1116 173.8 L1119 178.8 L1122 182.5 L1125 184.6 L1128 185.1 L1131 184.1 L1134 181.9 L1137 178.7 L1140 175.1 L1143 171.3 L1146 167.8 L1149 164.9 L1152 162.8 L1155 161.5 L1158 161.2 L1161 161.8 L1164 163.1 L1167 164.9 L1170 167.0 L1173 169.2 L1176 171.3 L1179 173.0 L1182 174.2 L1185 174.9 L1188 175.1 L1191 174.7 L1194 174.0 L1197 172.9 L1200 171.7" fill="none" stroke="#13171C" stroke-width="2" stroke-linejoin="round" opacity=".55"/>
+          <path id="sel-seg" d="" fill="none" stroke="#FF5B2E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="100" cy="101.5" r="5" fill="#13171C"/>
+          <circle cx="300" cy="87.2" r="5" fill="#13171C"/>
+          <circle cx="500" cy="125.4" r="5" fill="#13171C"/>
+          <circle cx="700" cy="113.5" r="5" fill="#13171C"/>
+          <circle cx="900" cy="64.2" r="5" fill="#13171C"/>
+          <circle cx="1100" cy="144.8" r="5" fill="#fff" stroke="#13171C" stroke-width="2"/>
+          <circle id="sel-dot" cx="900" cy="64.2" r="9" fill="#FF5B2E"/>
+        </svg>
+        <div class="picks" role="group" aria-label="기록 선택" id="picks"></div>
+      </div>
+      <article class="detail" aria-live="polite">
+        <div class="l">
+          <span class="meta" id="d-meta"></span>
+          <span class="rank" id="d-rank"></span>
+          <h3 id="d-title"></h3>
+          <span class="scale" id="d-scale"></span>
+        </div>
+        <dl>
+          <dt>잰 것</dt><dd id="d-measure"></dd>
+          <dt>푼 방법</dt><dd id="d-solve"></dd>
+        </dl>
+      </article>
+      <div class="press">
+        <small>보도</small>
+        <a href="https://www.kyeongin.com/article/1770048" target="_blank" rel="noopener">경인일보 ‘만나본 Who’ 인터뷰 · 2026.09</a>
+        <a href="https://www.joongboo.com/news/articleView.html?idxno=363734069" target="_blank" rel="noopener">중부일보 내일로 해커톤 성료 기사 · 2026.08</a>
+      </div>
     </div>
   </section>
 
-  <section id="notes" class="wrap" aria-labelledby="notes-title">
-    <h2 class="sec" id="notes-title"><span class="num">03</span>실험 노트 — 혼자 파 보는 것</h2>
-    <div class="notes">
-      <div class="note"><small>진행 중</small><b>창 함수를 직접 만들어 보기</b><p>신호를 잘라 볼 때 쓰는 창의 모양과 길이가 결과를 얼마나 바꾸는지, 기성품 대신 직접 설계해 비교합니다.</p></div>
-      <div class="note"><small>진행 중</small><b>마이크 하나로 공간감 되살리기</b><p>마이크 한 개로 녹음한 소리에 남은 울림만으로, 그 방의 입체감을 되살릴 수 있는지 실험합니다.</p></div>
+  <section id="studio" class="wrap" aria-labelledby="studio-title">
+    <div class="sec-head">
+      <span class="eyebrow">04 · STUDIO</span>
+      <h2 class="title" id="studio-title">만드는 사람</h2>
     </div>
-    <div class="press">
-      <small>보도</small>
-      <a href="https://www.kyeongin.com/article/1770048" target="_blank" rel="noopener">경인일보 ‘만나본 Who’ 인터뷰 · 2026.09</a>
-      <a href="https://www.joongboo.com/news/articleView.html?idxno=363734069" target="_blank" rel="noopener">중부일보 내일로 해커톤 성료 기사 · 2026.08</a>
+    <div class="body">
+      <p>acvi는 김태연이 운영합니다. 신호처리와 청각 지능을 공부하며, 들리는 것을 숫자로 바꾸고 그 숫자로 현장의 문제를 푸는 일을 해 왔습니다.</p>
+      <p>한 사람이 측정부터 모델, 시제품까지 맡기 때문에 중간에 말이 바뀌지 않습니다. 대신 한 번에 맡는 프로젝트 수는 적게 유지합니다.</p>
+      <small>대표 김태연</small>
     </div>
   </section>
 </main>
 
 <footer id="contact">
   <div class="wrap">
-    <h2>같이 재 볼 소리가 있다면,<br>작업실 문은 열려 있습니다.</h2>
+    <span class="eyebrow">CONTACT</span>
+    <h2>재 볼 소리가 있다면,<br>먼저 이야기부터 들려주세요.</h2>
+    <p>어떤 현장인지, 무엇이 궁금한지 두세 줄이면 충분합니다. 영업일 기준 2일 안에 답장드립니다.</p>
     <div class="btns">
-      <!-- [이메일 주소]를 공개해도 되는 메일 주소로 바꿔 주세요 -->
-      <a class="btn a" href="mailto:kim@acvi.net">메일 보내기</a>
+      <a class="btn a" href="mailto:kim@acvi.net">kim@acvi.net</a>
       <a class="btn g" href="https://github.com/composedly13" target="_blank" rel="noopener">GitHub</a>
     </div>
-    <div class="foot"><span>© 2026 acvi · 김태연</span><span>Acoustic · Vibration</span></div>
+    <div class="foot"><span>© 2026 acvi · Acoustic · Vibration Studio</span><span>acvi.net</span></div>
   </div>
 </footer>
 
 <script>
 (function () {
-  // 기록 데이터 — 새 공모전이 생기면 여기에 한 줄 추가하고 파형도 다시 계산하면 됩니다.
+  // 해 온 일 데이터 — 새 기록이 생기면 여기와 아래 peaks·segs에 한 칸씩 추가합니다.
   var data = [
-    { date: '2025.02', short: '최우수상', rank: '최우수상', title: '한신 AI 아트코딩 해커톤', team: '[팀명]', scale: '한신대학교 SW중심대학사업단 주최', measure: '[이 작업에서 잰 것을 적어 주세요]', solve: '[어떻게 풀었는지 적어 주세요]' },
+    { date: '2025.02', short: '최우수상', rank: '최우수상', title: '한신 AI 아트코딩 해커톤', team: '한신대학교', scale: '한신대학교 SW중심대학사업단 주최', measure: '기록을 정리하고 있습니다.', solve: '곧 이 진동의 이야기도 채워집니다.' },
     { date: '2026.05', short: '최우수상', rank: '최우수상 · 국립중앙과학관장상', title: 'AI Hack Camp 2026', team: '팀 CSI', scale: '전국 410개 팀 참가 · 무박 2일', measure: '카메라 대신, 방 안을 지나는 와이파이 신호의 미세한 흔들림.', solve: '흔들림의 패턴을 기기 안에서 도는 작은 AI로 읽어, 환자 상태를 실시간으로 살피는 비접촉 감시 시스템을 만들었습니다.' },
     { date: '2026.07', short: '동상', rank: '동상', title: '한국디지털콘텐츠학회 대학생논문경진대회', team: '공동저자', scale: '하계종합학술대회 논문 발표', measure: '와이파이 신호와 방 안의 소리, 두 가지를 동시에.', solve: '두 신호를 함께 읽어 혼자 사는 어르신의 낙상을 놓치지 않는 시스템의 설계 방향을 논문으로 정리했습니다.' },
     { date: '2026.08', short: '후원기업상', rank: '후원기업상', title: '2026 AI·SW중심대학 디지털 경진대회 AI부문', team: '팀 토큰강도', scale: '상위 3% · 본선 진출', measure: 'AI 에이전트가 실제로 골라 온 행동의 기록.', solve: '큰 모델의 판단을 작은 모델에 옮겨 담고 직접 압축해, 메모리 1GB·10분 제한을 지키며 점수를 0.436에서 0.798로 올렸습니다.' },
