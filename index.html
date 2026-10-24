@@ -4,420 +4,317 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>acvi — Acoustic · Vibration</title>
-<meta name="description" content="들리는 것을 재고, 잰 것으로 답을 만듭니다. 소리와 진동을 다루는 김태연의 스튜디오 acvi.">
+<meta name="description" content="소리·진동 센서와 AI로 현장의 문제를 푸는 김태연의 작업실 acvi. 공모전 프로젝트를 현장·잰 것·만든 것·결과로 기록합니다.">
 <meta property="og:title" content="acvi — Acoustic · Vibration">
 <meta property="og:description" content="들리는 것을 재고, 잰 것으로 답을 만듭니다.">
 <meta property="og:url" content="https://acvi.net">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#101418">
+<meta name="theme-color" content="#F4F4F1">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
-<style>
-/* 레이아웃: 화면 전체가 하나의 진동하는 줄(캔버스). 메인은 한 화면, 나머지는 오른쪽에서 열리는 패널 */
-:root{
-  color-scheme: dark;
-  --ink:#101418; --ink-2:#161B21; --line:#2A3038; --fg:#EEF0F2; --mute:#A3ABB4; --accent:#FF5B2E; --accent-ink:#101418;
-  --display:'Sora','IBM Plex Sans KR',system-ui,sans-serif;
-  --body:'IBM Plex Sans KR','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;
-  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
-  --drawer: min(560px, 100vw);
-}
-html,body{height:100%}
-[hidden]{display:none!important}
-body{margin:0;background:var(--ink);color:var(--fg);font-family:var(--body);overflow:hidden;word-break:keep-all;-webkit-font-smoothing:antialiased}
-a{color:inherit}
-:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
-button{font:inherit;color:inherit}
-
-#field{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}
-
-.stage{position:relative;height:100%;display:grid;grid-template-rows:auto 1fr auto;padding-inline:clamp(16px,3.5vw,48px);pointer-events:none;transition:opacity .4s ease, transform .5s cubic-bezier(.2,.7,.2,1)}
-.stage a,.stage button{pointer-events:auto}
-body.open .stage{opacity:.35;transform:translateX(-4vw)}
-
-.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;padding-block:24px 0;font-family:var(--mono);font-size:12px;color:var(--mute)}
-.top .left{letter-spacing:.24em}
-.top .right{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px}
-.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent);margin-right:8px;animation:pulse 2s ease-in-out infinite}
-@keyframes pulse{50%{opacity:.3}}
-.amp{font-variant-numeric:tabular-nums;min-width:8.5ch}
-.sound{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 12px;border:1px solid var(--line);border-radius:999px;background:transparent;cursor:pointer;font-family:var(--mono);font-size:12px;color:var(--mute)}
-.sound[aria-pressed="true"]{color:var(--fg);border-color:var(--accent)}
-
-.hero{align-self:start;padding-top:clamp(40px,11vh,120px);display:flex;flex-direction:column;gap:18px}
-.hero h1{margin:0;font-family:var(--display);font-weight:600;font-size:clamp(96px,17vw,240px);line-height:.82;letter-spacing:-.06em}
-.hero p{margin:0;font-size:clamp(18px,2vw,26px);font-weight:500;color:var(--mute);text-wrap:balance}
-.hint{font-family:var(--mono);font-size:12px;color:var(--mute);transition:opacity .6s}
-.hint.gone{opacity:0}
-
-.nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line);margin-inline:calc(-1 * clamp(16px,3.5vw,48px));padding-bottom:env(safe-area-inset-bottom,0px)}
-.nav a{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:88px;padding-inline:clamp(16px,3.5vw,48px);text-decoration:none;border-right:1px solid var(--line);background:color-mix(in srgb, var(--ink) 70%, transparent);transition:background .25s}
-.nav a:last-child{border-right:0}
-.nav a:hover,.nav a:focus-visible{background:var(--ink-2)}
-.nav b{font-weight:600;font-size:clamp(16px,1.6vw,21px)}
-.nav small{display:block;font-family:var(--mono);font-size:11px;color:var(--mute);margin-bottom:4px}
-.nav .arr{transition:transform .25s}
-.nav a:hover .arr{transform:translateX(6px)}
-
-/* 패널 */
-.drawer{position:fixed;top:0;right:0;bottom:0;width:var(--drawer);background:var(--ink-2);border-left:1px solid var(--line);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .5s cubic-bezier(.2,.7,.2,1);z-index:5}
-body.open .drawer{transform:none}
-.dhead{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:16px 16px 0 24px;padding-top:calc(16px + env(safe-area-inset-top,0px))}
-.tabs{display:flex;gap:4px}
-.tabs button{min-height:44px;padding:0 14px;border:0;border-radius:999px;background:transparent;color:var(--mute);cursor:pointer;font-size:15px}
-.tabs button[aria-selected="true"]{background:var(--fg);color:var(--ink);font-weight:600}
-.close{width:44px;height:44px;border:1px solid var(--line);border-radius:50%;background:transparent;cursor:pointer;font-size:20px;line-height:1}
-.dbody{flex:1;overflow-y:auto;padding:28px 24px 40px;padding-bottom:calc(40px + env(safe-area-inset-bottom,0px))}
-.panel{display:flex;flex-direction:column;gap:24px}
-.panel h2{margin:0;font-family:var(--display);font-weight:600;font-size:40px;letter-spacing:-.04em}
-.lede{margin:0;color:var(--mute);font-size:16px;line-height:1.7}
-
-.rec{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
-.rec li{border-bottom:1px solid var(--line)}
-.rec button{width:100%;display:grid;grid-template-columns:72px minmax(0,1fr) auto;align-items:center;gap:12px;min-height:72px;padding:12px 0;background:transparent;border:0;text-align:left;cursor:pointer}
-.rec .d{font-family:var(--mono);font-size:12px;color:var(--mute);font-variant-numeric:tabular-nums}
-.rec .t{display:flex;flex-direction:column;gap:2px;min-width:0}
-.rec .t b{font-weight:600;font-size:16px}
-.rec .t span{font-size:13px;color:var(--mute)}
-.rec .lvl{display:flex;align-items:flex-end;gap:2px;height:22px}
-.rec .lvl i{display:block;width:3px;border-radius:2px;background:var(--line)}
-.rec .lvl i.on{background:var(--accent)}
-.rec .more{display:grid;grid-template-columns:64px minmax(0,1fr);gap:10px 12px;padding:0 0 18px 84px;font-size:15px;line-height:1.7}
-.rec .more dt{font-family:var(--mono);font-size:11px;color:var(--mute);padding-top:4px}
-.rec .more dd{margin:0}
-.press{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--mute)}
-
-.svc{display:flex;flex-direction:column;border-top:1px solid var(--line)}
-.svc div{padding:20px 0;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
-.svc b{font-size:20px;font-weight:600}
-.svc p{margin:0;color:var(--mute);line-height:1.7;font-size:15px}
-.svc span{font-size:13px;color:var(--fg);opacity:.75}
-.flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-family:var(--mono);font-size:13px;color:var(--mute)}
-.flow b{color:var(--fg);font-family:var(--body);font-weight:600;font-size:15px}
-
-.facts{margin:0;display:grid;grid-template-columns:56px minmax(0,1fr);gap:10px 14px;font-size:15px;line-height:1.6}
-.facts dt{font-family:var(--mono);font-size:11px;color:var(--mute);padding-top:4px}
-.facts dd{margin:0}
-.mail{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:20px;border:1px solid var(--line);border-radius:16px}
-.mail code{font-family:var(--mono);font-size:18px;user-select:all}
-.btn{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:999px;border:1px solid var(--line);background:transparent;text-decoration:none;cursor:pointer;font-size:14px}
-.btn.a{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
-
-@media (max-width:640px){
-  .nav{grid-template-columns:1fr}
-  .nav a{min-height:60px;border-right:0;border-top:1px solid var(--line)}
-  .top .left{display:none}
-  .rec .more{padding-left:0}
-}
-@media (prefers-reduced-motion:reduce){
-  .stage,.drawer,.nav a,.nav .arr,.hint{transition:none}
-  .dot{animation:none}
-}
-</style>
+<link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
 
-<canvas id="field" aria-hidden="true"></canvas>
-
-<div class="stage" id="stage">
-  <div class="top">
-    <span class="left">ACOUSTIC · VIBRATION</span>
-    <span class="right">
-      <span><span class="dot"></span>작업 중 · Matter AX Sprint 본선 준비</span>
-      <span class="amp" id="amp" aria-hidden="true">AMP 0.00</span>
-      <button class="sound" id="sound" type="button" aria-pressed="false">소리 꺼짐</button>
-    </span>
-  </div>
-
-  <div class="hero">
-    <h1>acvi</h1>
-    <p>들리는 것을 재고, 잰 것으로 답을 만듭니다.</p>
-    <span class="hint" id="hint">선을 건드려 보세요 · 움직이거나 눌러서</span>
-  </div>
-
-  <nav class="nav" aria-label="페이지">
-    <a href="#work" data-open="work"><span><small>WORK</small><b>작업</b></span><span class="arr" aria-hidden="true">→</span></a>
-    <a href="#services" data-open="services"><span><small>SERVICES</small><b>하는 일</b></span><span class="arr" aria-hidden="true">→</span></a>
-    <a href="#about" data-open="about"><span><small>ABOUT</small><b>소개 · 문의</b></span><span class="arr" aria-hidden="true">→</span></a>
-  </nav>
-</div>
-
-<aside class="drawer" id="drawer" aria-label="상세" aria-hidden="true">
-  <div class="dhead">
-    <div class="tabs" role="tablist">
-      <button role="tab" id="tab-work" aria-controls="work" data-tab="work">작업</button>
-      <button role="tab" id="tab-services" aria-controls="services" data-tab="services">하는 일</button>
-      <button role="tab" id="tab-about" aria-controls="about" data-tab="about">소개</button>
+<header class="top">
+  <nav class="wrap nav" aria-label="주 메뉴">
+    <a class="brand" href="/" aria-label="acvi 홈">
+      <svg viewBox="0 0 200 100" aria-hidden="true"><path d="M0 50 L6.7 29.6 L13.3 17.1 L20 14.7 L26.7 21.6 L33.3 34.8 L40 50 L46.7 63.2 L53.3 71.2 L60 72.7 L66.7 68.3 L73.3 59.8 L80 50 L86.7 41.5 L93.3 36.4 L100 35.4 L106.7 38.2 L113.3 43.7 L120 50 L126.7 55.5 L133.3 58.8 L140 59.4 L146.7 57.6 L153.3 54.1 L160 50 L166.7 46.5 L173.3 44.3 L180 43.9 L186.7 45.1 L193.3 47.4 L200 50" fill="none" stroke="#FF5B2E" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <b>acvi</b>
+    </a>
+    <div class="menu">
+      <a href="#projects">프로젝트</a>
+      <a href="#services">하는 일</a>
+      <a href="#about">소개</a>
+      <a href="#news">소식</a>
+      <a class="btn d" href="#contact">연락하기</a>
     </div>
-    <button class="close" id="close" type="button" aria-label="닫기">×</button>
-  </div>
-  <div class="dbody">
-    <section class="panel" id="work" role="tabpanel" aria-labelledby="tab-work" hidden>
-      <h2>작업</h2>
-      <p class="lede">결과가 클수록 크게 울립니다. 항목에 올리거나 눌러 보세요.</p>
-      <ul class="rec" id="rec"></ul>
-      <div class="press">
-        <span>보도</span>
-        <a href="https://www.kyeongin.com/article/1770048" target="_blank" rel="noopener">경인일보 인터뷰 · 2026.09</a>
-        <a href="https://www.joongboo.com/news/articleView.html?idxno=363734069" target="_blank" rel="noopener">중부일보 · 2026.08</a>
-      </div>
-    </section>
+  </nav>
+</header>
 
-    <section class="panel" id="services" role="tabpanel" aria-labelledby="tab-services" hidden>
-      <h2>하는 일</h2>
+<main id="main">
+
+  <!-- 첫 화면 -->
+  <section class="wrap hero">
+    <p class="eyebrow">ACOUSTIC · VIBRATION</p>
+    <h1>들리는 것을 재고,<br>잰 것으로 답을 만듭니다.</h1>
+    <p class="sub">소리·진동 센서와 AI로 현장의 문제를 푸는 김태연의 작업실 acvi입니다. 공항, 철도, 주거 현장에서 잰 것으로 2025년부터 6개 공모전에서 6번 수상했습니다.</p>
+    <div class="cta">
+      <a class="btn a" href="#projects">프로젝트 보기
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a class="btn g" href="#contact">연락하기</a>
+    </div>
+  </section>
+
+  <!-- 결과물 띠 -->
+  <section class="strip" aria-label="결과물 미리보기">
+    <div class="row">
+      <figure>
+        <div class="ph"><span>[이미지] drrk 혼잡도 현황판 화면</span></div>
+        <figcaption>내일路 해커톤 2026 · 대상</figcaption>
+      </figure>
+      <figure>
+        <div class="ph"><span>[이미지] Go/No-Go 시연 장면</span></div>
+        <figcaption>Matter AX Sprint 2026 · 우수상</figcaption>
+      </figure>
+      <figure>
+        <div class="ph"><span>[이미지] 압축 언어모델 결과 화면</span></div>
+        <figcaption>AI·SW중심대학 디지털 경진대회 · 후원기업상</figcaption>
+      </figure>
+      <figure>
+        <div class="ph"><span>[이미지] AITKOO 감시 화면</span></div>
+        <figcaption>AI Hack Camp 2026 · 최우수상</figcaption>
+      </figure>
+      <figure>
+        <div class="ph"><span>[이미지] 낙상 감지 시스템 구성도</span></div>
+        <figcaption>한국디지털콘텐츠학회 논문경진대회 · 동상</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 할 수 있는 일 -->
+  <section class="band" id="services">
+    <div class="wrap sec">
+      <div class="sec-head">
+        <p class="eyebrow">SERVICES</p>
+        <h2 class="title">할 수 있는 일</h2>
+        <p class="lede">현장에서 소리와 진동을 재는 일부터, 그 신호를 읽는 AI를 작은 기기에 넣는 일까지. 이미 해 본 형태들입니다.</p>
+      </div>
       <div class="svc">
-        <div><b>현장 소리·진동 계측</b><p>무엇을 어디서 재야 하는지 정하고, 센서를 골라 붙여 쓸 수 있는 데이터로 넘겨 드립니다.</p><span>예 · 책상 상판 진동으로 캐리어 바퀴 세기</span></div>
-        <div><b>소리·진동 AI 모델</b><p>신호에서 사건을 찾고, 나누고, 예측하는 모델을 만들어 작은 기기에서 돌도록 줄입니다.</p><span>예 · 소리로 낙상 감지, 1GB 안에 언어모델 압축</span></div>
-        <div><b>빠른 시제품</b><p>아이디어가 되는지 짧게 확인하고, 쓰던 서비스에 붙는 모듈까지 묶어 보여 드립니다.</p><span>예 · 준비 1주 + 본선 2일로 대상 시제품</span></div>
+        <article>
+          <p class="num">01</p>
+          <h3>소리·진동 측정과 AI 모델</h3>
+          <p>무엇을 어디서 재야 하는지 정하고, 센서를 골라 붙여 쓸 수 있는 데이터로 만듭니다. 그 신호에서 사건을 찾고, 나누고, 예측하는 모델을 만들어 작은 기기에서 돌도록 줄입니다.</p>
+          <div class="tags"><span class="tag">#현장 계측</span><span class="tag">#사건 감지·예측</span><span class="tag">#작은 기기 탑재</span></div>
+          <p class="eg">예 · 책상 상판 진동으로 캐리어 바퀴 세기 · 와이파이 신호와 소리로 낙상 감지</p>
+          <div class="ph"><span>[이미지] 피에조 픽업 계측 장비 사진</span></div>
+        </article>
+        <article>
+          <p class="num">02</p>
+          <h3>현장 데이터 수집·분석과 빠른 시제품</h3>
+          <p>공항, 철도, 요양시설 같은 현장에서 데이터를 모으고 읽을 수 있는 숫자로 바꿉니다. 아이디어가 되는지 짧게 확인하고, 쓰던 서비스에 붙는 모듈 형태까지 묶어 보여 드립니다.</p>
+          <div class="tags"><span class="tag">#데이터 수집</span><span class="tag">#분석</span><span class="tag">#모듈형 시제품</span></div>
+          <p class="eg">예 · 준비 1주 + 본선 2일로 대상 시제품 · 메모리 1GB 안에 언어모델 압축</p>
+          <div class="ph"><span>[이미지] 본선 현장 작업 사진</span></div>
+        </article>
       </div>
-      <div class="flow" aria-label="일하는 순서"><b>듣기</b>→<b>재기</b>→<b>읽기</b>→<b>붙이기</b></div>
-    </section>
+    </div>
+  </section>
 
-    <section class="panel" id="about" role="tabpanel" aria-labelledby="tab-about" hidden>
-      <h2>소개</h2>
-      <p class="lede">acvi는 김태연이 운영하는 소리·진동 스튜디오입니다. 신호처리와 청각 지능을 공부하며, 들리는 것을 숫자로 바꾸고 그 숫자로 현장의 문제를 풀어 왔습니다.</p>
+  <!-- 프로젝트 -->
+  <section class="wrap sec" id="projects">
+    <div class="sec-head split">
+      <div class="sec-head">
+        <p class="eyebrow">PORTFOLIO</p>
+        <h2 class="title">프로젝트</h2>
+      </div>
+      <p>공모전 하나가 프로젝트 하나입니다. 어떤 현장에서 무엇을 재서 어떤 결과를 냈는지로 적습니다.</p>
+    </div>
+
+    <!-- 대표 프로젝트 -->
+    <a class="feature" href="projects/drrk.html">
+      <div class="img"><div class="ph"><span>[대표 이미지] drrk 현황판 + 계측 장비 합성 화면</span></div></div>
+      <div class="txt">
+        <div class="meta">
+          <span class="mono">2026.08</span>
+          <span class="badge a">대상 · 인천국제공항공사 사장상</span>
+          <span class="badge l">팀장</span>
+        </div>
+        <h3>캐리어 바퀴 소리로 공항→철도 승강장 혼잡을 미리 알리다</h3>
+        <p>책상 상판에 붙인 접촉식 센서로 캐리어 바퀴가 굴러가는 진동을 세고, 항공편 도착 정보와 합쳐 열차 승강장이 언제 붐빌지 예보하는 계측 모듈 'drrk'를 만들었습니다.</p>
+        <p class="host">내일路 해커톤 2026 · 코레일 · 인천국제공항공사 · 예선 약 70팀 → 본선 12팀 → 대상 2팀</p>
+        <span class="more">자세히 보기
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </div>
+    </a>
+
+    <!-- 프로젝트 목록 — 상세 페이지가 생기면 <div>를 <a href="projects/...html">로 바꿉니다 -->
+    <ul class="plist">
+      <li>
+        <div class="prow">
+          <div class="ph thumb"></div>
+          <span class="date">2026.10</span>
+          <div class="txt">
+            <b>지능형 홈 허브의 작은 AI가 더 잘 판단하도록 돕는 중계 기기 'Go/No-Go'</b>
+            <small>Matter AX Sprint 2026 · 한국AI스마트홈산업협회 · 팀 딸깍 · 팀장</small>
+          </div>
+          <div class="side"><span class="badge o">우수상 · 협회장상</span><span class="badge soft">상세 준비 중</span></div>
+        </div>
+      </li>
+      <li>
+        <a class="prow" href="projects/drrk.html">
+          <div class="ph thumb"></div>
+          <span class="date">2026.08</span>
+          <div class="txt">
+            <b>캐리어 바퀴 소리로 공항→철도 승강장 혼잡 예측 'drrk'</b>
+            <small>내일路 해커톤 2026 · 코레일 · 인천국제공항공사 · 드르륵팀 · 팀장</small>
+          </div>
+          <div class="side"><span class="badge a">대상 · 사장상</span></div>
+        </a>
+      </li>
+      <li>
+        <div class="prow">
+          <div class="ph thumb"></div>
+          <span class="date">2026.08</span>
+          <div class="txt">
+            <b>메모리 1GB · 10분 제한 안에서 큰 모델의 판단을 작은 모델에 옮기다</b>
+            <small>2026 AI·SW중심대학 디지털 경진대회 AI부문 · DACON · 팀 토큰강도 · 점수 0.436 → 0.798</small>
+          </div>
+          <div class="side"><span class="badge o">후원기업상 · 상위 3%</span><span class="badge soft">상세 준비 중</span></div>
+        </div>
+      </li>
+      <li>
+        <div class="prow">
+          <div class="ph thumb"></div>
+          <span class="date">2026.07</span>
+          <div class="txt">
+            <b>와이파이 신호와 소리를 함께 읽어 혼자 사는 어르신의 낙상을 감지하는 설계</b>
+            <small>한국디지털콘텐츠학회 하계종합학술대회 대학생논문경진대회 · 공동저자</small>
+          </div>
+          <div class="side"><span class="badge o">동상</span><span class="badge soft">상세 준비 중</span></div>
+        </div>
+      </li>
+      <li>
+        <div class="prow">
+          <div class="ph thumb"></div>
+          <span class="date">2026.05</span>
+          <div class="txt">
+            <b>방 안을 지나는 와이파이 신호의 흔들림으로 환자 상태를 살피는 비접촉 감시 'AITKOO'</b>
+            <small>AI Hack Camp 2026 · 410개 팀 · 팀 CSI</small>
+          </div>
+          <div class="side"><span class="badge o">최우수상 · 국립중앙과학관장상</span><span class="badge soft">상세 준비 중</span></div>
+        </div>
+      </li>
+      <li>
+        <div class="prow">
+          <div class="ph thumb"></div>
+          <span class="date">2025.02</span>
+          <div class="txt">
+            <b>[프로젝트 한 줄 — 작성 예정]</b>
+            <small>2025 한신 AI 아트코딩 해커톤 · 한신대학교 SW중심대학사업단</small>
+          </div>
+          <div class="side"><span class="badge o">최우수상</span><span class="badge soft">상세 준비 중</span></div>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- 함께한 기관 -->
+  <section class="band" aria-label="함께한 주최·후원 기관">
+    <div class="wrap orgs">
+      <p class="eyebrow dim">함께한 주최 · 후원 기관</p>
+      <div class="row">
+        <span class="org">코레일</span>
+        <span class="org">인천국제공항공사</span>
+        <span class="org">국립중앙과학관</span>
+        <span class="org">AI·SW중심대학사업단</span>
+        <span class="org">DACON</span>
+        <span class="org">한국디지털콘텐츠학회</span>
+        <span class="org">한국AI스마트홈산업협회</span>
+        <span class="org">한신대학교 SW중심대학사업단</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 일하는 방식 -->
+  <section class="wrap sec">
+    <div class="sec-head">
+      <p class="eyebrow">HOW WE WORK</p>
+      <h2 class="title">일하는 방식</h2>
+    </div>
+    <div class="how">
+      <div><span class="num">01</span><h3>재서 말한다</h3><p>느낌이 아니라 측정값으로 시작합니다. 무엇을 어디서 어떻게 잴지부터 정합니다.</p></div>
+      <div><span class="num">02</span><h3>현장에서 한다</h3><p>데이터는 현장에서 직접 모읍니다. 대리석 바닥에서 안 잡히면 책상 상판으로 옮겨 다시 잽니다.</p></div>
+      <div><span class="num">03</span><h3>기존 것에 붙인다</h3><p>새 앱을 만들기보다, 쓰던 서비스와 기기에 들어가는 모듈로 만듭니다.</p></div>
+      <div><span class="num">04</span><h3>결과를 숫자로 남긴다</h3><p>점수, 정확도, 기간. 끝난 일은 숫자와 증거로 기록합니다.</p></div>
+    </div>
+  </section>
+
+  <!-- 숫자 -->
+  <section class="stats" aria-label="실적 숫자">
+    <div class="wrap">
+      <p class="eyebrow">2025 — 2026</p>
+      <div class="row">
+        <div class="stat"><b>6</b><span>프로젝트</span></div>
+        <div class="stat"><b>6</b><span>수상</span></div>
+        <div class="stat"><b>1</b><span>대상</span></div>
+        <div class="stat"><b>2</b><span>언론 보도</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 상장 -->
+  <section class="wrap sec" aria-label="수상 증빙">
+    <div class="sec-head">
+      <p class="eyebrow">RECOGNITION</p>
+      <h2 class="title">인정받은 기록</h2>
+    </div>
+    <div class="certs">
+      <figure><div class="ph sm"><span>[상장]</span></div><figcaption>내일路 해커톤 2026 대상<br><span>인천국제공항공사 사장상</span></figcaption></figure>
+      <figure><div class="ph sm"><span>[상장]</span></div><figcaption>AI Hack Camp 2026 최우수상<br><span>국립중앙과학관장상</span></figcaption></figure>
+      <figure><div class="ph sm"><span>[상장]</span></div><figcaption>Matter AX Sprint 2026 우수상<br><span>한국AI스마트홈산업협회장상</span></figcaption></figure>
+      <figure><div class="ph sm"><span>[상장]</span></div><figcaption>AI·SW중심대학 디지털 경진대회<br><span>후원기업상</span></figcaption></figure>
+      <figure><div class="ph sm"><span>[상장]</span></div><figcaption>대학생논문경진대회 동상<br><span>한국디지털콘텐츠학회</span></figcaption></figure>
+      <figure><div class="ph sm"><span>[상장]</span></div><figcaption>한신 AI 아트코딩 해커톤 최우수상<br><span>한신대학교 SW중심대학사업단</span></figcaption></figure>
+    </div>
+  </section>
+
+  <!-- 소식 -->
+  <section class="band" id="news">
+    <div class="wrap sec">
+      <div class="sec-head">
+        <p class="eyebrow">NEWS</p>
+        <h2 class="title">소식</h2>
+      </div>
+      <ul class="news">
+        <li><div class="item"><span class="date">2026.10.19</span><span class="txt">Matter AX Sprint 2026 우수상(한국AI스마트홈산업협회장상) 수상 — 시상식 11월 3일</span></div></li>
+        <li><a href="https://www.kyeongin.com/article/1770048" target="_blank" rel="noopener"><span class="date">2026.09.01</span><span class="txt">경인일보 '만나본 Who' — 내일路 해커톤 대상 팀장 인터뷰</span></a></li>
+        <li><a href="https://www.joongboo.com/news/articleView.html?idxno=363734069" target="_blank" rel="noopener"><span class="date">2026.08.18</span><span class="txt">중부일보 — 인천공항공사·코레일 '내일로 해커톤 2026' 성료, 드르륵팀 대상</span></a></li>
+        <li><a href="projects/drrk.html"><span class="date">2026.08.14</span><span class="txt">내일路 해커톤 2026 대상(인천국제공항공사 사장상) 수상</span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 소개 + 연락 -->
+  <section class="wrap about" id="about">
+    <div class="txt">
+      <p class="eyebrow">ABOUT</p>
+      <h2 class="title">소개</h2>
+      <p>acvi는 김태연이 운영하는 소리·진동 작업실입니다. 신호처리와 청각 지능을 공부하며, 들리는 것을 숫자로 바꾸고 그 숫자로 현장의 문제를 풀어 왔습니다.</p>
       <dl class="facts">
-        <dt>대표</dt><dd>김태연</dd>
-        <dt>수상</dt><dd>내일路 해커톤 2026 대상 · AI Hack Camp 2026 최우수상</dd>
+        <div><dt>대표</dt><dd>김태연</dd></div>
+        <div><dt>시작</dt><dd>2025</dd></div>
+        <div><dt>분야</dt><dd>소리·진동 계측 · 신호처리 AI</dd></div>
+        <div><dt>코드</dt><dd><a href="https://github.com/composedly13" target="_blank" rel="noopener">github.com/composedly13</a></dd></div>
       </dl>
-      <div class="mail">
-        <code id="addr">kim@acvi.net</code>
-        <button class="btn" id="copy" type="button">주소 복사</button>
-        <a class="btn a" href="mailto:kim@acvi.net">메일 쓰기</a>
-        <a class="btn" href="https://github.com/composedly13" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <div class="card-dark" id="contact">
+      <p class="eyebrow">CONTACT</p>
+      <h3>같이 할 일이 있다면</h3>
+      <p>현장, 하고 싶은 것, 원하는 시점. 이 세 가지만 적어 보내 주세요. 공모전 팀 제안, 연구 협업, 현장 데이터 수집 모두 좋습니다.</p>
+      <div class="cta">
+        <a class="btn a" href="mailto:kim@acvi.net">kim@acvi.net 로 메일 쓰기</a>
+        <a class="btn dg" href="https://github.com/composedly13" target="_blank" rel="noopener">GitHub</a>
       </div>
-    </section>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="brand">
+      <svg viewBox="0 0 200 100" aria-hidden="true"><path d="M0 50 L6.7 29.6 L13.3 17.1 L20 14.7 L26.7 21.6 L33.3 34.8 L40 50 L46.7 63.2 L53.3 71.2 L60 72.7 L66.7 68.3 L73.3 59.8 L80 50 L86.7 41.5 L93.3 36.4 L100 35.4 L106.7 38.2 L113.3 43.7 L120 50 L126.7 55.5 L133.3 58.8 L140 59.4 L146.7 57.6 L153.3 54.1 L160 50 L166.7 46.5 L173.3 44.3 L180 43.9 L186.7 45.1 L193.3 47.4 L200 50" fill="none" stroke="#FF5B2E" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <b>acvi</b>
+      <span class="eyebrow dim">ACOUSTIC · VIBRATION</span>
+    </div>
+    <p>대표 김태연 · kim@acvi.net · © 2026 acvi</p>
   </div>
-</aside>
-
-<script>
-(function(){
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var canvas = document.getElementById('field');
-  var ctx = canvas.getContext('2d');
-  var accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#FF5B2E';
-  var lineCol = getComputedStyle(document.documentElement).getPropertyValue('--line').trim() || '#2A3038';
-  var W = 0, H = 0, dpr = 1;
-
-  // 1차원 줄의 파동 방정식 (양 끝 고정)
-  var N = 240, y = new Float32Array(N), yp = new Float32Array(N), yn = new Float32Array(N);
-  var C2 = 0.38, DAMP = reduce ? 0.985 : 0.9972;
-
-  function resize(){
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
-    W = canvas.clientWidth; H = canvas.clientHeight;
-    canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
-  }
-  window.addEventListener('resize', resize); resize();
-
-  function base(){ return H * (W < 640 ? 0.6 : 0.64); }
-  function scale(){ return H * 0.2; }
-  function visibleW(){ return document.body.classList.contains('open') && W > 700 ? W - Math.min(560, W) : W; }
-
-  function pluck(xn, amp, width){
-    width = width || 0.035;
-    for (var i = 1; i < N - 1; i++){
-      var d = i / (N - 1) - xn;
-      var g = Math.exp(-(d * d) / (2 * width * width)) * amp;
-      y[i] += g; yp[i] += g;
-    }
-  }
-
-  function step(){
-    for (var i = 1; i < N - 1; i++){
-      yn[i] = (2 * y[i] - yp[i] + C2 * (y[i - 1] - 2 * y[i] + y[i + 1])) * DAMP;
-    }
-    var t = yp; yp = y; y = yn; yn = t;
-    y[0] = y[N - 1] = 0;
-  }
-
-  // 소리 (사용자가 켰을 때만)
-  var audio = null, soundOn = false;
-  var soundBtn = document.getElementById('sound');
-  soundBtn.addEventListener('click', function(){
-    soundOn = !soundOn;
-    if (soundOn && !audio){ try { audio = new (window.AudioContext || window.webkitAudioContext)(); } catch(e){ audio = null; } }
-    if (audio && audio.state === 'suspended') audio.resume();
-    soundBtn.setAttribute('aria-pressed', soundOn ? 'true' : 'false');
-    soundBtn.textContent = soundOn ? '소리 켜짐' : '소리 꺼짐';
-    if (soundOn) strike(0.5, 0.6);
-  });
-  function tone(xn, amp){
-    if (!soundOn || !audio) return;
-    var now = audio.currentTime, f = 110 * Math.pow(2, xn * 2);
-    [[1, 1], [2.01, 0.35], [3.02, 0.12]].forEach(function(p){
-      var o = audio.createOscillator(), g = audio.createGain();
-      o.type = 'sine'; o.frequency.value = f * p[0];
-      g.gain.setValueAtTime(0.0001, now);
-      g.gain.exponentialRampToValueAtTime(Math.max(0.0002, 0.12 * amp * p[1]), now + 0.008);
-      g.gain.exponentialRampToValueAtTime(0.0001, now + 1.6 / p[0]);
-      o.connect(g).connect(audio.destination); o.start(now); o.stop(now + 1.7);
-    });
-  }
-  function strike(xn, amp, sign){
-    pluck(xn, (sign || (Math.random() < 0.5 ? -1 : 1)) * amp, 0.03);
-    tone(xn, Math.abs(amp));
-  }
-
-  // 손대기
-  var hint = document.getElementById('hint'), touched = false;
-  function firstTouch(){ if (!touched){ touched = true; hint.classList.add('gone'); } }
-  var last = null;
-  canvas.addEventListener('pointermove', function(e){
-    var vw = visibleW(); if (e.clientX > vw) { last = null; return; }
-    if (last){
-      var dy = e.clientY - last.y, dx = e.clientX - last.x;
-      var near = Math.abs(e.clientY - (base() + y[Math.round(e.clientX / vw * (N - 1))] * scale())) < H * 0.22;
-      if (near){
-        var push = Math.max(-0.5, Math.min(0.5, (dy + dx * 0.1) / H * 2.2));
-        pluck(e.clientX / vw, push, 0.02);
-        if (Math.abs(push) > 0.02) firstTouch();
-      }
-    }
-    last = { x: e.clientX, y: e.clientY };
-  });
-  canvas.addEventListener('pointerleave', function(){ last = null; });
-  canvas.addEventListener('pointerdown', function(e){
-    var vw = visibleW(); if (e.clientX > vw) return;
-    var rel = (e.clientY - base()) / scale();
-    strike(e.clientX / vw, 0.9, rel < 0 ? -1 : 1);
-    firstTouch();
-  });
-
-  // 메인 이동 칸에 올리면 그 자리가 울림
-  Array.prototype.forEach.call(document.querySelectorAll('.nav a'), function(a, i){
-    a.addEventListener('pointerenter', function(){ pluck((i + 0.5) / 3, -0.35, 0.05); });
-  });
-
-  // 가만히 있으면 가끔 스스로 떨림
-  var idle = 0;
-  function ambient(dt){
-    if (reduce) return;
-    idle += dt;
-    if (idle > 2600){ idle = 0; pluck(0.15 + Math.random() * 0.7, (Math.random() < 0.5 ? -1 : 1) * (0.12 + Math.random() * 0.1), 0.05); }
-  }
-
-  var ampEl = document.getElementById('amp'), ampT = 0;
-  function draw(){
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.clearRect(0, 0, W, H);
-    var vw = visibleW(), b = base(), s = scale();
-
-    // 측정 눈금
-    ctx.strokeStyle = lineCol; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(0, b); ctx.lineTo(vw, b); ctx.stroke();
-    for (var k = 1; k < 20; k++){
-      var tx = vw * k / 20, th = k % 5 === 0 ? 10 : 5;
-      ctx.beginPath(); ctx.moveTo(tx, b - th); ctx.lineTo(tx, b + th); ctx.stroke();
-    }
-
-    // 줄
-    ctx.beginPath();
-    for (var i = 0; i < N; i++){
-      var px = vw * i / (N - 1), py = b + y[i] * s;
-      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
-    }
-    ctx.strokeStyle = accent; ctx.lineWidth = 2.5; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
-    ctx.stroke();
-  }
-
-  var prev = performance.now();
-  function loop(now){
-    var dt = Math.min(64, now - prev); prev = now;
-    var sub = Math.max(1, Math.round(dt / 16.7 * 3));
-    for (var k = 0; k < sub; k++) step();
-    ambient(dt);
-    draw();
-    ampT += dt;
-    if (ampT > 120){
-      ampT = 0;
-      var m = 0; for (var i = 0; i < N; i++){ var v = Math.abs(y[i]); if (v > m) m = v; }
-      ampEl.textContent = 'AMP ' + Math.min(9.99, m).toFixed(2);
-    }
-    requestAnimationFrame(loop);
-  }
-  // 첫 화면: 로고처럼 감쇠 파형 한 번
-  pluck(0.18, -0.85, 0.045);
-  requestAnimationFrame(loop);
-
-  // 작업 목록
-  var data = [
-    { date:'2025.02', rank:'최우수상', title:'한신 AI 아트코딩 해커톤', sub:'한신대학교 SW중심대학사업단', lvl:4, m:'기록을 정리하고 있습니다.', s:'곧 이 진동의 이야기도 채워집니다.' },
-    { date:'2026.05', rank:'최우수상', title:'AI Hack Camp 2026', sub:'국립중앙과학관장상 · 410개 팀', lvl:4, m:'카메라 대신, 방 안을 지나는 와이파이 신호의 미세한 흔들림.', s:'흔들림의 패턴을 기기 안에서 도는 작은 AI로 읽어 환자 상태를 살피는 비접촉 감시 시스템을 만들었습니다.' },
-    { date:'2026.07', rank:'동상', title:'대학생논문경진대회', sub:'한국디지털콘텐츠학회 · 공동저자', lvl:2, m:'와이파이 신호와 방 안의 소리, 두 가지를 동시에.', s:'두 신호를 함께 읽어 혼자 사는 어르신의 낙상을 놓치지 않는 시스템의 설계 방향을 논문으로 정리했습니다.' },
-    { date:'2026.08', rank:'후원기업상', title:'AI·SW중심대학 디지털 경진대회', sub:'AI부문 · 상위 3%', lvl:3, m:'AI 에이전트가 실제로 골라 온 행동의 기록.', s:'큰 모델의 판단을 작은 모델에 옮겨 담고 직접 압축해, 메모리 1GB·10분 제한 안에서 점수를 0.436에서 0.798로 올렸습니다.' },
-    { date:'2026.08', rank:'대상', title:'내일路 해커톤 2026', sub:'인천국제공항공사 사장상 · 팀장', lvl:5, m:'책상 상판에 붙인 진동 센서로 캐리어 바퀴가 굴러가는 소리.', s:'바퀴 소리로 짐의 흐름을 세고 항공편 도착 정보와 합쳐, 공항에서 철도로 넘어가는 구간의 승강장 혼잡을 미리 알려 주는 모듈을 만들었습니다.' },
-    { date:'2026.09~', rank:'진행 중', title:'Matter AX Sprint 2026', sub:'서류 통과 20팀 · 본선 준비', lvl:1, m:'본선을 준비하는 중입니다.', s:'결과가 나오면 이 진동도 기록으로 채워집니다.' }
-  ];
-  var rec = document.getElementById('rec');
-  data.slice().reverse().forEach(function(d, ri){
-    var i = data.length - 1 - ri;
-    var li = document.createElement('li');
-    var bars = ''; for (var k = 1; k <= 5; k++) bars += '<i class="' + (k <= d.lvl ? 'on' : '') + '" style="height:' + (4 + k * 3.6) + 'px"></i>';
-    li.innerHTML = '<button type="button" aria-expanded="false" aria-controls="m' + i + '"><span class="d"></span><span class="t"><b></b><span></span></span><span class="lvl" aria-hidden="true">' + bars + '</span></button><dl class="more" id="m' + i + '" hidden><dt>잰 것</dt><dd></dd><dt>푼 방법</dt><dd></dd></dl>';
-    li.querySelector('.d').textContent = d.date;
-    li.querySelector('.t b').textContent = d.rank + ' · ' + d.title;
-    li.querySelector('.t span').textContent = d.sub;
-    var dds = li.querySelectorAll('dd'); dds[0].textContent = d.m; dds[1].textContent = d.s;
-    var btn = li.querySelector('button'), more = li.querySelector('.more');
-    var ring = function(){ strike((i + 0.5) / data.length, 0.18 + d.lvl * 0.17, -1); };
-    btn.addEventListener('pointerenter', ring);
-    btn.addEventListener('focus', ring);
-    btn.addEventListener('click', function(){
-      var open = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
-      more.hidden = open;
-      if (!open) ring();
-    });
-    rec.appendChild(li);
-  });
-
-  // 패널 열기·닫기 (주소 끝 #work 등으로 바로 열 수 있음)
-  var drawer = document.getElementById('drawer');
-  var tabs = document.querySelectorAll('[data-tab]');
-  var lastFocus = null;
-  function show(id){
-    if (!id || !document.getElementById(id)){ hide(); return; }
-    if (!document.body.classList.contains('open')) lastFocus = document.activeElement;
-    document.body.classList.add('open');
-    drawer.setAttribute('aria-hidden', 'false');
-    Array.prototype.forEach.call(tabs, function(t){
-      var on = t.getAttribute('data-tab') === id;
-      t.setAttribute('aria-selected', on ? 'true' : 'false');
-      document.getElementById(t.getAttribute('data-tab')).hidden = !on;
-    });
-    pluck(0.85, 0.5, 0.06);
-    setTimeout(function(){ var h = document.querySelector('#' + id + ' h2'); if (h){ h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); } }, 60);
-  }
-  function hide(){
-    document.body.classList.remove('open');
-    drawer.setAttribute('aria-hidden', 'true');
-    if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
-  }
-  function fromHash(){ var h = (location.hash || '').replace('#', ''); if (h) show(h); else hide(); }
-  window.addEventListener('hashchange', fromHash);
-  Array.prototype.forEach.call(tabs, function(t){
-    t.addEventListener('click', function(){ location.hash = t.getAttribute('data-tab'); });
-  });
-  document.getElementById('close').addEventListener('click', function(){
-    if (location.hash) history.pushState('', document.title, location.pathname + location.search);
-    hide();
-  });
-  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && document.body.classList.contains('open')) document.getElementById('close').click(); });
-  fromHash();
-
-  // 주소 복사
-  document.getElementById('copy').addEventListener('click', function(){
-    var b = this, addr = document.getElementById('addr').textContent;
-    var done = function(){ b.textContent = '복사했어요'; setTimeout(function(){ b.textContent = '주소 복사'; }, 1600); };
-    if (navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(addr).then(done, function(){ selectAddr(); });
-    } else selectAddr();
-    function selectAddr(){ var r = document.createRange(); r.selectNodeContents(document.getElementById('addr')); var s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = '선택됨 · Ctrl+C'; }
-  });
-})();
-</script>
+</footer>
 </body>
 </html>
