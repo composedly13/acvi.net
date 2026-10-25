@@ -5,7 +5,7 @@
   2. [대괄호] 안을 채우고, 없는 항목은 그 줄을 지웁니다.
   3. 이미지가 생기면 <div class="ph">…</div> 를 <img class="cover" src="../assets/img/<파일>" alt="…"> 로 바꿉니다.
   4. index.html 프로젝트 목록에서 해당 줄의 <div class="prow"> 를 <a class="prow" href="projects/<슬러그>.html"> 로 바꾸고 '상세 준비 중' 꼬리표를 지웁니다.
-  5. 문장은 '~다' 평서체나 명사형으로 끝낸다. '~입니다 / ~습니다 / ~해요 / ~주세요'는 쓰지 않는다.
+  5. 문장 금지. 모든 표현은 명사구 · 키워드 · '항목 / 값' 형태로만 쓴다(~다 · ~입니다 · ~해요 · ~음 끝맺음 없음).
   이 파일 자체는 사이트에 노출되지 않음(링크가 없음).
 -->
 <html lang="ko">
@@ -13,7 +13,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>[프로젝트 한 줄 제목] — acvi</title>
-<meta name="description" content="[대회명] [수상]. [무엇을 재서 무엇을 만들었는지 한 문장]">
+<meta name="description" content="[대회명] [수상] · [무엇 기반 무엇 — 명사구]">
 <meta property="og:title" content="[프로젝트 한 줄 제목] — acvi">
 <meta property="og:description" content="[대회명] [수상] · [상 이름]">
 <meta property="og:url" content="https://acvi.net/projects/[슬러그].html">
@@ -54,8 +54,8 @@
       <span class="badge l">[역할 — 팀장 · AI 파트 등]</span>
       <span class="badge l">[기술 꼬리표 · 2~3개]</span>
     </div>
-    <h1>[프로젝트 한 줄 제목 — 무엇으로 무엇을 했다]</h1>
-    <p class="sub">[한 문단 요약 — 어떤 현장에서, 무엇을 재서, 무엇을 만들었는지]</p>
+    <h1>[프로젝트 제목 — 명사구. 예: OO 기반 OO 예보]</h1>
+    <p class="sub">[잰 것 + 쓴 데이터 → 만든 것 — 명사구 한 줄]</p>
   </section>
 
   <section class="wrap overview" aria-label="프로젝트 개요">
@@ -78,14 +78,21 @@
       <article>
         <div class="lab"><span class="num">01</span><h2>현장과 문제</h2></div>
         <div class="bod">
-          <p>[어떤 현장에서 무엇이 문제였는지. 기존에 무엇이 없었는지.]</p>
+          <dl class="kv">
+            <div><dt>[항목]</dt><dd>[현장 · 문제 · 없던 것 — 명사구]</dd></div>
+            <div><dt>[항목]</dt><dd>[값]</dd></div>
+          </dl>
         </div>
       </article>
 
       <article>
         <div class="lab"><span class="num">02</span><h2>잰 것</h2></div>
         <div class="bod">
-          <p>[무엇을 어떤 센서·데이터로 어떻게 쟀는지. 실패하고 바꾼 것이 있으면 그것도.]</p>
+          <dl class="kv">
+            <div><dt>대상</dt><dd>[무엇]</dd></div>
+            <div><dt>센서</dt><dd>[어떤 장비]</dd></div>
+            <div><dt>[항목]</dt><dd>[실패 → 변경이 있으면]</dd></div>
+          </dl>
           <div class="pics">
             <div class="ph"><span>[이미지] 장비 · 데이터</span></div>
             <div class="ph"><span>[이미지] 신호 · 화면</span></div>
@@ -96,7 +103,10 @@
       <article>
         <div class="lab"><span class="num">03</span><h2>만든 것</h2></div>
         <div class="bod">
-          <p>[모델 · 모듈 · 기기. 어디에 붙는 형태인지.]</p>
+          <dl class="kv">
+            <div><dt>결과물</dt><dd>[모델 · 모듈 · 기기]</dd></div>
+            <div><dt>연결 방식</dt><dd>[어디에 붙는 형태]</dd></div>
+          </dl>
           <div class="ph big"><span>[이미지] 결과물 화면</span></div>
         </div>
       </article>
@@ -109,7 +119,7 @@
             <div><b>[n일]</b><span>[투입 기간]</span></div>
             <div><b>[수치]</b><span>[점수 · 정확도 · 규모]</span></div>
           </div>
-          <p class="note">[이후 진행 — 특허 · 논문 · 후속 과제가 있으면]</p>
+          <p class="note">후속 · [특허 · 논문 · 후속 과제 — 명사구]</p>
         </div>
       </article>
 
