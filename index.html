@@ -38,21 +38,33 @@
     </div>
   </section>
 
-  <!-- 프로젝트 타일. 상세 페이지가 생기면 <a class="pill" href="projects/<슬러그>.html">자세히 보기</a> 를 붙인다.
-       이미지가 생기면 설명 아래에 <img class="shot" src="assets/img/<슬러그>/tile.jpg" alt="…"> 를 넣는다. -->
+  <!-- 프로젝트 타일. 모두 같은 모양, 최신순. 구분 표시 없음.
+       상세 페이지가 생기면 <article class="tile"> … </article> 를 <a class="tile" href="projects/<슬러그>.html"> … </a> 로 바꾼다.
+       이미지가 생기면 설명 아래에 <img class="shot" src="assets/img/<슬러그>/tile.jpg" alt="…"> 를 넣는다(모든 타일 동일하게). -->
   <section class="tiles" id="projects" aria-label="프로젝트">
 
-    <article class="tile wide dark">
-      <p class="award">내일路 해커톤 2026 대상</p>
-      <h2>drrk</h2>
-      <p class="desc">캐리어 바퀴 소리 기반 공항→철도 승강장 혼잡 예보</p>
-      <a class="pill light" href="projects/drrk.html" aria-label="drrk 자세히 보기">자세히 보기</a>
-    </article>
-
-    <article class="tile wide">
+    <article class="tile">
       <p class="award">Matter AX Sprint 2026 우수상</p>
       <h2>Go/No-Go</h2>
       <p class="desc">지능형 홈 허브 소형 AI의 판단 보조 중계 기기</p>
+    </article>
+
+    <a class="tile" href="projects/drrk.html">
+      <p class="award">내일路 해커톤 2026 대상</p>
+      <h2>drrk</h2>
+      <p class="desc">캐리어 바퀴 소리 기반 공항→철도 승강장 혼잡 예보</p>
+    </a>
+
+    <article class="tile">
+      <p class="award">AI·SW중심대학 디지털 경진대회 2026 후원기업상</p>
+      <h2>1GB 언어모델</h2>
+      <p class="desc">메모리 1GB 제한 소형 언어모델, 점수 0.436 → 0.798</p>
+    </article>
+
+    <article class="tile">
+      <p class="award">한국디지털콘텐츠학회 논문경진대회 2026 동상</p>
+      <h2>SafeWave</h2>
+      <p class="desc">와이파이 신호와 소리 결합 독거 어르신 낙상 감지</p>
     </article>
 
     <article class="tile">
@@ -62,20 +74,8 @@
     </article>
 
     <article class="tile">
-      <p class="award">AI·SW중심대학 디지털 경진대회 후원기업상</p>
-      <h2>1GB 언어모델</h2>
-      <p class="desc">메모리 1GB 제한 소형 언어모델, 점수 0.436 → 0.798</p>
-    </article>
-
-    <article class="tile">
-      <p class="award">한국디지털콘텐츠학회 논문경진대회 동상</p>
-      <h2>SafeWave</h2>
-      <p class="desc">와이파이 신호와 소리 결합 독거 어르신 낙상 감지</p>
-    </article>
-
-    <article class="tile">
-      <p class="award">2025 최우수상</p>
-      <h2>한신 AI 아트코딩 해커톤</h2>
+      <p class="award">한신 AI 아트코딩 해커톤 2025 최우수상</p>
+      <h2>AI 아트코딩</h2>
     </article>
 
   </section>

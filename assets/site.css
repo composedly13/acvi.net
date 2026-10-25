@@ -9,7 +9,7 @@
   --line:#D2D2D7;
   --black:#000000;
   --on-black:#F5F5F7;
-  --accent:#FF5B2E;
+  --accent:#FF5B2E;  /* 로고 · 파형에만 */
   --accent-ink:#C2410C;
   --font:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Noto Sans CJK KR",system-ui,sans-serif;
 }
@@ -46,15 +46,11 @@ img{display:block;max-width:100%;height:auto}
   @keyframes record{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
 }
 
-/* ---------- 홈: 프로젝트 타일 ---------- */
+/* ---------- 홈: 프로젝트 타일 — 모두 같은 모양 ---------- */
 .tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:56px 12px 12px}
-.tile{background:var(--tile);min-height:360px;padding:64px 32px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-.tile.wide{grid-column:1 / -1;min-height:440px}
-.tile.dark{background:var(--black);color:var(--on-black)}
+.tile{background:var(--tile);color:var(--ink);min-height:400px;padding:64px 32px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
 .tile .award{font-size:17px;font-weight:600;letter-spacing:-.015em;color:var(--gray)}
-.tile.dark .award{color:var(--accent)}
 .tile h2{margin-top:8px;text-wrap:balance;font-size:clamp(36px,4.2vw,52px);font-weight:700;letter-spacing:-.04em;line-height:1.05}
-.tile.wide h2{font-size:clamp(48px,7vw,80px)}
 .tile .desc{margin-top:12px;max-width:22em;text-wrap:balance;font-size:clamp(19px,1.9vw,24px);font-weight:500;letter-spacing:-.02em;line-height:1.3}
 .tile .shot{margin-top:40px;width:100%;max-width:880px}
 
@@ -62,7 +58,6 @@ img{display:block;max-width:100%;height:auto}
 .pill:hover{opacity:.86}
 .pill.light{background:#fff;color:var(--ink)}
 .pill.line{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
-.tile .pill{margin-top:28px}
 
 /* ---------- 홈: 연락 ---------- */
 .contact{padding:136px 22px 144px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px}
@@ -78,7 +73,7 @@ img{display:block;max-width:100%;height:auto}
 
 /* ---------- 프로젝트 페이지 ---------- */
 .phero{padding:96px 22px 0;text-align:center;display:flex;flex-direction:column;align-items:center}
-.phero .award{font-size:19px;font-weight:600;letter-spacing:-.015em;color:var(--accent-ink)}
+.phero .award{font-size:19px;font-weight:600;letter-spacing:-.015em;color:var(--gray)}
 .phero h1{margin-top:10px;font-size:clamp(80px,15vw,168px);font-weight:700;letter-spacing:-.065em;line-height:.92}
 .phero .desc{margin-top:22px;max-width:22em;text-wrap:balance;font-size:clamp(21px,2.6vw,28px);font-weight:600;letter-spacing:-.025em;line-height:1.3}
 .phero .shot{margin-top:56px;width:100%;max-width:1024px}
@@ -104,7 +99,6 @@ img{display:block;max-width:100%;height:auto}
   .wave{margin-top:48px}
   .tiles{grid-template-columns:minmax(0,1fr);padding-top:40px}
   .tile{min-height:300px;padding:56px 24px}
-  .tile.wide{min-height:340px}
   .contact{padding:104px 22px 112px}
   .phero{padding-top:72px}
   .highlights{grid-template-columns:minmax(0,1fr);gap:36px;padding:72px 22px 80px}
