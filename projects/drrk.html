@@ -3,187 +3,106 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>캐리어 바퀴 소리로 승강장 혼잡 예측 'drrk' — acvi</title>
-<meta name="description" content="내일路 해커톤 2026 대상 · 캐리어 바퀴 소리 기반 공항→철도 승강장 혼잡 예보 모듈 drrk">
-<meta property="og:title" content="캐리어 바퀴 소리로 승강장 혼잡 예측 'drrk' — acvi">
-<meta property="og:description" content="내일路 해커톤 2026 대상 · 인천국제공항공사 사장상">
+<title>drrk — acvi</title>
+<meta name="description" content="내일路 해커톤 2026 대상, 캐리어 바퀴 소리 기반 공항→철도 승강장 혼잡 예보">
+<meta property="og:title" content="drrk — acvi">
+<meta property="og:description" content="내일路 해커톤 2026 대상, 캐리어 바퀴 소리 기반 공항→철도 승강장 혼잡 예보">
 <meta property="og:url" content="https://acvi.net/projects/drrk.html">
 <meta property="og:type" content="article">
-<meta name="theme-color" content="#F4F4F1">
+<meta name="theme-color" content="#FFFFFF">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="../assets/site.css">
 </head>
 <body>
-<a class="skip" href="#main">본문으로 건너뛰기</a>
+<a class="skip" href="#main">본문 바로가기</a>
 
-<header class="top">
-  <nav class="wrap nav" aria-label="주 메뉴">
-    <a class="brand" href="/" aria-label="acvi 홈">
-      <svg viewBox="0 0 200 100" aria-hidden="true"><path d="M0 50 L6.7 29.6 L13.3 17.1 L20 14.7 L26.7 21.6 L33.3 34.8 L40 50 L46.7 63.2 L53.3 71.2 L60 72.7 L66.7 68.3 L73.3 59.8 L80 50 L86.7 41.5 L93.3 36.4 L100 35.4 L106.7 38.2 L113.3 43.7 L120 50 L126.7 55.5 L133.3 58.8 L140 59.4 L146.7 57.6 L153.3 54.1 L160 50 L166.7 46.5 L173.3 44.3 L180 43.9 L186.7 45.1 L193.3 47.4 L200 50" fill="none" stroke="#FF5B2E" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <b>acvi</b>
-    </a>
-    <div class="menu">
-      <a href="/#projects" aria-current="page">프로젝트</a>
-      <a href="/#services">하는 일</a>
-      <a href="/#about">소개</a>
-      <a href="/#news">소식</a>
-      <a class="btn d" href="/#contact">연락하기</a>
+<header class="gnav">
+  <nav class="gnav-in" aria-label="주 메뉴">
+    <a class="logo" href="/" aria-label="acvi 홈"><svg viewBox="0 0 200 100" aria-hidden="true"><path d="M0 50 L6.7 29.6 L13.3 17.1 L20 14.7 L26.7 21.6 L33.3 34.8 L40 50 L46.7 63.2 L53.3 71.2 L60 72.7 L66.7 68.3 L73.3 59.8 L80 50 L86.7 41.5 L93.3 36.4 L100 35.4 L106.7 38.2 L113.3 43.7 L120 50 L126.7 55.5 L133.3 58.8 L140 59.4 L146.7 57.6 L153.3 54.1 L160 50 L166.7 46.5 L173.3 44.3 L180 43.9 L186.7 45.1 L193.3 47.4 L200 50" fill="none" stroke="#FF5B2E" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/></svg><span>acvi</span></a>
+    <div class="links">
+      <a href="/#projects">프로젝트</a>
+      <a href="/#contact">연락</a>
     </div>
   </nav>
 </header>
 
 <main id="main">
 
-  <!-- 제목 -->
-  <section class="wrap phead">
-    <nav class="crumb" aria-label="현재 위치"><a href="/#projects">프로젝트</a><span aria-hidden="true">/</span><span>내일路 해커톤 2026</span></nav>
-    <div class="meta">
-      <span class="mono">2026.08</span>
-      <span class="badge a">대상 · 인천국제공항공사 사장상</span>
-      <span class="badge l">팀장 · AI 모듈 담당</span>
-      <span class="badge l">진동 계측 · 사건 감지 · 수요 예보</span>
+  <section class="phero">
+    <p class="award">내일路 해커톤 2026 대상</p>
+    <h1>drrk</h1>
+    <p class="desc">캐리어 바퀴 소리 기반 공항→철도 승강장 혼잡 예보</p>
+    <!-- 대표 이미지가 생기면: <img class="shot" src="../assets/img/drrk/cover.jpg" alt="…"> -->
+  </section>
+
+  <section class="highlights" aria-label="핵심 수치">
+    <div><b>대상</b><span>인천국제공항공사 사장상</span></div>
+    <div><b>약 70팀</b><span>예선 참가, 본선 12팀, 대상 2팀</span></div>
+    <div><b>9일</b><span>준비 1주와 본선 2일</span></div>
+  </section>
+
+  <section class="specs" aria-label="상세">
+    <div class="spec">
+      <h2>현장과 문제</h2>
+      <dl class="kv">
+        <dt>빈 구간</dt><dd>공항→철도 환승 구간 혼잡도 정보</dd>
+        <dt>항공 데이터</dt><dd>도착 시각과 승객 수뿐</dd>
+        <dt>비어 있는 값</dt><dd>입국심사, 수하물 수취 뒤 실제 유출 곡선</dd>
+        <dt>차이</dt><dd>같은 물량의 5분 집중과 20분 분산, 서로 다른 승강장 상황</dd>
+        <dt>출발점</dt><dd>유출 곡선의 현장 직접 계측</dd>
+      </dl>
     </div>
-    <h1>캐리어 바퀴 소리 기반 공항→철도 승강장 혼잡 예보</h1>
-    <p class="sub">입국장 캐리어 바퀴 진동 계측 + 항공편 도착 정보 → 열차 승강장 혼잡 예보 모듈 'drrk'</p>
-  </section>
-
-  <!-- 개요 -->
-  <section class="wrap overview" aria-label="프로젝트 개요">
-    <dl>
-      <div><dt>대회</dt><dd>내일路 해커톤 2026<br><span>RAIL × AIR AI Mobility Hackathon</span></dd></div>
-      <div><dt>주최</dt><dd>코레일 · 인천국제공항공사</dd></div>
-      <div><dt>기간</dt><dd>준비 1주 + 본선 2박 3일<br><span>2026.8.12 – 8.14 · 인천공항 항공교육원</span></dd></div>
-      <div><dt>팀 · 역할</dt><dd>드르륵팀 4인 · 팀장<br><span>계측 · AI 모듈 담당</span></dd></div>
-      <div><dt>결과</dt><dd>대상 (2팀 중 1팀)<br><span>예선 약 70팀 → 본선 12팀</span></dd></div>
-    </dl>
-  </section>
-
-  <!-- 대표 이미지 -->
-  <section class="wrap pcover" aria-label="대표 이미지">
-    <div class="ph"><span>[대표 이미지] drrk 혼잡도 현황판 화면 또는 계측 장비 사진 · 1200 × 560 권장</span></div>
-  </section>
-
-  <!-- 본문 -->
-  <section class="band">
-    <div class="wrap story">
-
-      <article>
-        <div class="lab"><span class="num">01</span><h2>현장과 문제</h2></div>
-        <div class="bod">
-          <dl class="kv">
-            <div><dt>빈 구간</dt><dd>공항→철도 환승 구간 혼잡도 정보</dd></div>
-            <div><dt>항공 데이터</dt><dd>도착 시각 · 승객 수뿐</dd></div>
-            <div><dt>비어 있는 값</dt><dd>입국심사 · 수하물 수취 뒤 실제 유출 곡선</dd></div>
-            <div><dt>차이</dt><dd>같은 물량 · 5분 집중 vs 20분 분산 → 승강장 상황 차이</dd></div>
-            <div><dt>출발점</dt><dd>유출 곡선의 현장 직접 계측</dd></div>
-          </dl>
-        </div>
-      </article>
-
-      <article>
-        <div class="lab"><span class="num">02</span><h2>잰 것</h2></div>
-        <div class="bod">
-          <dl class="kv">
-            <div><dt>대상</dt><dd>바닥을 타고 오는 진동 (공기 중 소리 대신)</dd></div>
-            <div><dt>센서</dt><dd>접촉식 피에조 픽업(압전 센서) 2개 + 오디오 인터페이스</dd></div>
-            <div><dt>수신</dt><dd>48kHz · 24비트</dd></div>
-            <div><dt>계측면</dt><dd>대리석 타일 바닥(진동 감쇠로 실패) → 책상 상판</dd></div>
-            <div><dt>분석</dt><dd>10초 창 · 5초 간격 통과 사건 탐지</dd></div>
-            <div><dt>분류</dt><dd>통과 1회당 캐리어 0 · 1 · 2개</dd></div>
-            <div><dt>학습 데이터</dt><dd>본선 현장 직접 수집</dd></div>
-          </dl>
-          <div class="pics">
-            <div class="ph"><span>[이미지] 피에조 픽업 + 오디오 인터페이스</span></div>
-            <div class="ph"><span>[이미지] 통과 사건 파형 캡처</span></div>
-          </div>
-        </div>
-      </article>
-
-      <article>
-        <div class="lab"><span class="num">03</span><h2>만든 것</h2></div>
-        <div class="bod">
-          <dl class="kv">
-            <div><dt>결과물</dt><dd>계측 패키지 'drrk'</dd></div>
-            <div><dt>사용 형태</dt><dd>서버에서 불러 쓰기 · 소형 기기에서 결과만 전송</dd></div>
-            <div><dt>연결 방식</dt><dd>독립 앱 아닌 기존 서비스용 모듈</dd></div>
-            <div><dt>혼잡도</dt><dd>실측(센서가 센 캐리어) + 예보(항공편 도착 물량)</dd></div>
-            <div><dt>계산 구간</dt><dd>직전 열차 출발 ~ 다음 열차 도착</dd></div>
-            <div><dt>출력</dt><dd>현황판 실시간 표시</dd></div>
-          </dl>
-          <div class="ph big"><span>[이미지] 현황판 화면 · 혼잡도 수준 표시</span></div>
-        </div>
-      </article>
-
-      <article>
-        <div class="lab"><span class="num">04</span><h2>결과</h2></div>
-        <div class="bod">
-          <div class="rstats">
-            <div><b>대상</b><span>인천국제공항공사 사장상</span></div>
-            <div><b>9일</b><span>준비 1주 + 본선 개발 2일</span></div>
-            <div><b>2건</b><span>언론 보도</span></div>
-            <div><b class="todo">[정확도]</b><span>캐리어 수 분류 · 확인 후 기입</span></div>
-          </div>
-          <p class="note">후속 · drrk 계측 기술 팀 공동 특허 출원 진행 중</p>
-        </div>
-      </article>
-
-      <article>
-        <div class="lab"><span class="num">05</span><h2>증거</h2></div>
-        <div class="bod">
-          <div class="evid">
-            <figure><div class="ph sm"><span>[상장 사진]</span></div><figcaption>대상 상장 · 인천국제공항공사 사장상</figcaption></figure>
-            <a class="ecard" href="https://www.kyeongin.com/article/1770048" target="_blank" rel="noopener">
-              <span class="k">보도 · 경인일보 · 2026.09.01</span>
-              <span class="t">'만나본 Who' — 캐리어 소리로 혼잡을 예측한 팀장 인터뷰</span>
-              <span class="go">기사 보기 →</span>
-            </a>
-            <a class="ecard" href="https://www.joongboo.com/news/articleView.html?idxno=363734069" target="_blank" rel="noopener">
-              <span class="k">보도 · 중부일보 · 2026.08.18</span>
-              <span class="t">인천공항공사·코레일 '내일로 해커톤 2026' 성료 — 드르륵팀 대상</span>
-              <span class="go">기사 보기 →</span>
-            </a>
-            <div class="ecard todo">
-              <span class="k">코드 · 데모</span>
-              <span class="t">[GitHub 저장소 링크]<br>[데모 영상 링크]</span>
-              <span class="go">공개 범위 확인 후 연결</span>
-            </div>
-          </div>
-        </div>
-      </article>
-
+    <div class="spec">
+      <h2>잰 것</h2>
+      <dl class="kv">
+        <dt>대상</dt><dd>바닥을 타고 오는 진동, 공기 중 소리 대신</dd>
+        <dt>센서</dt><dd>접촉식 피에조 픽업(압전 센서) 2개, 오디오 인터페이스</dd>
+        <dt>수신</dt><dd>48kHz, 24비트</dd>
+        <dt>계측면</dt><dd>대리석 타일 바닥(진동 감쇠로 실패) → 책상 상판</dd>
+        <dt>분석</dt><dd>10초 창, 5초 간격 통과 사건 탐지</dd>
+        <dt>분류</dt><dd>통과 1회당 캐리어 0, 1, 2개</dd>
+        <dt>학습 데이터</dt><dd>본선 현장 직접 수집</dd>
+      </dl>
+    </div>
+    <div class="spec">
+      <h2>만든 것</h2>
+      <dl class="kv">
+        <dt>결과물</dt><dd>계측 패키지 drrk</dd>
+        <dt>사용 형태</dt><dd>서버에서 불러 쓰기, 소형 기기에서 결과만 전송</dd>
+        <dt>연결 방식</dt><dd>독립 앱이 아닌 기존 서비스용 모듈</dd>
+        <dt>혼잡도</dt><dd>실측(센서가 센 캐리어) + 예보(항공편 도착 물량)</dd>
+        <dt>계산 구간</dt><dd>직전 열차 출발부터 다음 열차 도착까지</dd>
+        <dt>출력</dt><dd>현황판 실시간 표시</dd>
+      </dl>
+    </div>
+    <div class="spec">
+      <h2>정보</h2>
+      <dl class="kv">
+        <dt>대회</dt><dd>내일路 해커톤 2026 (RAIL × AIR AI Mobility Hackathon)</dd>
+        <dt>주최</dt><dd>코레일, 인천국제공항공사</dd>
+        <dt>기간</dt><dd>2026년 8월 12–14일, 인천공항 항공교육원</dd>
+        <dt>팀</dt><dd>드르륵팀 4인</dd>
+        <dt>역할</dt><dd>팀장, 계측과 AI 모듈</dd>
+        <dt>후속</dt><dd>drrk 계측 기술 팀 공동 특허 출원 진행 중</dd>
+      </dl>
+    </div>
+    <div class="spec">
+      <h2>보도</h2>
+      <dl class="kv">
+        <dt>2026.09.01</dt><dd><a href="https://www.kyeongin.com/article/1770048" target="_blank" rel="noopener">경인일보 만나본 Who, 팀장 인터뷰</a></dd>
+        <dt>2026.08.18</dt><dd><a href="https://www.joongboo.com/news/articleView.html?idxno=363734069" target="_blank" rel="noopener">중부일보, 내일로 해커톤 2026 성료와 드르륵팀 대상</a></dd>
+      </dl>
     </div>
   </section>
 
-  <!-- 사진 -->
-  <section class="wrap gallery" aria-label="현장 사진">
-    <p class="eyebrow">GALLERY</p>
-    <div class="row">
-      <div class="ph"><span>[사진] 본선 현장 작업</span></div>
-      <div class="ph"><span>[사진] 발표 장면</span></div>
-      <div class="ph"><span>[사진] 시상식</span></div>
-    </div>
-  </section>
-
-  <!-- 이전 · 다음 -->
-  <nav class="wrap pn" aria-label="다른 프로젝트">
-    <div class="none"><span class="k">← 이전 프로젝트 · 2026.08</span><b>1GB · 10분 제한 안에서 큰 모델의 판단을 작은 모델에 옮기다 — 준비 중</b></div>
-    <div class="none next"><span class="k">다음 프로젝트 · 2026.10 →</span><b>지능형 홈 허브의 작은 AI를 돕는 중계 기기 'Go/No-Go' — 준비 중</b></div>
-  </nav>
+  <div class="back"><a class="pill line" href="/#projects">모든 프로젝트</a></div>
 
 </main>
 
 <footer class="foot">
-  <div class="wrap">
-    <div class="brand">
-      <svg viewBox="0 0 200 100" aria-hidden="true"><path d="M0 50 L6.7 29.6 L13.3 17.1 L20 14.7 L26.7 21.6 L33.3 34.8 L40 50 L46.7 63.2 L53.3 71.2 L60 72.7 L66.7 68.3 L73.3 59.8 L80 50 L86.7 41.5 L93.3 36.4 L100 35.4 L106.7 38.2 L113.3 43.7 L120 50 L126.7 55.5 L133.3 58.8 L140 59.4 L146.7 57.6 L153.3 54.1 L160 50 L166.7 46.5 L173.3 44.3 L180 43.9 L186.7 45.1 L193.3 47.4 L200 50" fill="none" stroke="#FF5B2E" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <b>acvi</b>
-      <span class="eyebrow dim">ACOUSTIC · VIBRATION</span>
-    </div>
-    <p>대표 김태연 · kim@acvi.net · © 2026 acvi</p>
-  </div>
+  <div class="foot-in"><span>© 2026 acvi</span><span>김태연</span></div>
 </footer>
 </body>
 </html>

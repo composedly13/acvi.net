@@ -1,175 +1,102 @@
 <!doctype html>
 <!--
-  프로젝트 페이지 틀.
-  1. 이 파일을 projects/<영문-슬러그>.html 로 복사합니다. (예: projects/aitkoo.html)
-  2. [대괄호] 안을 채우고, 없는 항목은 그 줄을 지웁니다.
-  3. 이미지가 생기면 <div class="ph">…</div> 를 <img class="cover" src="../assets/img/<파일>" alt="…"> 로 바꿉니다.
-  4. index.html 프로젝트 목록에서 해당 줄의 <div class="prow"> 를 <a class="prow" href="projects/<슬러그>.html"> 로 바꾸고 '상세 준비 중' 꼬리표를 지웁니다.
-  5. 문장 금지. 모든 표현은 명사구 · 키워드 · '항목 / 값' 형태로만 쓴다(~다 · ~입니다 · ~해요 · ~음 끝맺음 없음).
-  이 파일 자체는 사이트에 노출되지 않음(링크가 없음).
+  프로젝트 페이지 틀 (사이트에 링크 없음).
+  1. 이 파일을 projects/<영문-슬러그>.html 로 복사한다. (예: projects/aitkoo.html)
+  2. [대괄호]를 채우고, 없는 줄은 지운다. 자리표시 상자는 두지 않는다.
+  3. 대표 이미지가 생기면 .phero 안에 <img class="shot" src="../assets/img/<슬러그>/cover.jpg" alt="…"> 추가.
+  4. index.html 의 해당 타일에 <a class="pill" href="projects/<슬러그>.html">자세히 보기</a> 추가.
+  5. 문장 금지. 제목 · 설명 · 값 모두 명사구로. (~다 · ~입니다 · ~해요 · ~음 끝맺음 없음)
 -->
 <html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>[프로젝트 한 줄 제목] — acvi</title>
-<meta name="description" content="[대회명] [수상] · [무엇 기반 무엇 — 명사구]">
-<meta property="og:title" content="[프로젝트 한 줄 제목] — acvi">
-<meta property="og:description" content="[대회명] [수상] · [상 이름]">
+<title>[이름] — acvi</title>
+<meta name="description" content="[대회명] [상], [무엇 기반 무엇]">
+<meta property="og:title" content="[이름] — acvi">
+<meta property="og:description" content="[대회명] [상], [무엇 기반 무엇]">
 <meta property="og:url" content="https://acvi.net/projects/[슬러그].html">
 <meta property="og:type" content="article">
-<meta name="theme-color" content="#F4F4F1">
+<meta name="theme-color" content="#FFFFFF">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="../assets/site.css">
 </head>
 <body>
-<a class="skip" href="#main">본문으로 건너뛰기</a>
+<a class="skip" href="#main">본문 바로가기</a>
 
-<header class="top">
-  <nav class="wrap nav" aria-label="주 메뉴">
-    <a class="brand" href="/" aria-label="acvi 홈">
-      <svg viewBox="0 0 200 100" aria-hidden="true"><path d="M0 50 L6.7 29.6 L13.3 17.1 L20 14.7 L26.7 21.6 L33.3 34.8 L40 50 L46.7 63.2 L53.3 71.2 L60 72.7 L66.7 68.3 L73.3 59.8 L80 50 L86.7 41.5 L93.3 36.4 L100 35.4 L106.7 38.2 L113.3 43.7 L120 50 L126.7 55.5 L133.3 58.8 L140 59.4 L146.7 57.6 L153.3 54.1 L160 50 L166.7 46.5 L173.3 44.3 L180 43.9 L186.7 45.1 L193.3 47.4 L200 50" fill="none" stroke="#FF5B2E" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <b>acvi</b>
-    </a>
-    <div class="menu">
-      <a href="/#projects" aria-current="page">프로젝트</a>
-      <a href="/#services">하는 일</a>
-      <a href="/#about">소개</a>
-      <a href="/#news">소식</a>
-      <a class="btn d" href="/#contact">연락하기</a>
+<header class="gnav">
+  <nav class="gnav-in" aria-label="주 메뉴">
+    <a class="logo" href="/" aria-label="acvi 홈"><svg viewBox="0 0 200 100" aria-hidden="true"><path d="M0 50 L6.7 29.6 L13.3 17.1 L20 14.7 L26.7 21.6 L33.3 34.8 L40 50 L46.7 63.2 L53.3 71.2 L60 72.7 L66.7 68.3 L73.3 59.8 L80 50 L86.7 41.5 L93.3 36.4 L100 35.4 L106.7 38.2 L113.3 43.7 L120 50 L126.7 55.5 L133.3 58.8 L140 59.4 L146.7 57.6 L153.3 54.1 L160 50 L166.7 46.5 L173.3 44.3 L180 43.9 L186.7 45.1 L193.3 47.4 L200 50" fill="none" stroke="#FF5B2E" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/></svg><span>acvi</span></a>
+    <div class="links">
+      <a href="/#projects">프로젝트</a>
+      <a href="/#contact">연락</a>
     </div>
   </nav>
 </header>
 
 <main id="main">
 
-  <section class="wrap phead">
-    <nav class="crumb" aria-label="현재 위치"><a href="/#projects">프로젝트</a><span aria-hidden="true">/</span><span>[대회명]</span></nav>
-    <div class="meta">
-      <span class="mono">[YYYY.MM]</span>
-      <span class="badge a">[수상] · [상 이름]</span>
-      <span class="badge l">[역할 — 팀장 · AI 파트 등]</span>
-      <span class="badge l">[기술 꼬리표 · 2~3개]</span>
+  <section class="phero">
+    <p class="award">[대회명 상]</p>
+    <h1>[이름]</h1>
+    <p class="desc">[무엇 기반 무엇 — 명사구 한 줄]</p>
+  </section>
+
+  <section class="highlights" aria-label="핵심 수치">
+    <div><b>[상]</b><span>[상 이름]</span></div>
+    <div><b>[수치]</b><span>[규모 · 점수 · 정확도]</span></div>
+    <div><b>[n일]</b><span>[투입 기간]</span></div>
+  </section>
+
+  <section class="specs" aria-label="상세">
+    <div class="spec">
+      <h2>현장과 문제</h2>
+      <dl class="kv">
+        <dt>[항목]</dt><dd>[값]</dd>
+        <dt>[항목]</dt><dd>[값]</dd>
+      </dl>
     </div>
-    <h1>[프로젝트 제목 — 명사구. 예: OO 기반 OO 예보]</h1>
-    <p class="sub">[잰 것 + 쓴 데이터 → 만든 것 — 명사구 한 줄]</p>
-  </section>
-
-  <section class="wrap overview" aria-label="프로젝트 개요">
-    <dl>
-      <div><dt>대회</dt><dd>[대회명]<br><span>[영문명 또는 부문]</span></dd></div>
-      <div><dt>주최</dt><dd>[주최 · 후원]</dd></div>
-      <div><dt>기간</dt><dd>[준비 n주 + 본선 n일]<br><span>[날짜 · 장소]</span></dd></div>
-      <div><dt>팀 · 역할</dt><dd>[팀명 n인 · 역할]<br><span>[맡은 범위]</span></dd></div>
-      <div><dt>결과</dt><dd>[수상]<br><span>[참가 규모 → 본선 → 수상]</span></dd></div>
-    </dl>
-  </section>
-
-  <section class="wrap pcover" aria-label="대표 이미지">
-    <div class="ph"><span>[대표 이미지] 1200 × 560 권장</span></div>
-  </section>
-
-  <section class="band">
-    <div class="wrap story">
-
-      <article>
-        <div class="lab"><span class="num">01</span><h2>현장과 문제</h2></div>
-        <div class="bod">
-          <dl class="kv">
-            <div><dt>[항목]</dt><dd>[현장 · 문제 · 없던 것 — 명사구]</dd></div>
-            <div><dt>[항목]</dt><dd>[값]</dd></div>
-          </dl>
-        </div>
-      </article>
-
-      <article>
-        <div class="lab"><span class="num">02</span><h2>잰 것</h2></div>
-        <div class="bod">
-          <dl class="kv">
-            <div><dt>대상</dt><dd>[무엇]</dd></div>
-            <div><dt>센서</dt><dd>[어떤 장비]</dd></div>
-            <div><dt>[항목]</dt><dd>[실패 → 변경이 있으면]</dd></div>
-          </dl>
-          <div class="pics">
-            <div class="ph"><span>[이미지] 장비 · 데이터</span></div>
-            <div class="ph"><span>[이미지] 신호 · 화면</span></div>
-          </div>
-        </div>
-      </article>
-
-      <article>
-        <div class="lab"><span class="num">03</span><h2>만든 것</h2></div>
-        <div class="bod">
-          <dl class="kv">
-            <div><dt>결과물</dt><dd>[모델 · 모듈 · 기기]</dd></div>
-            <div><dt>연결 방식</dt><dd>[어디에 붙는 형태]</dd></div>
-          </dl>
-          <div class="ph big"><span>[이미지] 결과물 화면</span></div>
-        </div>
-      </article>
-
-      <article>
-        <div class="lab"><span class="num">04</span><h2>결과</h2></div>
-        <div class="bod">
-          <div class="rstats">
-            <div><b>[수상]</b><span>[상 이름]</span></div>
-            <div><b>[n일]</b><span>[투입 기간]</span></div>
-            <div><b>[수치]</b><span>[점수 · 정확도 · 규모]</span></div>
-          </div>
-          <p class="note">후속 · [특허 · 논문 · 후속 과제 — 명사구]</p>
-        </div>
-      </article>
-
-      <article>
-        <div class="lab"><span class="num">05</span><h2>증거</h2></div>
-        <div class="bod">
-          <div class="evid">
-            <figure><div class="ph sm"><span>[상장 사진]</span></div><figcaption>[상장 이름]</figcaption></figure>
-            <a class="ecard" href="[기사 URL]" target="_blank" rel="noopener">
-              <span class="k">보도 · [매체] · [날짜]</span>
-              <span class="t">[기사 제목]</span>
-              <span class="go">기사 보기 →</span>
-            </a>
-            <a class="ecard" href="[GitHub URL]" target="_blank" rel="noopener">
-              <span class="k">코드</span>
-              <span class="t">[저장소 이름]</span>
-              <span class="go">GitHub →</span>
-            </a>
-          </div>
-        </div>
-      </article>
-
+    <div class="spec">
+      <h2>잰 것</h2>
+      <dl class="kv">
+        <dt>대상</dt><dd>[무엇]</dd>
+        <dt>센서</dt><dd>[장비]</dd>
+        <dt>[항목]</dt><dd>[값]</dd>
+      </dl>
+    </div>
+    <div class="spec">
+      <h2>만든 것</h2>
+      <dl class="kv">
+        <dt>결과물</dt><dd>[모델 · 모듈 · 기기]</dd>
+        <dt>연결 방식</dt><dd>[어디에 붙는 형태]</dd>
+      </dl>
+    </div>
+    <div class="spec">
+      <h2>정보</h2>
+      <dl class="kv">
+        <dt>대회</dt><dd>[대회명]</dd>
+        <dt>주최</dt><dd>[주최]</dd>
+        <dt>기간</dt><dd>[기간]</dd>
+        <dt>팀</dt><dd>[팀명, 인원]</dd>
+        <dt>역할</dt><dd>[역할]</dd>
+      </dl>
+    </div>
+    <div class="spec">
+      <h2>보도</h2>
+      <dl class="kv">
+        <dt>[YYYY.MM.DD]</dt><dd><a href="[기사 주소]" target="_blank" rel="noopener">[매체, 제목]</a></dd>
+      </dl>
     </div>
   </section>
 
-  <section class="wrap gallery" aria-label="현장 사진">
-    <p class="eyebrow">GALLERY</p>
-    <div class="row">
-      <div class="ph"><span>[사진]</span></div>
-      <div class="ph"><span>[사진]</span></div>
-      <div class="ph"><span>[사진]</span></div>
-    </div>
-  </section>
-
-  <nav class="wrap pn" aria-label="다른 프로젝트">
-    <a href="[이전 프로젝트 파일].html"><span class="k">← 이전 프로젝트 · [YYYY.MM]</span><b>[이전 프로젝트 제목]</b></a>
-    <a class="next" href="[다음 프로젝트 파일].html"><span class="k">다음 프로젝트 · [YYYY.MM] →</span><b>[다음 프로젝트 제목]</b></a>
-  </nav>
+  <div class="back"><a class="pill line" href="/#projects">모든 프로젝트</a></div>
 
 </main>
 
 <footer class="foot">
-  <div class="wrap">
-    <div class="brand">
-      <svg viewBox="0 0 200 100" aria-hidden="true"><path d="M0 50 L6.7 29.6 L13.3 17.1 L20 14.7 L26.7 21.6 L33.3 34.8 L40 50 L46.7 63.2 L53.3 71.2 L60 72.7 L66.7 68.3 L73.3 59.8 L80 50 L86.7 41.5 L93.3 36.4 L100 35.4 L106.7 38.2 L113.3 43.7 L120 50 L126.7 55.5 L133.3 58.8 L140 59.4 L146.7 57.6 L153.3 54.1 L160 50 L166.7 46.5 L173.3 44.3 L180 43.9 L186.7 45.1 L193.3 47.4 L200 50" fill="none" stroke="#FF5B2E" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <b>acvi</b>
-      <span class="eyebrow dim">ACOUSTIC · VIBRATION</span>
-    </div>
-    <p>대표 김태연 · kim@acvi.net · © 2026 acvi</p>
-  </div>
+  <div class="foot-in"><span>© 2026 acvi</span><span>김태연</span></div>
 </footer>
 </body>
 </html>
