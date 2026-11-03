@@ -91,6 +91,10 @@ img{display:block;max-width:100%;height:auto}
 .kv a{text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:4px;transition:text-decoration-color .2s}
 .kv a:hover{text-decoration-color:currentColor}
 
+.cert{display:block;width:100%;max-width:320px;transition:opacity .2s}
+.cert:hover{opacity:.86}
+.cert img{width:100%;border:1px solid var(--line)}
+
 .back{text-align:center;padding:40px 22px 120px}
 
 /* ---------- 좁은 화면 ---------- */

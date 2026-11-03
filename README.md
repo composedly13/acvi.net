@@ -18,7 +18,7 @@ https://acvi.net
 | 파일 | 역할 |
 |---|---|
 | `index.html` | 홈. 로고 → 한 줄 소개 → 파형 → 프로젝트 타일 → 메일 |
-| `projects/<슬러그>.html` | 프로젝트 상세. 이름 → 핵심 수치 3개 → 현장과 문제 · 잰 것 · 만든 것 · 정보 · 보도 |
+| `projects/<슬러그>.html` | 프로젝트 상세. 이름 → 핵심 수치 3개 → 현장과 문제 · 잰 것 · 만든 것 · 정보 · 상장 · 보도 |
 | `projects/_template.html` | 새 프로젝트 페이지용 틀 (사이트에는 링크 없음) |
 | `assets/site.css` | 공용 스타일. 색 · 글꼴은 맨 위 `:root` |
 | `assets/img/<슬러그>/` | 프로젝트 이미지 |
@@ -35,6 +35,7 @@ https://acvi.net
 4. 이미지가 있으면 `assets/img/<슬러그>/`에 넣고
    - 타일: 설명 아래 `<img class="shot" src="assets/img/<슬러그>/tile.jpg" alt="…">` (모든 타일에 같은 방식)
    - 상세: `.phero` 안 `<img class="shot" src="../assets/img/<슬러그>/cover.jpg" alt="…">`
+   - 상장: `assets/img/<슬러그>/award.jpg` (가로 1000px JPEG, 약 100KB). 상세 페이지 `정보` 다음 `상장` 칸에 표시, 누르면 원본 크기
 
 새 공모전은 홈 타일 맨 앞에 `tile` 하나 추가. 수상 줄은 `대회명 연도 상` 형식.
 

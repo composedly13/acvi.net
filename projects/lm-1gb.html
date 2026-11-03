@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>1GB 언어모델 — acvi</title>
+<meta name="description" content="AI·SW중심대학 디지털 경진대회 2026 후원기업상, 메모리 1GB 제한 소형 언어모델">
+<meta property="og:title" content="1GB 언어모델 — acvi">
+<meta property="og:description" content="AI·SW중심대학 디지털 경진대회 2026 후원기업상, 메모리 1GB 제한 소형 언어모델">
+<meta property="og:url" content="https://acvi.net/projects/lm-1gb.html">
+<meta property="og:type" content="article">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">본문 바로가기</a>
+
+<header class="gnav">
+  <nav class="gnav-in" aria-label="주 메뉴">
+    <a class="logo" href="/" aria-label="acvi 홈"><svg viewBox="0 0 200 100" aria-hidden="true"><path d="M0 50 L6.7 29.6 L13.3 17.1 L20 14.7 L26.7 21.6 L33.3 34.8 L40 50 L46.7 63.2 L53.3 71.2 L60 72.7 L66.7 68.3 L73.3 59.8 L80 50 L86.7 41.5 L93.3 36.4 L100 35.4 L106.7 38.2 L113.3 43.7 L120 50 L126.7 55.5 L133.3 58.8 L140 59.4 L146.7 57.6 L153.3 54.1 L160 50 L166.7 46.5 L173.3 44.3 L180 43.9 L186.7 45.1 L193.3 47.4 L200 50" fill="none" stroke="#FF5B2E" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/></svg><span>acvi</span></a>
+    <div class="links">
+      <a href="/#projects">프로젝트</a>
+      <a href="/#contact">연락</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+
+  <section class="phero">
+    <p class="award">AI·SW중심대학 디지털 경진대회 2026 후원기업상</p>
+    <h1>1GB 언어모델</h1>
+    <p class="desc">메모리 1GB 제한 소형 언어모델, 점수 0.436 → 0.798</p>
+  </section>
+
+  <section class="highlights" aria-label="핵심 수치">
+    <div><b>후원기업상</b><span>팀스파르타 후원기업상, AI부문</span></div>
+    <div><b>0.798</b><span>기준 점수 0.436, 공개 순위 8위</span></div>
+    <div><b>7분 15초</b><span>추론 시간, 제한 10분</span></div>
+  </section>
+
+  <section class="specs" aria-label="상세">
+    <div class="spec">
+      <h2>현장과 문제</h2>
+      <dl class="kv">
+        <dt>과제</dt><dd>AI 에이전트 행동 의사결정 예측</dd>
+        <dt>제약</dt><dd>메모리 1GB, 추론 10분</dd>
+        <dt>평가</dt><dd>Macro-F1, 행동 항목별 F1 점수 평균</dd>
+      </dl>
+    </div>
+    <div class="spec">
+      <h2>잰 것</h2>
+      <dl class="kv">
+        <dt>대상</dt><dd>에이전트가 실제로 고른 행동의 기록</dd>
+        <dt>관점</dt><dd>정답 라벨은 최적 행동이 아닌 생성기의 실제 선택</dd>
+      </dl>
+    </div>
+    <div class="spec">
+      <h2>만든 것</h2>
+      <dl class="kv">
+        <dt>기반 모델</dt><dd>HyperCLOVA X 0.5B</dd>
+        <dt>지식 증류</dt><dd>교사 모델 Qwen3.5-0.8B의 판단을 작은 모델로 이전</dd>
+        <dt>합의 판정</dt><dd>확신이 낮은 34.1% 구간만 모델 3개 합의</dd>
+        <dt>고정 규칙</dt><dd>12종</dd>
+        <dt>압축</dt><dd>가중치 정밀도 8비트, 4비트 자체 양자화</dd>
+      </dl>
+    </div>
+    <div class="spec">
+      <h2>정보</h2>
+      <dl class="kv">
+        <dt>대회</dt><dd>2026 AI·SW중심대학 디지털 경진대회 AI부문</dd>
+        <dt>본선</dt><dd>2026년 8월 11일, 대한상공회의소</dd>
+        <dt>시상</dt><dd>팀스파르타 주식회사</dd>
+        <dt>팀</dt><dd>토큰강도 4인</dd>
+        <dt>역할</dt><dd>학생 모델 실험</dd>
+      </dl>
+    </div>
+    <div class="spec">
+      <h2>상장</h2>
+      <a class="cert" href="../assets/img/lm-1gb/award.jpg" target="_blank" rel="noopener"><img src="../assets/img/lm-1gb/award.jpg" width="1000" height="1537" loading="lazy" alt="2026 AI·SW중심대학 디지털 경진대회 후원기업상 상장, 팀스파르타, 토큰강도 팀"></a>
+    </div>
+  </section>
+
+  <div class="back"><a class="pill line" href="/#projects">모든 프로젝트</a></div>
+
+</main>
+
+<footer class="foot">
+  <div class="foot-in"><span>© 2026 acvi</span><span>김태연</span></div>
+</footer>
+</body>
+</html>
