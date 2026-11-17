@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SafeWave — acvi</title>
+<meta name="description" content="한국디지털콘텐츠학회 논문경진대회 2026 동상, 와이파이 신호와 소리 결합 독거 어르신 낙상 감지">
+<meta property="og:title" content="SafeWave — acvi">
+<meta property="og:description" content="한국디지털콘텐츠학회 논문경진대회 2026 동상, 와이파이 신호와 소리 결합 독거 어르신 낙상 감지">
+<meta property="og:url" content="https://acvi.net/projects/safewave.html">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://acvi.net/assets/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">본문 바로가기</a>
+
+<header class="gnav">
+  <nav class="gnav-in" aria-label="주 메뉴">
+    <a class="logo" href="/" aria-label="acvi 홈"><svg viewBox="0 0 200 100" aria-hidden="true"><path d="M0 50 L6.7 29.6 L13.3 17.1 L20 14.7 L26.7 21.6 L33.3 34.8 L40 50 L46.7 63.2 L53.3 71.2 L60 72.7 L66.7 68.3 L73.3 59.8 L80 50 L86.7 41.5 L93.3 36.4 L100 35.4 L106.7 38.2 L113.3 43.7 L120 50 L126.7 55.5 L133.3 58.8 L140 59.4 L146.7 57.6 L153.3 54.1 L160 50 L166.7 46.5 L173.3 44.3 L180 43.9 L186.7 45.1 L193.3 47.4 L200 50" fill="none" stroke="#FF5B2E" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/></svg><span>acvi</span></a>
+    <div class="links">
+      <a href="/#projects">프로젝트</a>
+      <a href="/#about">소개</a>
+      <a href="/#contact">연락</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+
+  <section class="phero">
+    <p class="award">한국디지털콘텐츠학회 논문경진대회 2026 동상</p>
+    <h1>SafeWave</h1>
+    <p class="desc">와이파이 신호와 소리 결합 독거 어르신 낙상 감지</p>
+    <!-- 대표 이미지가 생기면: <img class="shot" src="../assets/img/safewave/cover.jpg" alt="…"> -->
+  </section>
+
+  <section class="highlights" aria-label="핵심 수치">
+    <div><b>동상</b><span>대학생 논문경진대회</span></div>
+    <div><b>2단 확인</b><span>소리로 먼저 감지, 와이파이 신호로 재확인</span></div>
+    <div><b>100Hz</b><span>와이파이 신호 수집 주기, 센서 기기 최대 5대</span></div>
+  </section>
+
+  <section class="specs" aria-label="상세">
+    <div class="spec">
+      <h2>현장과 문제</h2>
+      <dl class="kv">
+        <dt>대상</dt><dd>혼자 사는 어르신의 집 안 낙상</dd>
+        <dt>카메라</dt><dd>욕실, 침실 설치 곤란</dd>
+        <dt>부착 센서</dt><dd>착용 누락</dd>
+        <dt>단일 센서</dt><dd>한 가지 신호만으로는 부족한 판단 근거</dd>
+        <dt>출발점</dt><dd>카메라와 부착 센서 없는 두 신호 결합 감지</dd>
+      </dl>
+    </div>
+    <div class="spec">
+      <h2>잰 것</h2>
+      <dl class="kv">
+        <dt>대상</dt><dd>방 안을 지나는 와이파이 신호의 흔들림, 집 안 소리</dd>
+        <dt>신호</dt><dd>와이파이 채널 상태 정보(CSI), 부반송파 64개 진폭</dd>
+        <dt>센서</dt><dd>ESP32-S3 소형 보드, 마이크</dd>
+        <dt>기기 내 처리</dt><dd>정규화, 호흡 대역 0.1–0.6Hz와 심박 대역 0.8–3.0Hz 분리</dd>
+        <dt>전송</dt><dd>788바이트 고정 묶음, 초당 100회</dd>
+        <dt>소리</dt><dd>16kHz 단일 채널, 3초 단위</dd>
+      </dl>
+    </div>
+    <div class="spec">
+      <h2>만든 것</h2>
+      <dl class="kv">
+        <dt>결과물</dt><dd>가정용 안전 감시 시스템 시제품</dd>
+        <dt>본체</dt><dd>Raspberry Pi 5(소형 컴퓨터)</dd>
+        <dt>모델 구성</dt><dd>낙상 추정, 호흡과 심박 추정, 환경음 분류, 한국어 음성 인식, 종합 위험 판단</dd>
+        <dt>종합 판단</dt><dd>기기 안에서 도는 소형 언어모델</dd>
+        <dt>알림</dt><dd>휴대전화 알림, 음성 안내</dd>
+        <dt>검증 범위</dt><dd>시제품 단계, 실거주 환경 성능 검증 전</dd>
+      </dl>
+    </div>
+    <div class="spec">
+      <h2>정보</h2>
+      <dl class="kv">
+        <dt>학술대회</dt><dd>한국디지털콘텐츠학회 2026 하계종합학술대회 대학생 논문경진대회</dd>
+        <dt>논문</dt><dd>WiFi CSI와 음향 데이터의 다중 모달 융합을 통한 독거노인 낙상 감지 시스템 설계 방향 고찰</dd>
+        <dt>팀</dt><dd>4인</dd>
+        <dt>역할</dt><dd>와이파이 신호 수집 기기와 전송 규격</dd>
+        <dt>후속</dt><dd>캡스톤 디자인 과제로 개발 진행 중</dd>
+        <dt>코드</dt><dd><a href="https://github.com/jinsan02/safewave-ai-ambient-monitoring" target="_blank" rel="noopener">시스템 전체</a>, <a href="https://github.com/composedly13/safewave-ai-ambient-monitoring-firmware" target="_blank" rel="noopener">신호 수집 기기</a></dd>
+      </dl>
+    </div>
+  </section>
+
+  <section class="contact" aria-label="연락">
+    <p class="what">공모전 팀 제안, 연구 협업, 현장 데이터 수집</p>
+    <a class="mail" href="mailto:kim@acvi.net">kim@acvi.net</a>
+    <a class="sub-link" href="/#projects">모든 프로젝트</a>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot-in"><span>© 2026 acvi</span><span>김태연</span></div>
+</footer>
+</body>
+</html>
