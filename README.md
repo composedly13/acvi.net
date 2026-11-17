@@ -21,6 +21,7 @@ https://acvi.net
 | `projects/<슬러그>.html` | 프로젝트 상세. 이름 → 핵심 수치 3개 → 현장과 문제 · 잰 것 · 만든 것 · 정보(공개 저장소는 `코드` 줄) · 상장 · 보도 → 메일 |
 | `projects/_template.html` | 새 프로젝트 페이지용 틀 (사이트에는 링크 없음) |
 | `assets/site.css` | 공용 스타일. 색 · 글꼴은 맨 위 `:root` |
+| `assets/site.js` | 움직임 전용. 없어도 내용 표시 |
 | `assets/img/<슬러그>/` | 프로젝트 이미지 |
 | `favicon.svg` | 탭 아이콘 (감쇠 파형) |
 | `assets/img/og.png` | 주소 공유 때 보이는 미리보기 그림 (1200×630) |
@@ -28,7 +29,7 @@ https://acvi.net
 | `robots.txt`, `sitemap.xml` | 검색 엔진용. **쪽을 추가하면 `sitemap.xml`에도 한 줄 추가.** |
 | `CNAME` | `acvi.net` 도메인 연결. **지우면 도메인 연결 해제.** |
 
-자바스크립트 없음. HTML과 CSS만. (홈의 `application/ld+json`은 검색 엔진용 자료이며 실행되는 코드가 아님)
+내용은 HTML과 CSS만. 자바스크립트는 `assets/site.js` 하나, 움직임에만 사용(첫 화면 파형, 화면에 들어올 때 나타나기, 수치 올라가기). 꺼져 있거나 "동작 줄이기" 설정이면 움직임 없이 내용 전부 표시. (홈의 `application/ld+json`은 검색 엔진용 자료이며 실행되는 코드가 아님)
 
 홈 `소개`의 수치 3개(수상 건수 · 신호 종류 · 보도 건수)는 프로젝트를 추가할 때 함께 고침.
 
